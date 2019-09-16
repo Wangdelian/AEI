@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="io.jeasyframework.dao.master.SysSwitchsiteDao">
+
+	<select id="queryObject" resultType="io.jeasyframework.entity.SysSwitchsiteEntity">
+		select SWITCHSITE_ID as switchsiteId, SWITCHSITECODE, 
+		SWITCHSITENAME, SITEURL, LOGIN_NAME as loginName, 
+		LOGIN_PASSWORD as loginPassword,
+		DBKEY
+		from SYS_SWITCHSITE where SWITCHSITE_ID = #{value}
+	</select>
+
+    <select id="queryList" resultType="io.jeasyframework.entity.SysSwitchsiteEntity">
+		select SWITCHSITE_ID as switchsiteId, SWITCHSITECODE, 
+		SWITCHSITENAME, SITEURL, LOGIN_NAME as loginName, 
+		LOGIN_PASSWORD as loginPassword,
+		DBKEY
+		from SYS_SWITCHSITE 
+	</select>
+</mapper>

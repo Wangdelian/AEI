@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="io.jeasyframework.dao.master.SysRoleDao">
+
+	<select id="queryObject" resultType="io.jeasyframework.entity.SysRoleEntity">
+		select 
+			 role_id as roleid,
+			role_name as rolename,
+			remark,
+			role_type as roletype,
+			role_icon as roleicon,
+			role_Seq as roleseq,
+			role_parent_id as  roleparentid,
+			create_user_id as createuserid,
+			create_time as createtime
+        from sys_role where role_id = #{value}
+	</select>
+	<select id="queryListShow" resultType="io.jeasyframework.entity.SysRoleEntity">
+		select
+		role1.role_id as roleid,
+		role1.role_name as rolename,
+		role1.remark,
+		(case when  role1.role_type='1' then '功能权限'
+		else '数据权限' end) roletype,
+		role1.role_icon as roleicon,
+		role1.role_Seq as roleseq,
+		role2.role_name as  roleParentName,
+		role1.create_user_id as createuserid,
+		role1.create_time as createtime
+		from sys_role role1 left join sys_role role2 on role2.role_id =role1.role_parent_id
+		WHERE  1 = 1
+		<if test="roleNameKey != null and roleNameKey != '' ">
+			AND  ( role1.role_name like    '%' || #{roleNameKey} || '%' )
+		</if>
+		<if test="roleId != null and roleId != '' ">
+			AND  role1.role_id !=#{roleId}
+		</if>
+		order by role1.role_Seq
+	</select>
+	<select id="queryList" resultType="io.jeasyframework.entity.SysRoleEntity">
+		select 
+            role_id as roleid,
+			role_name as rolename,
+			remark,
+			role_type as roletype,
+			role_icon as roleicon,
+			role_Seq as roleseq,
+			role_parent_id as  roleparentid,
+			create_user_id as createuserid,
+			create_time as createtime
+        from sys_role WHERE  1 = 1
+        <if test="roleNameKey != null and roleNameKey != '' ">
+			AND  ( role_name like    '%' || #{roleNameKey} || '%' )
+		</if>
+		<if test="roleId != null and roleId != '' ">
+			AND  role_id !=#{roleId}
+		</if>
+		<if test="roleName != null and roleName != '' ">
+			AND  role_name = #{roleName}
+		</if>
+
+	</select>
+	
+	<select id="queryTotal" resultType="int">
+		select count(*) from sys_role 
+		<where>
+			<if test="roleName != null and roleName.trim() != ''">
+				and `role_name` like concat('%',#{roleName},'%') 
+			</if>
+			<if test="createUserId != null">
+				and create_user_id = #{createUserId} 
+			</if>
+			<if test="roleNameKey != null and roleNameKey != '' ">
+				AND  ( role_name like    '%' || #{roleNameKey} || '%' )
+			</if>
+		</where>
+	</select>
+	
+	<insert id="save" parameterType="io.jeasyframework.entity.SysRoleEntity" useGeneratedKeys="true" keyProperty="roleId">
+		<selectKey resultType="java.lang.Long" keyProperty="roleId" order="BEFORE">
+			<if test="roleId == null">
+				select sys_role_seq_atuoid.nextval as roleId from dual
+			</if>
+			<if test="roleId != null">
+				select ${roleId} from dual
+			</if>
+		</selectKey>
+		insert into sys_role
+		(
+			role_id,
+			role_name,
+			remark,
+			create_user_id,
+			create_time
+		)
+		values
+		(
+			#{roleId},
+			#{roleName}, 
+			#{remark},
+			#{createUserId},
+			#{createTime}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="io.jeasyframework.entity.SysRoleEntity">
+		update sys_role 
+		<set> 
+			<if test="roleName != null">role_name = #{roleName}, </if>
+			<if test="remark != null">remark = #{remark}</if>
+		</set>
+		where role_id = #{roleId}
+	</update>
+	
+	<delete id="deleteBatch">
+		delete from sys_role where role_id in 
+		<foreach item="roleId" collection="array" open="(" separator="," close=")">
+			#{roleId}
+		</foreach>
+	</delete>
+	
+	<!-- 查询用户创建的角色ID列表 -->
+	<select id="queryRoleIdList" resultType="long">
+		select role_id from sys_role where create_user_id = #{createUserId} 
+	</select>
+
+	<select id="queryRoleNameList" resultType="io.jeasyframework.entity.SysRoleEntity">
+		select role_name as rolename,role_id as roleid from SYS_ROLE where role_id in( select role_id  from sys_user_role  where user_id = #{value} )
+	</select>
+</mapper>

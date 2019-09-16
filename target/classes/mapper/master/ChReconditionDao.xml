@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="io.jeasyframework.dao.master.ChReconditionDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="io.jeasyframework.entity.ChReconditionEntity" id="chReconditionMap">
+        <result property="fId" column="F_ID"/>
+        <result property="fReconditionsite" column="F_ReconditionSite"/>
+        <result property="fDevicename" column="F_DeviceName"/>
+        <result property="fReconditiontype" column="F_ReconditionType"/>
+        <result property="fReconditiontime" column="F_ReconditionTime"/>
+        <result property="fReconditionpart" column="F_ReconditionPart"/>
+        <result property="fReconditionstatus" column="F_ReconditionStatus"/>
+		<result property="fDisposecontent" column="F_DisposeContent"/>
+		<result property="fDisposeresult" column="F_DisposeResult"/>
+		<result property="fRecordpersonnel" column="F_RecordPersonnel"/>
+		<result property="fRecordtime" column="F_RecordTime"/>
+		<result property="fRemark" column="F_Remark"/>
+		<result property="fReserve1" column="F_RESERVE1"/>
+		<result property="fReserve2" column="F_RESERVE2"/>
+		<result property="fReserve3" column="F_RESERVE3"/>
+		<result property="fReserve4" column="F_RESERVE4"/>
+		<result property="fReserve5" column="F_RESERVE5"/>
+		<result property="levelmarkid" column="levelmarkid"/>
+	</resultMap>
+	<sql id="Base_Column_List">
+    F_ID,F_REMARK,F_DEVICENAME,to_char( F_RECORDTIME, 'yyyy-MM-dd hh24:mi:ss' ) AS F_RECORDTIME,F_DISPOSERESULT,F_DISPOSECONTENT,F_RECONDITIONPART,
+	F_RECONDITIONSITE,to_char( F_RECONDITIONTIME, 'yyyy-MM-dd hh24:mi:ss' ) AS F_RECONDITIONTIME,F_RECONDITIONTYPE,F_RECORDPERSONNEL,
+	F_RECONDITIONSTATUS,F_RESERVE1,F_RESERVE2,F_RESERVE3,F_RESERVE4,F_RESERVE5
+	</sql>
+
+	<select id="queryObject" resultType="io.jeasyframework.entity.ChReconditionEntity">
+		SELECT R.F_ID as fId,LE.ABNAME AS fReconditionsite,R.F_DEVICENAME AS fDevicename,
+	    R.F_REMARK as fRemark,R.F_DEVICENAME AS fDeviceId,r.F_RECONDITIONSITE AS levelmarkid,to_char( R.F_RECORDTIME, 'yyyy-MM-dd hh24:mi:ss' ) AS fRecordtime,
+	    R.F_DISPOSERESULT as fDisposeresult,R.F_DISPOSECONTENT as fDisposecontent,R.F_RECONDITIONPART as fReconditionpart,
+	    to_char( R.F_RECONDITIONTIME, 'yyyy-MM-dd hh24:mi:ss' ) AS fReconditiontime,
+	    R.F_RECONDITIONTYPE as fReconditiontype,R.F_RECORDPERSONNEL as fRecordpersonnel,R.F_RECONDITIONSTATUS as fReconditionstatus,
+	    R.F_RESERVE1 as fReserve1,R.F_RESERVE2 as fReserve2,R.F_RESERVE3 as fReserve3,
+	    R.F_RESERVE4 as fReserve4,R.F_RESERVE5 as fReserve5
+        FROM CH_RECONDITION R
+	    LEFT JOIN SYS_LEVELMARK LE ON LE.LEVELMARKID = R.F_RECONDITIONSITE
+	    where R.F_ID = #{value}
+	</select>
+
+	<select id="queryList" resultMap="chReconditionMap">
+		SELECT R.F_ID,LE.ABNAME AS F_RECONDITIONSITE,
+	    R.F_REMARK,R.F_DEVICENAME,to_char( R.F_RECORDTIME, 'yyyy-MM-dd hh24:mi:ss' ) AS F_RECORDTIME,R.F_DISPOSERESULT,
+	    R.F_DISPOSECONTENT,R.F_RECONDITIONPART,to_char( R.F_RECONDITIONTIME, 'yyyy-MM-dd hh24:mi:ss' ) AS F_RECONDITIONTIME,
+	    R.F_RECONDITIONTYPE,R.F_RECORDPERSONNEL,R.F_RECONDITIONSTATUS,R.F_RESERVE1,R.F_RESERVE2,R.F_RESERVE3,R.F_RESERVE4,R.F_RESERVE5
+        FROM CH_RECONDITION R
+	    LEFT JOIN SYS_LEVELMARK LE ON LE.LEVELMARKID = R.F_RECONDITIONSITE
+	    WHERE R.F_RESERVE1=0
+		<if test="startTime != null and startTime.trim() != ''">
+			and R.F_RECONDITIONTIME >= to_date(#{startTime},'yyyy-mm-dd hh24:mi:ss')
+		</if>
+		<if test="endTime != null and endTime.trim() != ''">
+			and R.F_RECONDITIONTIME &lt; to_date(#{endTime},'yyyy-mm-dd hh24:mi:ss')
+		</if>
+		<if test="fBureauname != null and fBureauname.trim() != ''">
+			and LE.LEVELMARKID like '${fBureauname}%'
+		</if>
+		<if test="fSectionname != null and fSectionname.trim() != ''">
+			and LE.LEVELMARKID like '${fSectionname}%'
+		</if>
+		<if test="fpasssite != null and fpasssite.trim() != ''">
+			and LE.LEVELMARKID like '${fpasssite}%'
+		</if>
+		order by R.F_RECONDITIONTIME desc
+	</select>
+
+	<select id="queryTotal" resultType="int">
+        SELECT COUNT(*)
+		FROM CH_RECONDITION R
+		LEFT JOIN SYS_LEVELMARK LE ON LE.LEVELMARKID = R.F_RECONDITIONSITE
+		WHERE R.F_RESERVE1=0
+		<if test="startTime != null and startTime.trim() != ''">
+			and R.F_RECONDITIONTIME >= to_date(#{startTime},'yyyy-mm-dd hh24:mi:ss')
+		</if>
+		<if test="endTime != null and endTime.trim() != ''">
+			and R.F_RECONDITIONTIME &lt; to_date(#{endTime},'yyyy-mm-dd hh24:mi:ss')
+		</if>
+		<if test="fBureauname != null and fBureauname.trim() != ''">
+			and LE.LEVELMARKID like '${fBureauname}%'
+		</if>
+		<if test="fSectionname != null and fSectionname.trim() != ''">
+			and LE.LEVELMARKID like '${fSectionname}%'
+		</if>
+		<if test="fpasssite != null and fpasssite.trim() != ''">
+			and LE.LEVELMARKID like '${fpasssite}%'
+		</if>
+	</select>
+
+	<update id="deleteBatch" >
+		update CH_RECONDITION set F_RESERVE1 = 1 where F_ID in
+		<foreach item="fId" collection="array" open="(" separator="," close=")">
+			#{fId}
+		</foreach>
+	</update>
+
+	<update id="update" parameterType="io.jeasyframework.entity.ChReconditionEntity">
+		update CH_RECONDITION
+		<set>
+			<if test="!fReconditionsite.isEmpty()">F_ReconditionSite = #{fReconditionsite}, </if>
+			<if test="fDevicename != null">F_DeviceName = #{fDevicename}, </if>
+			<if test="fReconditiontype != null">F_ReconditionType = #{fReconditiontype}, </if>
+			<if test="fReconditiontime != null">F_ReconditionTime = to_date(#{fReconditiontime},'yyyy-MM-dd HH24:mi:ss'),</if>
+			<if test="fReconditionpart != null">F_ReconditionPart = #{fReconditionpart}, </if>
+			<if test="fReconditionstatus != null">F_ReconditionStatus = #{fReconditionstatus}, </if>
+			<if test="fDisposecontent != null">F_DisposeContent = #{fDisposecontent}, </if>
+			<if test="fDisposeresult != null">F_DisposeResult = #{fDisposeresult}, </if>
+			<if test="fRecordpersonnel != null">F_RecordPersonnel = #{fRecordpersonnel}, </if>
+			<if test="fRecordtime != null">F_RecordTime = #{fRecordtime}, </if>
+			<if test="fRemark != null">F_Remark = #{fRemark}, </if>
+			<if test="fReserve1 != null">F_RESERVE1 = #{fReserve1}, </if>
+			<if test="fReserve2 != null">F_RESERVE2 = #{fReserve2}, </if>
+			<if test="fReserve3 != null">F_RESERVE3 = #{fReserve3}, </if>
+			<if test="fReserve4 != null">F_RESERVE4 = #{fReserve4}, </if>
+			<if test="fReserve5 != null">F_RESERVE5 = #{fReserve5}</if>
+		</set>
+		where F_ID = #{fId}
+	</update>
+
+	<insert id="save" parameterType="io.jeasyframework.entity.ChReconditionEntity">
+
+		insert into ch_recondition
+		(
+		F_ID,
+		F_ReconditionSite,
+		F_DeviceName,
+
+		<if test="fReconditiontype != null">F_ReconditionType,</if>
+		F_ReconditionTime,
+		<if test="fReconditionpart != null">F_ReconditionPart,</if>
+		<if test="fReconditionstatus != null">F_ReconditionStatus,</if>
+		F_DisposeContent,
+		F_DisposeResult,
+		F_RecordPersonnel,
+		F_RecordTime,
+		F_Remark,
+		F_RESERVE1
+		)
+		values
+		(
+		#{fId},
+		#{fReconditionsite},
+		#{fDevicename},
+		<if test="fReconditiontype != null">#{fReconditiontype},</if>
+		#{fReconditiontime},
+		<if test="fReconditionpart != null">#{fReconditionpart},</if>
+		<if test="fReconditionstatus != null">#{fReconditionstatus},</if>
+		#{fDisposecontent},
+		#{fDisposeresult},
+		#{fRecordpersonnel},
+		sysdate,
+		#{fRemark},
+		#{fReserve1}
+		)
+	</insert>
+
+</mapper>

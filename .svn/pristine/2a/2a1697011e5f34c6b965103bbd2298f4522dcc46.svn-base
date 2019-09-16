@@ -1,0 +1,810 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="io.jeasyframework.dao.master.ChTraincheckinfoDao">
+
+    <!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="io.jeasyframework.entity.ChTraincheckinfoEntity" id="chTraincheckinfoMap">
+        <result property="fId" column="F_ID"/>
+        <result property="fDeviceid" column="F_DEVICEID"/>
+        <result property="fTguid" column="F_TGUID"/>
+        <result property="fPasssite" column="F_PASSSITE"/>
+        <result property="fPasspoint" column="F_PASSPOINT"/>
+        <result property="fSerialnumber" column="F_SERIALNUMBER"/>
+        <result property="fTrainmodel" column="F_TRAINMODEL"/>
+        <result property="fTrainorder" column="F_TRAINORDER"/>
+        <result property="fDirection" column="F_DIRECTION"/>
+        <result property="fTimearrive" column="F_TIMEARRIVE"/>
+        <result property="fTimethrough" column="F_TIMETHROUGH"/>
+        <result property="fAxiscounthas" column="F_AXISCOUNTHAS"/>
+        <result property="fAxiscountmis" column="F_AXISCOUNTMIS"/>
+        <result property="fTraincount" column="F_TRAINCOUNT"/>
+        <result property="fTraincountunknow" column="F_TRAINCOUNTUNKNOW"/>
+        <result property="fTagcounthas" column="F_TAGCOUNTHAS"/>
+        <result property="fTagcountmis" column="F_TAGCOUNTMIS"/>
+        <result property="fTraincountj" column="F_TRAINCOUNTJ"/>
+        <result property="fTraincountjunknow" column="F_TRAINCOUNTJUNKNOW"/>
+        <result property="fTagcountjhas" column="F_TAGCOUNTJHAS"/>
+        <result property="fTagcountjmis" column="F_TAGCOUNTJMIS"/>
+        <result property="fTraincountk" column="F_TRAINCOUNTK"/>
+        <result property="fTraincountkunknow" column="F_TRAINCOUNTKUNKNOW"/>
+        <result property="fTagcountkhas" column="F_TAGCOUNTKHAS"/>
+        <result property="fTagcountkmis" column="F_TAGCOUNTKMIS"/>
+        <result property="fTraincounth" column="F_TRAINCOUNTH"/>
+        <result property="fTraincounthunknow" column="F_TRAINCOUNTHUNKNOW"/>
+        <result property="fTagcounthhas" column="F_TAGCOUNTHHAS"/>
+        <result property="fTagcounthmis" column="F_TAGCOUNTHMIS"/>
+        <result property="fTraincountd" column="F_TRAINCOUNTD"/>
+        <result property="fTraincountdunknow" column="F_TRAINCOUNTDUNKNOW"/>
+        <result property="fTagcountdhas" column="F_TAGCOUNTDHAS"/>
+        <result property="fTagcountdmis" column="F_TAGCOUNTDMIS"/>
+        <result property="fTraincounto" column="F_TRAINCOUNTO"/>
+        <result property="fTraincountounknow" column="F_TRAINCOUNTOUNKNOW"/>
+        <result property="fTagcountohas" column="F_TAGCOUNTOHAS"/>
+        <result property="fTagcountomis" column="F_TAGCOUNTOMIS"/>
+        <result property="fTraincountroad" column="F_TRAINCOUNTROAD"/>
+        <result property="fTraincountroadunknow" column="F_TRAINCOUNTROADUNKNOW"/>
+        <result property="fTagcountroadhas" column="F_TAGCOUNTROADHAS"/>
+        <result property="fTagcountroadmis" column="F_TAGCOUNTROADMIS"/>
+        <result property="fTraincountenterprise" column="F_TRAINCOUNTENTERPRISE"/>
+        <result property="fTraincountenterpriseunknow" column="F_TRAINCOUNTENTERPRISEUNKNOW"/>
+        <result property="fTagcountenterprisehas" column="F_TAGCOUNTENTERPRISEHAS"/>
+        <result property="fTagcountenterprisemis" column="F_TAGCOUNTENTERPRISEMIS"/>
+        <result property="fSpeedmin" column="F_SPEEDMIN"/>
+        <result property="fSpeedmax" column="F_SPEEDMAX"/>
+        <result property="fSpeedavg" column="F_SPEEDAVG"/>
+        <result property="fSpeedarrive" column="F_SPEEDARRIVE"/>
+        <result property="fSpeedthrough" column="F_SPEEDTHROUGH"/>
+        <result property="fSpeedleave" column="F_SPEEDLEAVE"/>
+        <result property="fPathmsg" column="F_PATHMSG"/>
+        <result property="fPathvideo" column="F_PATHVIDEO"/>
+        <result property="fRaterfid" column="F_RATERFID"/>
+        <result property="fRateimage" column="F_RATEIMAGE"/>
+        <result property="fRateall" column="F_RATEALL"/>
+        <result property="fUserid" column="F_USERID"/>
+        <result property="fFilename" column="F_FILENAME"/>
+        <result property="fFilecontent" column="F_FILECONTENT"/>
+        <result property="fReserve1" column="F_RESERVE1"/>
+        <result property="fReserve2" column="F_RESERVE2"/>
+        <result property="fReserve3" column="F_RESERVE3"/>
+        <result property="fReserve4" column="F_RESERVE4"/>
+        <result property="fReserve5" column="F_RESERVE5"/>
+        <result property="fTraintypeverdict" column="F_TRAINTYPEVERDICT"/>
+        <result property="fTrainnumberverdict" column="F_TRAINNUMBERVERDICT"/>
+        <result property="fBureauname" column="F_BUREAUNAME"/>
+        <result property="fSectionname" column="F_SECTIONNAME"/>
+        <result property="fInforfid" column="F_INFORFID"/>
+        <result property="fInfoimage" column="F_INFOIMAGE"/>
+        <result property="fdetalReserve1" column="detal_RESERVE1"/>
+        <result property="fdetalReserve2" column="detal_RESERVE2"/>
+        <result property="fdetalReserve3" column="detal_RESERVE3"/>
+        <result property="fdetalReserve4" column="detal_RESERVE4"/>
+        <result property="fdetalReserve5" column="detal_RESERVE5"/>
+        <result property="fTrainstatus" column="F_TRAINSTATUS"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+F_ID, F_DEVICEID, F_TGUID, F_PASSSITE, F_PASSPOINT, F_SERIALNUMBER, F_TRAINMODEL, F_TRAINORDER, F_DIRECTION, to_char(F_TIMEARRIVE,'yyyy-MM-dd hh24:mi:ss') as F_TIMEARRIVE,  to_char(F_TIMETHROUGH,'yyyy-MM-dd hh24:mi:ss') as F_TIMETHROUGH, F_AXISCOUNTHAS, F_AXISCOUNTMIS, F_TRAINCOUNT, F_TRAINCOUNTUNKNOW, F_TAGCOUNTHAS, F_TAGCOUNTMIS, F_TRAINCOUNTJ, F_TRAINCOUNTJUNKNOW, F_TAGCOUNTJHAS, F_TAGCOUNTJMIS, F_TRAINCOUNTK, F_TRAINCOUNTKUNKNOW, F_TAGCOUNTKHAS, F_TAGCOUNTKMIS, F_TRAINCOUNTH, F_TRAINCOUNTHUNKNOW, F_TAGCOUNTHHAS, F_TAGCOUNTHMIS, F_TRAINCOUNTD, F_TRAINCOUNTDUNKNOW, F_TAGCOUNTDHAS, F_TAGCOUNTDMIS, F_TRAINCOUNTO, F_TRAINCOUNTOUNKNOW, F_TAGCOUNTOHAS, F_TAGCOUNTOMIS, F_TRAINCOUNTROAD, F_TRAINCOUNTROADUNKNOW, F_TAGCOUNTROADHAS, F_TAGCOUNTROADMIS, F_TRAINCOUNTENTERPRISE, F_TRAINCOUNTENTERPRISEUNKNOW, F_TAGCOUNTENTERPRISEHAS, F_TAGCOUNTENTERPRISEMIS, F_SPEEDMIN, F_SPEEDMAX, F_SPEEDAVG, F_SPEEDARRIVE, F_SPEEDTHROUGH, F_SPEEDLEAVE, F_PATHMSG, F_PATHVIDEO, F_RATERFID, F_RATEIMAGE, F_RATEALL, F_USERID, F_FILENAME, F_FILECONTENT, F_RESERVE1, F_RESERVE2, F_RESERVE3, F_RESERVE4, F_RESERVE5
+	</sql>
+
+    <select id="queryJu" resultType="io.jeasyframework.entity.ChTraincheckinfoEntity">
+        select t.abname as fBureauname ,t.levelmarkid as  fDeviceid   from SYS_LEVELMARK t where t.levelmarkvalue = '6'
+	</select>
+    <select id="queryDuan" resultType="io.jeasyframework.entity.ChTraincheckinfoEntity">
+        select t.abname as fSectionname ,t.levelmarkid as  fDeviceid  from SYS_LEVELMARK t
+        where t.levelmarkvalue = '7'
+        <if test="fBureauname != null and fBureauname.trim() != ''">
+            and t.pid = #{fBureauname}
+        </if>
+    </select>
+
+    <select id="queryChang" resultType="io.jeasyframework.entity.ChTraincheckinfoEntity">
+        select t.abname as fPasssite ,t.levelmarkid as  fDeviceid  from SYS_LEVELMARK t
+        where t.levelmarkvalue = '13'
+        <if test="fSectionname != null and fSectionname.trim() != ''">
+            and t.pid = #{fSectionname}
+        </if>
+    </select>
+
+
+    <select id="queryObject" resultMap="chTraincheckinfoMap">
+		select
+		 c.F_ID,d.F_TRAINORDER,c.F_PASSSITE,c.F_PASSPOINT,c.F_DIRECTION,to_char(c.F_TIMETHROUGH,'yyyy-MM-dd hh24:mi:ss') as F_TIMETHROUGH,
+		 d.F_TRAINTYPEVERDICT,d.F_TRAINNUMBERVERDICT,d.F_BUREAUNAME,d.F_SECTIONNAME,d.F_INFORFID,d.F_INFOIMAGE,c.F_RESERVE1,c.F_TGUID,d.F_RESERVE2  detal_RESERVE2,d.F_RESERVE5 detal_RESERVE5
+		 from CH_TRAINCHECKINFO c
+		inner join CH_TRAINCHECKDETAIL d
+		on c.f_tguid = d.f_tguid
+		where c.F_ID = #{value}
+	</select>
+
+    <select id="queryList" resultMap="chTraincheckinfoMap">
+        select
+        c.F_ID,d.F_TRAINORDER,c.F_PASSSITE,c.F_PASSPOINT,c.F_DIRECTION,to_char(c.F_TIMETHROUGH,'yyyy-MM-dd hh24:mi:ss')
+        as F_TIMETHROUGH,
+        d.F_TRAINTYPEVERDICT,d.F_TRAINNUMBERVERDICT,d.F_BUREAUNAME,d.F_SECTIONNAME,d.F_INFORFID,d.F_INFOIMAGE,c.F_RESERVE1,c.F_TGUID,d.F_RESERVE2
+        detal_RESERVE2,d.F_RESERVE5 detal_RESERVE5
+        from CH_TRAINCHECKINFO c
+        inner join CH_TRAINCHECKDETAIL d
+        on c.f_tguid = d.f_tguid
+        where 1=1
+        <if test="tagstatus != null and tagstatus.trim() != '' and tagstatus == 0">
+            and ( ((d.f_traintypetag is null or d.f_traintypetag like '%*%')
+            and (d.f_trainnumbertag is null or d.f_trainnumbertag like '%*%'))
+
+            or (d.f_traintypetag is not null and d.f_traintypetag not like '%*%'
+            and d.f_trainnumbertag is not null and d.f_trainnumbertag not like '%*%'
+            and (
+            (translate(d.f_traintypetag,'#0123456789','#') is null and d.f_traintypetag is not null)
+            or d.f_traintypetag in ('ND','DJ','KD','6K','6G','8K','8G')
+            or (translate(d.f_trainnumbertag,'#0123456789','#') is not null or d.f_trainnumbertag is null)
+            or length(d.f_trainnumbertag) &lt; 4
+            )) )
+        </if>
+        <if test="tagstatus != null and tagstatus.trim() != '' and tagstatus == 1">
+            and (d.f_traintypetag is null or d.f_traintypetag like '%*%')
+            and (d.f_trainnumbertag is null or d.f_trainnumbertag like '%*%')
+        </if>
+        <if test="tagstatus != null and tagstatus.trim() != '' and tagstatus == 2">
+            and d.f_traintypetag is not null and d.f_traintypetag not like '%*%'
+            and d.f_trainnumbertag is not null and d.f_trainnumbertag not like '%*%'
+            and (
+            (translate(d.f_traintypetag,'#0123456789','#') is null and d.f_traintypetag is not null)
+            or d.f_traintypetag in ('ND','DJ','KD','6K','6G','8K','8G')
+            or (translate(d.f_trainnumbertag,'#0123456789','#') is not null or d.f_trainnumbertag is null)
+            or length(d.f_trainnumbertag) &lt; 4
+            )
+        </if>
+        <if test="startTime != null and startTime.trim() != ''">
+            and d.F_TIMETHROUGH >= to_date(#{startTime},'yyyy-mm-dd hh24:mi:ss')
+        </if>
+        <if test="endTime != null and endTime.trim() != ''">
+            and d.F_TIMETHROUGH &lt; to_date(#{endTime},'yyyy-mm-dd hh24:mi:ss')
+        </if>
+        <if test="fBureauname != null and fBureauname.trim() != ''">
+            and c.F_DEVICEID like '${fBureauname}%'
+        </if>
+        <if test="fSectionname != null and fSectionname.trim() != ''">
+            and c.F_DEVICEID like '${fSectionname}%'
+        </if>
+        <if test="fpasssite != null and fpasssite.trim() != ''">
+            and c.F_DEVICEID like '${fpasssite}%'
+        </if>
+        <if test="fdirection != null and fdirection.trim() != ''">
+            and c.F_DIRECTION = #{fdirection}
+        </if>
+        order by c.F_TIMETHROUGH desc
+    </select>
+
+    <select id="queryTotal" resultType="int">
+        select count(*) from CH_TRAINCHECKINFO c
+        inner join CH_TRAINCHECKDETAIL d
+        on c.f_tguid = d.f_tguid
+        where 1=1
+        <if test="tagstatus != null and tagstatus.trim() != '' and tagstatus == 0">
+            and ( ((d.f_traintypetag is null or d.f_traintypetag like '%*%')
+            and (d.f_trainnumbertag is null or d.f_trainnumbertag like '%*%'))
+
+            or (d.f_traintypetag is not null and d.f_traintypetag not like '%*%'
+            and d.f_trainnumbertag is not null and d.f_trainnumbertag not like '%*%'
+            and (
+            (translate(d.f_traintypetag,'#0123456789','#') is null and d.f_traintypetag is not null)
+            or d.f_traintypetag in ('ND','DJ','KD','6K','6G','8K','8G')
+            or (translate(d.f_trainnumbertag,'#0123456789','#') is not null or d.f_trainnumbertag is null)
+            or length(d.f_trainnumbertag) &lt; 4
+            )) )
+        </if>
+        <if test="tagstatus != null and tagstatus.trim() != '' and tagstatus == 1">
+            and (d.f_traintypetag is null or d.f_traintypetag like '%*%')
+            and (d.f_trainnumbertag is null or d.f_trainnumbertag like '%*%')
+        </if>
+        <if test="tagstatus != null and tagstatus.trim() != '' and tagstatus == 2">
+            and d.f_traintypetag is not null and d.f_traintypetag not like '%*%'
+            and d.f_trainnumbertag is not null and d.f_trainnumbertag not like '%*%'
+            and (
+            (translate(d.f_traintypetag,'#0123456789','#') is null and d.f_traintypetag is not null)
+            or d.f_traintypetag in ('ND','DJ','KD','6K','6G','8K','8G')
+            or (translate(d.f_trainnumbertag,'#0123456789','#') is not null or d.f_trainnumbertag is null)
+            or length(d.f_trainnumbertag) &lt; 4
+            )
+        </if>
+        <if test="startTime != null and startTime.trim() != ''">
+            and d.F_TIMETHROUGH >= to_date(#{startTime},'yyyy-mm-dd hh24:mi:ss')
+        </if>
+        <if test="endTime != null and endTime.trim() != ''">
+            and d.F_TIMETHROUGH &lt; to_date(#{endTime},'yyyy-mm-dd hh24:mi:ss')
+        </if>
+        <if test="fBureauname != null and fBureauname.trim() != ''">
+            and c.F_DEVICEID like '${fBureauname}%'
+        </if>
+        <if test="fSectionname != null and fSectionname.trim() != ''">
+            and c.F_DEVICEID like '${fSectionname}%'
+        </if>
+        <if test="fpasssite != null and fpasssite.trim() != ''">
+            and c.F_DEVICEID like '${fpasssite}%'
+        </if>
+        <if test="fdirection != null and fdirection.trim() != ''">
+            and c.F_DIRECTION = #{fdirection}
+        </if>
+    </select>
+
+    <select id="queryAllInfo" resultMap="chTraincheckinfoMap"
+            parameterType="io.jeasyframework.entity.ChTraincheckinfoEntity">
+        select *
+        from ( select t.F_ID , nvl(t.F_DEVICEID,'""') as F_DEVICEID, nvl(t.F_TGUID,'""') as F_TGUID,
+        nvl(t.F_PASSSITE,'""') as F_PASSSITE, nvl(t.F_PASSPOINT,'""') as F_PASSPOINT, nvl(t.F_SERIALNUMBER,'""') as F_SERIALNUMBER,
+        nvl(t.F_TRAINMODEL,'""') as F_TRAINMODEL, nvl(t.F_TRAINORDER,'""') as F_TRAINORDER, nvl(t.F_DIRECTION,'""') as F_DIRECTION,
+        nvl(to_char(t.F_TIMEARRIVE,'yyyy-MM-dd hh24:mi:ss'),'""') as F_TIMEARRIVE,nvl(to_char(t.F_TIMETHROUGH,'yyyy-MM-dd hh24:mi:ss'),'""') as F_TIMETHROUGH,
+        t.F_AXISCOUNTHAS , t.F_AXISCOUNTMIS, t.F_TRAINCOUNT ,t.F_TRAINCOUNTUNKNOW, t.F_TAGCOUNTHAS, t.F_TAGCOUNTMIS ,
+        t.F_TRAINCOUNTJ, t.F_TRAINCOUNTJUNKNOW, t.F_TAGCOUNTJHAS, t.F_TAGCOUNTJMIS, t.F_TRAINCOUNTK,t.F_TRAINCOUNTKUNKNOW ,
+        t.F_TAGCOUNTKHAS,t.F_TAGCOUNTKMIS, t.F_TRAINCOUNTH, t.F_TRAINCOUNTHUNKNOW, t.F_TAGCOUNTHHAS, t.F_TAGCOUNTHMIS ,
+        t.F_TRAINCOUNTD, t.F_TRAINCOUNTDUNKNOW, t.F_TAGCOUNTDHAS, t.F_TAGCOUNTDMIS, t.F_TRAINCOUNTO,
+        t.F_TRAINCOUNTOUNKNOW , t.F_TAGCOUNTOMIS, t.F_TRAINCOUNTROAD, t.F_TRAINCOUNTROADUNKNOW, t.F_TAGCOUNTROADHAS, t.F_TAGCOUNTROADMIS ,
+        t.F_TRAINCOUNTENTERPRISE, t.F_TRAINCOUNTENTERPRISEUNKNOW, t.F_TAGCOUNTENTERPRISEHAS, t.F_TAGCOUNTENTERPRISEMIS ,
+        nvl( TO_CHAR(t.F_SPEEDMIN),'""') as F_SPEEDMIN ,nvl(TO_CHAR(t.F_SPEEDMAX),'""') as F_SPEEDMAX,
+        nvl( TO_CHAR(t.F_SPEEDAVG),'""') as F_SPEEDAVG,nvl(TO_CHAR(t.F_SPEEDARRIVE),'""') as F_SPEEDARRIVE,
+        nvl(TO_CHAR( t.F_SPEEDTHROUGH),'""') as F_SPEEDTHROUGH,nvl(TO_CHAR(t.F_SPEEDLEAVE),'""') as F_SPEEDLEAVE,
+        nvl( t.F_PATHMSG,'""') as F_PATHMSG, nvl(t.F_PATHVIDEO,'""') as F_PATHVIDEO, nvl( TO_CHAR(t.F_RATERFID),'""') as F_RATERFID,
+        nvl( TO_CHAR(t.F_RATEIMAGE),'""') as F_RATEIMAGE,nvl(TO_CHAR(t.F_RATEALL),'""') as F_RATEALL, nvl(TO_CHAR(t.F_USERID),'""') as F_USERID ,
+        nvl(t.F_FILENAME,'""') as F_FILENAME, nvl(t.F_FILECONTENT,'""') as F_FILECONTENT, nvl(t.F_RESERVE1,'""') as F_RESERVE1,
+        nvl(t.F_RESERVE2,'""') as F_RESERVE2,nvl( t.F_RESERVE3,'""') as F_RESERVE3,nvl( t.F_RESERVE4,'""') as F_RESERVE4,
+        nvl( t.F_RESERVE5,'""') as F_RESERVE5 ,nvl(TO_CHAR(t.F_TAGCOUNTOHAS),'""') as F_TAGCOUNTOHAS
+        from CH_TRAINCHECKINFO t
+        where 1=1
+        <if test="fTimeStart != null and fTimeStart.trim() != '' ">
+            and t.F_TIMETHROUGH >= to_date(#{fTimeStart},'yyyy-MM-dd')
+        </if>
+        <if test="fTimeEnd != null and fTimeEnd.trim() != '' ">
+            and t.F_TIMETHROUGH &lt;= to_date(#{fTimeEnd},'yyyy-MM-dd')
+        </if>
+        order by t.f_id desc
+        ) where 1=1
+        <if test="chCount != null and chCount.trim() != '' ">
+            and rownum &lt;= #{chCount}
+        </if>
+    </select>
+
+
+    <select id="queryByConditions" resultMap="chTraincheckinfoMap"
+            parameterType="io.jeasyframework.entity.ChTraincheckinfoEntity">
+        select
+        c.F_ID,d.F_TRAINORDER,c.F_PASSSITE,c.F_PASSPOINT,c.F_DIRECTION,to_char(c.F_TIMETHROUGH,'yyyy-MM-dd hh24:mi:ss')
+        as F_TIMETHROUGH,
+        d.F_TRAINTYPEVERDICT,d.F_TRAINNUMBERVERDICT,d.F_BUREAUNAME,d.F_SECTIONNAME,d.F_INFORFID,d.F_INFOIMAGE,c.F_RESERVE1,c.F_TGUID,d.F_RESERVE2
+        detal_RESERVE2,d.F_RESERVE5 detal_RESERVE5,d.F_RESERVE3 detal_RESERVE3,d.F_RESERVE4 detal_RESERVE4
+        from CH_TRAINCHECKINFO c
+        inner join CH_TRAINCHECKDETAIL d
+        on c.f_tguid = d.f_tguid
+        where 1=1
+        <if test="fDeviceid != null and fDeviceid.trim() != '' ">
+            and c.F_DEVICEID like '${fDeviceid}%'
+        </if>
+        <if test="fTrainorder != null and fTrainorder.trim() != '' ">
+            and d.F_TRAINORDER like '%${fTrainorder}%'
+        </if>
+        <if test="fTraintypeverdict != null and fTraintypeverdict.trim() != '' ">
+            and d.F_TRAINTYPEVERDICT like '%${fTraintypeverdict}%'
+        </if>
+        <if test="fTrainnumberverdict != null and fTrainnumberverdict.trim() != '' ">
+            and d.F_TRAINNUMBERVERDICT like '%${fTrainnumberverdict}%'
+        </if>
+        <if test="fdetalReserve2 != null and fdetalReserve2.trim() != '' ">
+            and d.F_RESERVE2 like '%${fdetalReserve2}%'
+        </if>
+        <if test="fdetalReserve5 != null and fdetalReserve5.trim() != '' ">
+            and d.F_RESERVE5 like '%${fdetalReserve5}%'
+        </if>
+        <if test="fBureauname != null and fBureauname.trim() != '' ">
+            and d.F_BUREAUNAME like '%${fBureauname}%'
+        </if>
+        <if test="fSectionname != null and fSectionname.trim() != '' ">
+            and d.F_SECTIONNAME like '%${fSectionname}%'
+        </if>
+        <if test="fPasssite != null and fPasssite.trim() != '' ">
+            and c.F_PASSSITE like '%${fPasssite}%'
+        </if>
+        <if test="fPasspoint != null and fPasspoint.trim() != '' ">
+            and c.F_PASSPOINT like '%${fPasspoint}%'
+        </if>
+        <if test="fDirection != null and fDirection.trim() != '' ">
+            and c.F_DIRECTION like '%${fDirection}%'
+        </if>
+        <if test="fTimeStart != null and fTimeStart.trim() != '' ">
+            and c.F_TIMETHROUGH >= to_date(#{fTimeStart},'yyyy-MM-dd')
+        </if>
+        <if test="fTimeEnd != null and fTimeEnd.trim() != '' ">
+            and c.F_TIMETHROUGH &lt;= to_date(#{fTimeEnd},'yyyy-MM-dd')
+        </if>
+        <if test="fInforfid != null and fInforfid.trim() != '' ">
+            and d.F_INFORFID like '%${fInforfid}%'
+        </if>
+        <if test="errorCondition != null and errorCondition.trim() != '' ">
+            <choose>
+                <when test="errorCondition == 1">
+                    and (d.f_traintypetag is null or d.f_traintypetag like '%*%')
+                    and (d.f_trainnumbertag is null or d.f_trainnumbertag like '%*%')
+                </when>
+                <otherwise>
+                    and d.f_traintypetag is not null and d.f_traintypetag not like '%*%'
+                    and d.f_trainnumbertag is not null and d.f_trainnumbertag not like '%*%'
+                    and (
+                    (translate(d.f_traintypetag,'#0123456789','#') is null and d.f_traintypetag is not null)
+                    or d.f_traintypetag in ('ND','DJ','KD','6K','6G','8K','8G')
+                    or (translate(d.f_trainnumbertag,'#0123456789','#') is not null or d.f_trainnumbertag is null)
+                    or length(d.f_trainnumbertag) &lt; 4
+                    )
+                </otherwise>
+            </choose>
+
+
+        </if>
+        <if test="fdetalReserve3 != null and fdetalReserve3.trim() != '' ">
+            and d.F_RESERVE3 like '%${fdetalReserve3}%'
+        </if>
+        <if test="fdetalReserve4 != null and fdetalReserve4.trim() != '' ">
+            and d.F_RESERVE4 >= #{fdetalReserve4}
+        </if>
+        order by c.F_TIMETHROUGH desc
+    </select>
+
+    <select id="queryreporterrorlist" resultMap="chTraincheckinfoMap">
+        select
+        d.F_ID,d.F_TRAINORDER,c.F_PASSSITE,c.F_PASSPOINT,c.F_DIRECTION,to_char(d.F_TIMETHROUGH,'yyyy-MM-dd hh24:mi:ss')
+        as F_TIMETHROUGH,
+        d.F_TRAINTYPEVERDICT,d.F_TRAINNUMBERVERDICT,d.F_BUREAUNAME,d.F_SECTIONNAME,d.F_INFORFID,d.F_INFOIMAGE,c.F_TGUID,d.F_RESERVE3
+        detal_RESERVE3,d.F_RESERVE4 detal_RESERVE4,d.F_RESERVE2 detal_RESERVE2,d.F_RESERVE5 detal_RESERVE5,
+        NVL(d.F_TRAINSTATUS, '未知') F_TRAINSTATUS
+        from CH_TRAINCHECKDETAIL d
+        inner join CH_TRAINCHECKINFO c
+        on c.f_tguid = d.f_tguid
+        where 1=1
+        and d.F_TIMETHROUGH >= to_date(#{startTime},'yyyy-mm-dd HH24:mi:ss')
+        and d.F_TIMETHROUGH &lt;= to_date(#{endTime},'yyyy-mm-dd HH24:mi:ss')
+        <if test="direction != null and direction.trim() != '' ">
+            and c.F_DIRECTION like '%${direction}%'
+        </if>
+        <if test="flag != 1">
+            and (d.f_Traintypeverdict like '%*%'
+            or translate(d.f_Traintypeverdict,'#0123456789','#') is null
+            or d.f_Traintypeverdict in ('ND','DJ','KD','6K','6G','8K','8G')
+
+            or d.f_Trainnumberverdict like '%*%'
+            or translate(d.f_Trainnumberverdict,'#0123456789','#') is not null
+            or length(d.f_Trainnumberverdict) &lt; 4
+            )
+        </if>
+        order by c.F_TIMETHROUGH desc
+    </select>
+
+
+    <select id="queryreporterrorlistTotal" resultType="int">
+        select count(*)
+        from CH_TRAINCHECKDETAIL d
+        inner join CH_TRAINCHECKINFO c
+        on c.f_tguid = d.f_tguid
+        where 1=1
+        and d.F_TIMETHROUGH >= to_date(#{startTime},'yyyy-mm-dd HH24:mi:ss')
+        and d.F_TIMETHROUGH &lt;= to_date(#{endTime},'yyyy-mm-dd HH24:mi:ss')
+        <if test="flag != 1">
+            and (d.f_Traintypeverdict like '%*%'
+            or translate(d.f_Traintypeverdict,'#0123456789','#') is null
+            or d.f_Traintypeverdict in ('ND','DJ','KD','6K','6G','8K','8G')
+
+            or d.f_Trainnumberverdict like '%*%'
+            or translate(d.f_Trainnumberverdict,'#0123456789','#') is not null
+            or length(d.f_Trainnumberverdict) &lt; 4
+            )
+
+        </if>
+        <if test="direction != null and direction.trim() != '' ">
+            and c.F_DIRECTION like '%${direction}%'
+        </if>
+
+        order by c.F_TIMETHROUGH desc
+    </select>
+
+    <select id="queryerrorList" resultMap="chTraincheckinfoMap">
+        select
+        c.F_ID,d.F_TRAINORDER,c.F_PASSSITE,c.F_PASSPOINT,c.F_DIRECTION,to_char(c.F_TIMETHROUGH,'yyyy-MM-dd hh24:mi:ss')
+        as F_TIMETHROUGH,
+        d.F_TRAINTYPEVERDICT,d.F_TRAINNUMBERVERDICT,d.F_BUREAUNAME,d.F_SECTIONNAME,d.F_INFORFID,d.F_INFOIMAGE,c.F_TGUID
+        from CH_TRAINCHECKINFO c
+        inner join CH_TRAINCHECKDETAIL d
+        on c.f_tguid = d.f_tguid
+        where 1=1 and (
+        (d.f_traintypetag is null or d.f_traintypetag like '%*%')
+
+        or (d.f_trainnumbertag is null or d.f_trainnumbertag like '%*%')
+
+        or (d.f_traintypetag is not null and d.f_traintypetag not like '%*%'
+        and d.f_trainnumbertag is not null and d.f_trainnumbertag not like '%*%'
+        and ((translate(d.f_traintypetag,'#0123456789','#') is null and d.f_traintypetag is not null)
+        or d.f_traintypetag in ('ND','DJ','KD','6K','6G','8K','8G')
+        or (translate(d.f_trainnumbertag,'#0123456789','#') is not null or d.f_trainnumbertag is null)
+        or length(d.f_trainnumbertag) &lt; 4))
+        )
+        <if test="startTime != null and startTime.trim() != ''">
+            and c.F_TIMETHROUGH >= to_date(#{startTime},'yyyy-mm-dd hh24:mi:ss')
+        </if>
+        <if test="endTime != null and endTime.trim() != ''">
+            and c.F_TIMETHROUGH &lt; to_date(#{endTime},'yyyy-mm-dd hh24:mi:ss')
+        </if>
+        order by c.F_TIMETHROUGH desc
+    </select>
+
+    <select id="queryrepairList" resultType="int">
+        select count(*)
+        from CH_TRAINCHECKRESULT c
+        where 1=1 and c.F_RESERVE2 is not null
+        and c.F_RESERVE5 is not null
+        and ( ((f_traintypetag is null or f_traintypetag like '%*%')
+        and (f_trainnumbertag is null or f_trainnumbertag like '%*%'))
+
+        or (f_traintypetag is not null and f_traintypetag not like '%*%'
+        and f_trainnumbertag is not null and f_trainnumbertag not like '%*%'
+        and (
+        (translate(f_traintypetag,'#0123456789','#') is null and f_traintypetag is not null)
+        or f_traintypetag in ('ND','DJ','KD','6K','6G','8K','8G')
+        or (translate(f_trainnumbertag,'#0123456789','#') is not null or f_trainnumbertag is null)
+        or length(f_trainnumbertag) &lt; 4
+        )) )
+        <if test="startTime != null and startTime.trim() != ''">
+            and c.F_TIMETHROUGH >= to_date(#{startTime},'yyyy-mm-dd hh24:mi:ss')
+        </if>
+        <if test="endTime != null and endTime.trim() != ''">
+            and c.F_TIMETHROUGH &lt; to_date(#{endTime},'yyyy-mm-dd hh24:mi:ss')
+        </if>
+    </select>
+
+    <insert id="save" parameterType="io.jeasyframework.entity.ChTraincheckinfoEntity">
+		insert into CH_TRAINCHECKINFO
+		(
+			`F_ID`, 
+			`F_DEVICEID`, 
+			`F_TGUID`, 
+			`F_PASSSITE`, 
+			`F_PASSPOINT`, 
+			`F_SERIALNUMBER`, 
+			`F_TRAINMODEL`, 
+			`F_TRAINORDER`, 
+			`F_DIRECTION`, 
+			`F_TIMEARRIVE`, 
+			`F_TIMETHROUGH`, 
+			`F_AXISCOUNTHAS`, 
+			`F_AXISCOUNTMIS`, 
+			`F_TRAINCOUNT`, 
+			`F_TRAINCOUNTUNKNOW`, 
+			`F_TAGCOUNTHAS`, 
+			`F_TAGCOUNTMIS`, 
+			`F_TRAINCOUNTJ`, 
+			`F_TRAINCOUNTJUNKNOW`, 
+			`F_TAGCOUNTJHAS`, 
+			`F_TAGCOUNTJMIS`, 
+			`F_TRAINCOUNTK`, 
+			`F_TRAINCOUNTKUNKNOW`, 
+			`F_TAGCOUNTKHAS`, 
+			`F_TAGCOUNTKMIS`, 
+			`F_TRAINCOUNTH`, 
+			`F_TRAINCOUNTHUNKNOW`, 
+			`F_TAGCOUNTHHAS`, 
+			`F_TAGCOUNTHMIS`, 
+			`F_TRAINCOUNTD`, 
+			`F_TRAINCOUNTDUNKNOW`, 
+			`F_TAGCOUNTDHAS`, 
+			`F_TAGCOUNTDMIS`, 
+			`F_TRAINCOUNTO`, 
+			`F_TRAINCOUNTOUNKNOW`, 
+			`F_TAGCOUNTOHAS`, 
+			`F_TAGCOUNTOMIS`, 
+			`F_TRAINCOUNTROAD`, 
+			`F_TRAINCOUNTROADUNKNOW`, 
+			`F_TAGCOUNTROADHAS`, 
+			`F_TAGCOUNTROADMIS`, 
+			`F_TRAINCOUNTENTERPRISE`, 
+			`F_TRAINCOUNTENTERPRISEUNKNOW`, 
+			`F_TAGCOUNTENTERPRISEHAS`, 
+			`F_TAGCOUNTENTERPRISEMIS`, 
+			`F_SPEEDMIN`, 
+			`F_SPEEDMAX`, 
+			`F_SPEEDAVG`, 
+			`F_SPEEDARRIVE`, 
+			`F_SPEEDTHROUGH`, 
+			`F_SPEEDLEAVE`, 
+			`F_PATHMSG`, 
+			`F_PATHVIDEO`, 
+			`F_RATERFID`, 
+			`F_RATEIMAGE`, 
+			`F_RATEALL`, 
+			`F_USERID`, 
+			`F_FILENAME`, 
+			`F_FILECONTENT`, 
+			`F_RESERVE1`, 
+			`F_RESERVE2`, 
+			`F_RESERVE3`, 
+			`F_RESERVE4`, 
+			`F_RESERVE5`
+		)
+		values
+		(
+			#{fId}, 
+			#{fDeviceid}, 
+			#{fTguid}, 
+			#{fPasssite}, 
+			#{fPasspoint}, 
+			#{fSerialnumber}, 
+			#{fTrainmodel}, 
+			#{fTrainorder}, 
+			#{fDirection}, 
+			#{fTimearrive}, 
+			#{fTimethrough}, 
+			#{fAxiscounthas}, 
+			#{fAxiscountmis}, 
+			#{fTraincount}, 
+			#{fTraincountunknow}, 
+			#{fTagcounthas}, 
+			#{fTagcountmis}, 
+			#{fTraincountj}, 
+			#{fTraincountjunknow}, 
+			#{fTagcountjhas}, 
+			#{fTagcountjmis}, 
+			#{fTraincountk}, 
+			#{fTraincountkunknow}, 
+			#{fTagcountkhas}, 
+			#{fTagcountkmis}, 
+			#{fTraincounth}, 
+			#{fTraincounthunknow}, 
+			#{fTagcounthhas}, 
+			#{fTagcounthmis}, 
+			#{fTraincountd}, 
+			#{fTraincountdunknow}, 
+			#{fTagcountdhas}, 
+			#{fTagcountdmis}, 
+			#{fTraincounto}, 
+			#{fTraincountounknow}, 
+			#{fTagcountohas}, 
+			#{fTagcountomis}, 
+			#{fTraincountroad}, 
+			#{fTraincountroadunknow}, 
+			#{fTagcountroadhas}, 
+			#{fTagcountroadmis}, 
+			#{fTraincountenterprise}, 
+			#{fTraincountenterpriseunknow}, 
+			#{fTagcountenterprisehas}, 
+			#{fTagcountenterprisemis}, 
+			#{fSpeedmin}, 
+			#{fSpeedmax}, 
+			#{fSpeedavg}, 
+			#{fSpeedarrive}, 
+			#{fSpeedthrough}, 
+			#{fSpeedleave}, 
+			#{fPathmsg}, 
+			#{fPathvideo}, 
+			#{fRaterfid}, 
+			#{fRateimage}, 
+			#{fRateall}, 
+			#{fUserid}, 
+			#{fFilename}, 
+			#{fFilecontent}, 
+			#{fReserve1}, 
+			#{fReserve2}, 
+			#{fReserve3}, 
+			#{fReserve4}, 
+			#{fReserve5}
+		)
+	</insert>
+
+    <update id="update" parameterType="io.jeasyframework.entity.ChTraincheckinfoEntity">
+        update CH_TRAINCHECKINFO
+        <set>
+            <if test="fDeviceid != null">F_DEVICEID = #{fDeviceid},</if>
+            <if test="fTguid != null">F_TGUID = #{fTguid},</if>
+            <if test="fPasssite != null">F_PASSSITE = #{fPasssite},</if>
+            <if test="fPasspoint != null">F_PASSPOINT = #{fPasspoint},</if>
+            <if test="fSerialnumber != null">F_SERIALNUMBER = #{fSerialnumber},</if>
+            <if test="fTrainmodel != null">F_TRAINMODEL = #{fTrainmodel},</if>
+            <if test="fTrainorder != null">F_TRAINORDER = #{fTrainorder},</if>
+            <if test="fDirection != null">F_DIRECTION = #{fDirection},</if>
+            <if test="fTimearrive != null">F_TIMEARRIVE = to_date(#{fTimearrive},'yyyy-MM-dd HH24:mi:ss'),</if>
+            <if test="fTimethrough != null and fTimethrough.trim() != ''">F_TIMETHROUGH =
+                to_date(#{fTimethrough},'yyyy-MM-dd HH24:mi:ss'),
+            </if>
+            <if test="fAxiscounthas != null">F_AXISCOUNTHAS = #{fAxiscounthas},</if>
+            <if test="fAxiscountmis != null">F_AXISCOUNTMIS = #{fAxiscountmis},</if>
+            <if test="fTraincount != null">F_TRAINCOUNT = #{fTraincount},</if>
+            <if test="fTraincountunknow != null">F_TRAINCOUNTUNKNOW = #{fTraincountunknow},</if>
+            <if test="fTagcounthas != null">F_TAGCOUNTHAS = #{fTagcounthas},</if>
+            <if test="fTagcountmis != null">F_TAGCOUNTMIS = #{fTagcountmis},</if>
+            <if test="fTraincountj != null">F_TRAINCOUNTJ = #{fTraincountj},</if>
+            <if test="fTraincountjunknow != null">F_TRAINCOUNTJUNKNOW = #{fTraincountjunknow},</if>
+            <if test="fTagcountjhas != null">F_TAGCOUNTJHAS = #{fTagcountjhas},</if>
+            <if test="fTagcountjmis != null">F_TAGCOUNTJMIS = #{fTagcountjmis},</if>
+            <if test="fTraincountk != null">F_TRAINCOUNTK = #{fTraincountk},</if>
+            <if test="fTraincountkunknow != null">F_TRAINCOUNTKUNKNOW = #{fTraincountkunknow},</if>
+            <if test="fTagcountkhas != null">F_TAGCOUNTKHAS = #{fTagcountkhas},</if>
+            <if test="fTagcountkmis != null">F_TAGCOUNTKMIS = #{fTagcountkmis},</if>
+            <if test="fTraincounth != null">F_TRAINCOUNTH = #{fTraincounth},</if>
+            <if test="fTraincounthunknow != null">F_TRAINCOUNTHUNKNOW = #{fTraincounthunknow},</if>
+            <if test="fTagcounthhas != null">F_TAGCOUNTHHAS = #{fTagcounthhas},</if>
+            <if test="fTagcounthmis != null">F_TAGCOUNTHMIS = #{fTagcounthmis},</if>
+            <if test="fTraincountd != null">F_TRAINCOUNTD = #{fTraincountd},</if>
+            <if test="fTraincountdunknow != null">F_TRAINCOUNTDUNKNOW = #{fTraincountdunknow},</if>
+            <if test="fTagcountdhas != null">F_TAGCOUNTDHAS = #{fTagcountdhas},</if>
+            <if test="fTagcountdmis != null">F_TAGCOUNTDMIS = #{fTagcountdmis},</if>
+            <if test="fTraincounto != null">F_TRAINCOUNTO = #{fTraincounto},</if>
+            <if test="fTraincountounknow != null">F_TRAINCOUNTOUNKNOW = #{fTraincountounknow},</if>
+            <if test="fTagcountohas != null">F_TAGCOUNTOHAS = #{fTagcountohas},</if>
+            <if test="fTagcountomis != null">F_TAGCOUNTOMIS = #{fTagcountomis},</if>
+            <if test="fTraincountroad != null">F_TRAINCOUNTROAD = #{fTraincountroad},</if>
+            <if test="fTraincountroadunknow != null">F_TRAINCOUNTROADUNKNOW = #{fTraincountroadunknow},</if>
+            <if test="fTagcountroadhas != null">F_TAGCOUNTROADHAS = #{fTagcountroadhas},</if>
+            <if test="fTagcountroadmis != null">F_TAGCOUNTROADMIS = #{fTagcountroadmis},</if>
+            <if test="fTraincountenterprise != null">F_TRAINCOUNTENTERPRISE = #{fTraincountenterprise},</if>
+            <if test="fTraincountenterpriseunknow != null">F_TRAINCOUNTENTERPRISEUNKNOW =
+                #{fTraincountenterpriseunknow},
+            </if>
+            <if test="fTagcountenterprisehas != null">F_TAGCOUNTENTERPRISEHAS = #{fTagcountenterprisehas},</if>
+            <if test="fTagcountenterprisemis != null">F_TAGCOUNTENTERPRISEMIS = #{fTagcountenterprisemis},</if>
+            <if test="fReserve1 != null">F_RESERVE1 = #{fReserve1},</if>
+            <if test="fReserve2 != null">F_RESERVE2 = #{fReserve2},</if>
+            <if test="fReserve3 != null">F_RESERVE3 = #{fReserve3},</if>
+            <if test="fReserve4 != null">F_RESERVE4 = #{fReserve4},</if>
+            <if test="fReserve5 != null">F_RESERVE5 = #{fReserve5}</if>
+        </set>
+        where F_ID = #{fId}
+    </update>
+
+    <delete id="delete">
+		delete from CH_TRAINCHECKINFO where F_ID = #{value}
+	</delete>
+
+    <delete id="deleteBatch">
+        delete from CH_TRAINCHECKINFO where F_ID in
+        <foreach item="fId" collection="array" open="(" separator="," close=")">
+            #{fId}
+        </foreach>
+    </delete>
+
+
+
+    <select id="queryManageList" resultMap="chTraincheckinfoMap">
+        SELECT
+        F_DEVICEID,F_ID,F_SERIALNUMBER,F_TRAINORDER,F_TRAINTYPEVERDICT,F_TRAINNUMBERVERDICT,F_BUREAUNAME,
+        F_SECTIONNAME,F_PASSSITE,F_PASSPOINT,F_DIRECTION,to_char(F_TIMETHROUGH,'yyyy-MM-dd hh24:mi:ss')
+        as F_TIMETHROUGH,F_TRAINTYPETAG,F_TRAINNUMBERTAG,F_INFOIMAGE,F_INFORFID,
+        NVL(F_TRAINSTATUS, '未知') F_TRAINSTATUS
+        FROM
+        CH_TRAINCHECKRESULT
+        where 1=1
+        <if test="tagstatus != null and tagstatus.trim() != '' and tagstatus == 3">
+            and not ( ((f_traintypetag is null or f_traintypetag like '%*%')
+            and (f_trainnumbertag is null or f_trainnumbertag like '%*%'))
+
+            or (f_traintypetag is not null and f_traintypetag not like '%*%'
+            and f_trainnumbertag is not null and f_trainnumbertag not like '%*%'
+            and (
+            (translate(f_traintypetag,'#0123456789','#') is null and f_traintypetag is not null)
+            or f_traintypetag in ('ND','DJ','KD','6K','6G','8K','8G')
+            or (translate(f_trainnumbertag,'#0123456789','#') is not null or f_trainnumbertag is null)
+            or length(f_trainnumbertag) &lt; 4
+            )) )
+        </if>
+        <if test="tagstatus != null and tagstatus.trim() != '' and tagstatus == 1">
+            and (f_traintypetag is null or f_traintypetag like '%*%')
+            and (f_trainnumbertag is null or f_trainnumbertag like '%*%')
+        </if>
+        <if test="tagstatus != null and tagstatus.trim() != '' and tagstatus == 2">
+            and f_traintypetag is not null and f_traintypetag not like '%*%'
+            and f_trainnumbertag is not null and f_trainnumbertag not like '%*%'
+            and (
+            (translate(f_traintypetag,'#0123456789','#') is null and f_traintypetag is not null)
+            or f_traintypetag in ('ND','DJ','KD','6K','6G','8K','8G')
+            or (translate(f_trainnumbertag,'#0123456789','#') is not null or f_trainnumbertag is null)
+            or length(f_trainnumbertag) &lt; 4
+            )
+        </if>
+        <if test="startTime != null and startTime.trim() != ''">
+            and F_TIMETHROUGH >= to_date(#{startTime},'yyyy-mm-dd hh24:mi:ss')
+        </if>
+        <if test="endTime != null and endTime.trim() != ''">
+            and F_TIMETHROUGH &lt; to_date(#{endTime},'yyyy-mm-dd hh24:mi:ss')
+        </if>
+        <if test="fBureauname != null and fBureauname.trim() != ''">
+            and F_DEVICEID like '${fBureauname}%'
+        </if>
+        <if test="fSectionname != null and fSectionname.trim() != ''">
+            and F_DEVICEID like '${fSectionname}%'
+        </if>
+        <if test="fpasssite != null and fpasssite.trim() != ''">
+            and F_DEVICEID like '${fpasssite}%'
+        </if>
+        <if test="fdirection != null and fdirection.trim() != ''">
+            and F_DIRECTION = #{fdirection}
+        </if>
+        <if test="fpasspoint != null and fpasspoint.trim() != ''">
+            and F_PASSPOINT like '%${fpasspoint}%'
+        </if>
+        <if test="type != null and type.trim() != ''">
+            and F_TRAINTYPEVERDICT like '%${type}%'
+        </if>
+        <if test="number != null and number.trim() != ''">
+            and F_TRAINNUMBERVERDICT like '%${number}%'
+        </if>
+        order by F_TIMETHROUGH desc
+    </select>
+
+    <select id="queryManageTotal" resultType="int">
+        select count(*) from CH_TRAINCHECKRESULT
+        where 1=1
+        <if test="tagstatus != null and tagstatus.trim() != '' and tagstatus == 3">
+            and not ( ((f_traintypetag is null or f_traintypetag like '%*%')
+            and (f_trainnumbertag is null or f_trainnumbertag like '%*%'))
+
+            or (f_traintypetag is not null and f_traintypetag not like '%*%'
+            and f_trainnumbertag is not null and f_trainnumbertag not like '%*%'
+            and (
+            (translate(f_traintypetag,'#0123456789','#') is null and f_traintypetag is not null)
+            or f_traintypetag in ('ND','DJ','KD','6K','6G','8K','8G')
+            or (translate(f_trainnumbertag,'#0123456789','#') is not null or f_trainnumbertag is null)
+            or length(f_trainnumbertag) &lt; 4
+            )) )
+        </if>
+        <if test="tagstatus != null and tagstatus.trim() != '' and tagstatus == 1">
+            and (f_traintypetag is null or f_traintypetag like '%*%')
+            and (f_trainnumbertag is null or f_trainnumbertag like '%*%')
+        </if>
+        <if test="tagstatus != null and tagstatus.trim() != '' and tagstatus == 2">
+            and f_traintypetag is not null and f_traintypetag not like '%*%'
+            and f_trainnumbertag is not null and f_trainnumbertag not like '%*%'
+            and (
+            (translate(f_traintypetag,'#0123456789','#') is null and f_traintypetag is not null)
+            or f_traintypetag in ('ND','DJ','KD','6K','6G','8K','8G')
+            or (translate(f_trainnumbertag,'#0123456789','#') is not null or f_trainnumbertag is null)
+            or length(f_trainnumbertag) &lt; 4
+            )
+        </if>
+        <if test="startTime != null and startTime.trim() != ''">
+            and F_TIMETHROUGH >= to_date(#{startTime},'yyyy-mm-dd hh24:mi:ss')
+        </if>
+        <if test="endTime != null and endTime.trim() != ''">
+            and F_TIMETHROUGH &lt; to_date(#{endTime},'yyyy-mm-dd hh24:mi:ss')
+        </if>
+        <if test="fBureauname != null and fBureauname.trim() != ''">
+            and F_DEVICEID like '${fBureauname}%'
+        </if>
+        <if test="fSectionname != null and fSectionname.trim() != ''">
+            and F_DEVICEID like '${fSectionname}%'
+        </if>
+        <if test="fpasssite != null and fpasssite.trim() != ''">
+            and F_DEVICEID like '${fpasssite}%'
+        </if>
+        <if test="fdirection != null and fdirection.trim() != ''">
+            and F_DIRECTION = #{fdirection}
+        </if>
+        <if test="fpasspoint != null and fpasspoint.trim() != ''">
+            and F_PASSPOINT like '%${fpasspoint}%'
+        </if>
+        <if test="type != null and type.trim() != ''">
+            and F_TRAINTYPEVERDICT like '%${type}%'
+        </if>
+        <if test="number != null and number.trim() != ''">
+            and F_TRAINNUMBERVERDICT like '%${number}%'
+        </if>
+    </select>
+
+
+    <select id="queryLast" resultMap="chTraincheckinfoMap">
+        SELECT
+        c.F_DEVICEID,c.F_ID,c.F_SERIALNUMBER,c.F_PASSSITE,c.F_PASSPOINT,
+        c.F_DIRECTION,to_char(c.F_TIMETHROUGH,'yyyy-MM-dd hh24:mi:ss')
+        as F_TIMETHROUGH
+        FROM
+        CH_TRAINCHECKINFO c
+        where 1=1
+        <if test="levelMarkId != null and levelMarkId.trim() != ''">
+            and c.F_DEVICEID like '${levelMarkId}%'
+        </if>
+        <if test="range != null and range.trim() != ''">
+            and ROUND(TO_NUMBER(SYSDATE - c.F_TIMETHROUGH) * 24)&lt;#{range}
+        </if>
+        and rownum=1 order by c.F_TIMETHROUGH
+    </select>
+
+</mapper>

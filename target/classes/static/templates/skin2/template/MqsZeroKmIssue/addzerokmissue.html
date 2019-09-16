@@ -1,0 +1,377 @@
+<%
+directive dynamic mqsRegion;
+%>
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>零公里问题录入</title>
+    <link rel="stylesheet" href="${siteurl}/templates/skin2/template/plugins/layui/css/layui.css" media="all">
+</head>
+
+<body class="layui-container" style="position: static">
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 50px;">
+    <legend>新增零公里问题</legend>
+</fieldset>
+<form class="layui-form layui-form-pane" id="form1" action="">
+
+<span id="main">
+    <div class="layui-form-item">
+       <div class="layui-inline ">
+            <label class="layui-form-label" style="width:110px;">发生时间</label>
+            <div class="layui-input-inline" style="width:511px;">
+                <input type="text" name="dateoccur" id="dateoccur" lay-verify="required" placeholder="请输入开始日期"
+                       class="layui-input">
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">生产单位</label>
+            <div class="layui-input-inline" id="productiondeptnamediv">
+                <select name="productiondeptname" lay-search="" lay-filter="filter1" lay-verify="required">
+                    <option value="">请选择生产单位</option>
+                </select>
+
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">生产线</label>
+            <div class="layui-input-inline" id="productionlinenamediv">
+                <select name="productionlinename" lay-search="" lay-filter="filter2" lay-verify="required">
+                    <option value="">请选择生产线</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">发生基地</label>
+            <div class="layui-input-inline">
+                <select name="productionbase" lay-search=""  lay-verify="required">
+                    <option value="">请选择发生基地</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="layui-inline">
+            <label class="layui-form-label">周</label>
+            <div class="layui-input-inline">
+                <select name="zkweek" lay-search=""  lay-verify="required">
+                    <option value="">请选择第几周</option>
+                    <option value="第1周">第1周</option>
+                    <option value="第2周">第2周</option>
+                    <option value="第3周">第3周</option>
+                    <option value="第4周">第4周</option>
+                </select>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">机号</label>
+            <div class="layui-input-inline">
+                <input type="text" name="engineno" autocomplete="off" placeholder="请输入机号" class="layui-input"
+                       lay-verify="required">
+            </div>
+        </div>
+
+        <div class="layui-inline">
+            <label class="layui-form-label">机型</label>
+            <div class="layui-input-inline">
+                <select name="enginetype" lay-search=""  lay-verify="required">
+                    <option value="">请选择机型</option>
+                </select>
+            </div>
+        </div>
+
+
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-inline ">
+            <input id="bb" type="hidden">
+            <label class="layui-form-label" style="width:110px;">ICC</label>
+            <div class="layui-input-inline" style="width:511px; height: 38px;">
+
+                <input id="icc_select" style="width:511px; height: 38px;" name="icc" placeholder="请选择ICC"
+                       class="layui-input" lay-verify="required">
+            </div>
+
+        </div>
+    </div>
+
+
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">VRT</label>
+            <div class="layui-input-inline">
+                <input type="text" name="vrt" autocomplete="off" placeholder="默认填充" class="layui-input" id="vrt"
+                       readonly="readonly">
+                <input type="hidden" name="icccode" autocomplete="off" placeholder="默认填充" class="layui-input"
+                       id="iqiicccode" readonly="readonly">
+                <input type="hidden" name="ccccode" autocomplete="off" placeholder="默认填充" class="layui-input"
+                       id="iqiccccode" readonly="readonly">
+                <input type="hidden" name="vfgcode" autocomplete="off" placeholder="默认填充" class="layui-input"
+                       id="iqivfgcode" readonly="readonly">
+                <input type="hidden" name="vrtcode" autocomplete="off" placeholder="默认填充" class="layui-input"
+                       id="iqivrtcode" readonly="readonly">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">VFG</label>
+            <div class="layui-input-inline">
+                <input type="text" name="vfg" autocomplete="off" placeholder="默认填充" class="layui-input" id="vfg"
+                       readonly="readonly">
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">CCC</label>
+            <div class="layui-input-inline">
+                <input type="text" name="ccc" autocomplete="off" placeholder="默认填充" class="layui-input" id="ccc"
+                       readonly="readonly">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">模式</label>
+            <div class="layui-input-inline">
+                <input type="text" name="failuremodel" autocomplete="off" placeholder="默认填充" class="layui-input"
+                       id="iqimodel" readonly="readonly">
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">部位</label>
+            <div class="layui-input-inline">
+                <input type="text" name="itempart" autocomplete="off" placeholder="默认填充" class="layui-input"
+                       id="iqisite" readonly="readonly">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">问题严重度</label>
+            <div class="layui-input-inline">
+                <select name="issueseverity" lay-search=""  id="issueseverity"
+                        lay-verify="required">
+                    <option value="">请选择问题严重程度</option>
+
+
+                </select>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">系列</label>
+            <div class="layui-input-inline">
+                <select name="enginemodel" lay-search=""  lay-verify="required">
+                    <option value="">请选择系列</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="layui-inline">
+            <label class="layui-form-label">问题属性</label>
+            <div class="layui-input-inline">
+                <select name="issueattr" lay-search=""  lay-verify="required">
+                    <option value="">请选择问题属性</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">采集点</label>
+            <div class="layui-input-inline">
+                <div name="andInput">
+                    <select name="pstation" lay-search=""  lay-verify="required">
+                        <option value="零公里">零公里</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">责任单位</label>
+            <div class="layui-input-inline">
+                <select name="dutydept" lay-search=""  lay-verify="required">
+                    <option value="">请选择责任单位</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">维修方法</label>
+            <div class="layui-input-inline">
+            <span style="position:absolute;height:38px;">
+                <select name="repaircontent" lay-search="" lay-filter="select1" lay-verify="required" id="repaircontent"  style="">
+                    <option value="0"></option>
+                </select>
+            </span>
+            <span style="position:absolute;top:10px;left:9px;margin-top:1px;margin-left:1px;width:80%;height:30px;overflow:hidden;">
+                <!--这里是input框，定位到select的上面-->
+              <input type="text" name="repaircontentinput" id="repaircontentinput" class="repaircontentinput" placeholder="请手动输入或选择" style="border:0px;border-radius:5px;outline:0" >
+            </span>
+            </div>
+        </div>
+
+        <div class="layui-inline">
+            <label class="layui-form-label">问题状态</label>
+            <div class="layui-input-inline">
+                <select name="zkissuestatus" lay-search=""  lay-verify="required">
+                    <option value="">请选择状态</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">记录人</label>
+            <div class="layui-input-inline">
+                <!--<select  name="kpiname" lay-search=""  lay-filter="select1">
+                    <option value="">请选择记录人</option>
+                </select>-->
+                <input type="text" value="${username}" name="createdbyname" class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-inline">
+            <label class="layui-form-label">是否计入指标</label>
+            <div class="layui-input-inline">
+                <select name="iswritetarget" lay-search=""  >
+                    <option value="">请选择是否计入指标</option>
+                    <option value="是">是</option>
+                    <option value="申诉取消">申诉取消</option>
+                    <option value="抱怨">抱怨</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">ERA时间</label>
+            <div class="layui-input-inline" >
+                <input type="text" name="dateeraexecuted" id="dateeraexecuted"  placeholder="请选择ERA执行时间"
+                       class="layui-input">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">ICA时间</label>
+            <div class="layui-input-inline">
+                <input type="text" name="dateicaexecuted" id="dateicaexecuted"  placeholder="请选择ICA执行时间"
+                       class="layui-input">
+            </div>
+        </div>
+    </div>
+
+
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">PCA时间</label>
+            <div class="layui-input-inline">
+                <input type="text" name="datepcaexecuted" id="datepcaexecuted"  placeholder="请选择PCA执行时间"
+                       class="layui-input">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">完成状态</label>
+            <div class="layui-input-inline">
+                <select name="finishedstatus" lay-search=""  >
+                    <option value="">请选择完成状态</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="layui-form-item layui-form-text" style="width:621px;">
+        <label class="layui-form-label">ERA措施</label>
+        <div class="layui-input-block">
+            <textarea name="erameasures" id="erameasures" placeholder="请输入ERA措施" class="layui-textarea"></textarea>
+        </div>
+    </div>
+
+    <div class="layui-form-item layui-form-text" style="width:621px;">
+        <label class="layui-form-label">ICA措施</label>
+        <div class="layui-input-block">
+            <textarea name="icameatures" id="icameatures" placeholder="请输入ICA措施" class="layui-textarea"></textarea>
+        </div>
+    </div>
+
+    <div class="layui-form-item layui-form-text" style="width:621px;">
+        <label class="layui-form-label">PCA措施</label>
+        <div class="layui-input-block">
+            <textarea name="pcameasures" id="pcameasures" placeholder="请输入PCA措施" class="layui-textarea"></textarea>
+        </div>
+    </div>
+
+    <div class="layui-form-item layui-form-text" style="width:621px;">
+        <label class="layui-form-label">原因分析</label>
+        <div class="layui-input-block">
+            <textarea name="reasonanalysis" id="reasonanalysis" placeholder="请输入原因分析" class="layui-textarea"></textarea>
+        </div>
+    </div>
+
+    <div class="layui-form-item layui-form-text" style="width:621px;">
+        <label class="layui-form-label">问题描述</label>
+        <div class="layui-input-block">
+            <textarea name="issuedesc" placeholder="请输入问题描述" class="layui-textarea"></textarea>
+        </div>
+    </div>
+
+    <div class="layui-form-item layui-form-text" style="width:621px;">
+        <label class="layui-form-label">备注</label>
+        <div class="layui-input-block">
+            <textarea name="remark" placeholder="请输入备注" class="layui-textarea"></textarea>
+        </div>
+    </div>
+
+
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn" lay-submit="" lay-filter="demo1">保存并添加下一台</button>
+            <button class="layui-btn" onclick="javascript:vm.close()">关闭</button>
+        </div>
+    </div>
+    </span>
+</form>
+
+<script type="text/javascript" src="${siteurl}/templates/default/media/js/jquery1.9.1.js"></script>
+<script src="${siteurl}/templates/skin2/template/plugins/layui/layui.js"></script>
+<script type="text/javascript" src="${siteurl}/public/libs/vue.min.js"></script>
+
+<link rel="stylesheet" type="text/css"
+      href="${siteurl}/templates/skin2/media/js/plugins/jquery-easyui-1.5.3/themes/default/easyui.css">
+<link rel="stylesheet" type="text/css"
+      href="${siteurl}/templates/skin2/media/js/plugins/jquery-easyui-1.5.3/themes/icon.css">
+<script type="text/javascript"
+        src="${siteurl}/templates/skin2/media/js/plugins/jquery-easyui-1.5.3/jquery.easyui.min.js"></script>
+
+<!--业务逻辑JS-->
+<script type="text/javascript" src="${siteurl}/templates/skin2/media/js/biz/MqsZeroKmIssue/addzerokmissue.js"></script>
+</body>
+<script type="text/javascript">
+    var siteurl = '${siteurl}';
+    var iqiskname = "$('iqiskname').attr('id')";
+    var username = '${username}';
+
+</script>
+
+</html>

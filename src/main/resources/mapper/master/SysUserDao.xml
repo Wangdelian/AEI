@@ -1,0 +1,567 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="io.jeasyframework.dao.master.SysUserDao">
+
+    <select id="queryIsLogin" resultType="io.jeasyframework.entity.SysUserEntity">
+        select  * from sys_user
+        where DATELASTLOGIN >= to_date(#{fTimeStart},'yyyy-mm-dd Hh24:mi:ss')
+        and DATELASTLOGIN &lt;= to_date(#{fTimeEnd},'yyyy-mm-dd Hh24:mi:ss')
+    </select>
+
+    <select id="mysqlList" resultType="io.jeasyframework.entity.SysUserEntity">
+        select  user_id as userId,
+			username,
+			password,
+			email,
+			mobile,
+			status,
+			create_user_id as createuserid,
+			create_time as  createtime,
+			CHINESENAME,DATELASTLOGIN,
+            DATE_PASSWORD AS datePassword,
+            DATE_FAIL AS dateFail,
+            nvl(FAIL_TIMES, 0)  AS failTimes,
+			SKIN as  skin,
+		    USEREXTVALUE1 as  userextvalue1,
+		    USEREXTVALUE2 as  userextvalue2,
+		    USEREXTVALUE3 as  userextvalue3,
+		    USEREXTVALUE4 as  userextvalue4,
+		    USEREXTVALUE5 as  userextvalue5, USERPHOTO,LEVELMARKID, SEX from sys_user
+    </select>
+
+
+    <select id="queryObject" resultType="io.jeasyframework.entity.SysUserEntity">
+		select u.user_id as userId,
+        u.username,
+        u.password,
+        u.email,
+        u.mobile,
+        u.status,
+        u.create_user_id as createuserid,
+        u.create_time as createtime,
+        u.CHINESENAME,
+        u.DATELASTLOGIN as DATELASTLOGIN,
+        u.DATE_PASSWORD AS datePassword,
+        u.DATE_FAIL AS dateFail,
+        nvl(u.FAIL_TIMES, 0)  AS failTimes,
+        u.SKIN as skin,
+        u.USEREXTVALUE1 as userextvalue1,
+        u.USEREXTVALUE2 as userextvalue2,
+        u.USEREXTVALUE3 as userextvalue3,
+        u.USEREXTVALUE4 as userextvalue4,
+        u.USEREXTVALUE5 as userextvalue5, u.USERPHOTO,u.LEVELMARKID, u.SEX,
+        m.name as menuname
+        from sys_user u
+        left join  sys_menu m
+        on m.url = u.userextvalue4 where u.user_id = #{value}
+	</select>
+
+    <select id="queryList" resultType="io.jeasyframework.entity.SysUserEntity">
+        select u.user_id as userId,
+        u.username,
+        u.password,
+        u.email,
+        u.mobile,
+        u.status,
+        u.create_user_id as createuserid,
+        u.create_time as createtime,
+        u.CHINESENAME,
+        u.DATELASTLOGIN as DATELASTLOGIN,
+        u.DATE_PASSWORD AS datePassword,
+        u.DATE_FAIL AS dateFail,
+        nvl(u.FAIL_TIMES, 0)  AS failTimes,
+        u.SKIN as skin,
+        u.USEREXTVALUE1 as userextvalue1,
+        u.USEREXTVALUE2 as userextvalue2,
+        u.USEREXTVALUE3 as userextvalue3,
+        u.USEREXTVALUE4 as userextvalue4,
+        u.USEREXTVALUE5 as userextvalue5, u.USERPHOTO,u.LEVELMARKID, u.SEX,
+        m.name as menuname
+        from sys_user u
+        left join  sys_menu m
+        on m.url = u.userextvalue4
+        where 1= 1
+        <if test="username != null and username != '' ">
+            AND ( u.username like '%' || #{username} || '%' )
+        </if>
+        <if test="start !=null and start.trim() != ''">
+            AND ( u.create_time &gt;= to_date(#{start,jdbcType=VARCHAR},'yyyy-MM-dd HH24:mi:ss'))
+        </if>
+        <if test="end !=null and end.trim() != ''">
+            AND ( u.create_time &lt;= to_date(#{end,jdbcType=VARCHAR},'yyyy-MM-dd HH24:mi:ss'))
+        </if>
+        <if test="chineseName != null and chineseName != '' ">
+            AND ( u.chineseName like '%' || #{chineseName} || '%' )
+        </if>
+        <if test="userextvalue3 != null and userextvalue3 != '' ">
+            AND u.userextvalue3 = #{userextvalue3}
+        </if>
+        order by u.user_id ASC
+    </select>
+
+
+    <select id="queryUser" resultType="io.jeasyframework.entity.SysUserEntity">
+        select u.user_id as userId,
+        u.username,
+        u.password,
+        u.email,
+        u.mobile,
+        u.status,
+        u.create_user_id as createuserid,
+        u.create_time as createtime,
+        u.CHINESENAME,
+        u.DATELASTLOGIN as DATELASTLOGIN,
+        u.DATE_PASSWORD AS datePassword,
+        u.DATE_FAIL AS dateFail,
+        nvl(u.FAIL_TIMES, 0)  AS failTimes,
+        u.SKIN as skin,
+        u.USEREXTVALUE1 as userextvalue1,
+        u.USEREXTVALUE2 as userextvalue2,
+        u.USEREXTVALUE3 as userextvalue3,
+        u.USEREXTVALUE4 as userextvalue4,
+        u.USEREXTVALUE5 as userextvalue5, u.USERPHOTO,u.LEVELMARKID, u.SEX,
+        m.name as menuname
+        from sys_user u
+        left join  sys_menu m
+        on m.url = u.userextvalue4
+    </select>
+
+    <select id="queryTotal" resultType="int">
+        select count(*) from sys_user
+        where 1 = 1
+        <if test="username != null and username != '' ">
+            AND ( username like '%' || #{username} || '%' )
+        </if>
+        <if test="start !=null and start.trim() != ''">
+            AND ( create_time &gt;= to_date(#{start,jdbcType=VARCHAR},'yyyy-MM-dd HH24:mi:ss'))
+        </if>
+        <if test="end !=null and end.trim() != ''">
+            AND ( create_time &lt;= to_date(#{end,jdbcType=VARCHAR},'yyyy-MM-dd HH24:mi:ss'))
+        </if>
+        <if test="chineseName != null and chineseName != '' ">
+            AND ( chineseName like '%' || #{chineseName} || '%' )
+        </if>
+    </select>
+
+    <select id="queryTotalByTimeAndId" resultType="int">
+        select count(*) from sys_user
+        <where>
+            user_id like '%${id}%'
+            <if test="beginDate!=null">
+                and create_time &gt;= #{beginDate}
+            </if>
+            <if test="endDate!=null">
+                and create_time &lt;= #{endDate}
+            </if>
+        </where>
+    </select>
+
+    <select id="queryTotalByTimeAndName" resultType="int">
+        select count(*) from sys_user
+        <where>
+            username like '%${name}%'
+            <if test="beginDate!=null">
+                and create_time &gt;= ${beginDate}
+            </if>
+            <if test="endDate!=null">
+                and create_time &lt;= ${endDate}
+            </if>
+        </where>
+    </select>
+
+    <!-- 查询用户的所有权限 -->
+    <select id="queryAllPerms" resultType="string">
+		select m.perms from sys_user_role ur 
+			LEFT JOIN sys_role_menu rm on ur.role_id = rm.role_id 
+			LEFT JOIN sys_menu m on rm.menu_id = m.menu_id 
+		where ur.user_id = #{userId}
+	</select>
+
+    <!-- 查询用户的所有菜单ID -->
+    <select id="queryAllMenuId" resultType="long">
+		select distinct rm.menu_id from sys_user_role ur 
+			LEFT JOIN sys_role_menu rm on ur.role_id = rm.role_id 
+		where ur.user_id = #{userId}
+	</select>
+
+    <select id="queryByUserName" resultType="io.jeasyframework.entity.SysUserEntity">
+		select u.user_id as userId,
+        u.username,
+        u.password,
+        u.email,
+        u.mobile,
+        u.status,
+        u.create_user_id as createuserid,
+        u.create_time as createtime,
+        u.CHINESENAME,
+        u.DATELASTLOGIN as DATELASTLOGIN,
+        u.DATE_PASSWORD AS datePassword,
+        u.DATE_FAIL AS dateFail,
+        nvl(u.FAIL_TIMES, 0)  AS failTimes,
+        u.DATE_PASSWORD AS datePassword,
+        u.DATE_FAIL AS dateFail,
+        nvl(u.FAIL_TIMES, 0)  AS failTimes,
+        u.SKIN as skin,
+        u.USEREXTVALUE1 as userextvalue1,
+        u.USEREXTVALUE2 as userextvalue2,
+        u.USEREXTVALUE3 as userextvalue3,
+        u.USEREXTVALUE4 as userextvalue4,
+        u.USEREXTVALUE5 as userextvalue5, u.USERPHOTO,u.LEVELMARKID, u.SEX,
+        m.name as menuname,
+        le.ABNAME as abname
+        from sys_user u
+        left join  sys_menu m
+        on m.url = u.userextvalue4
+        left join SYS_LEVELMARK le on u.LEVELMARKID = le.LEVELMARKID
+        where username = #{username} and rownum &lt;= 1
+	</select>
+    <select id="queryByChineseName" resultType="io.jeasyframework.entity.SysUserEntity">
+		select u.user_id as userId,
+        u.username,
+        u.password,
+        u.email,
+        u.mobile,
+        u.status,
+        u.create_user_id as createuserid,
+        u.create_time as createtime,
+        u.CHINESENAME,
+        u.DATELASTLOGIN as DATELASTLOGIN,
+        u.DATE_PASSWORD AS datePassword,
+        u.DATE_FAIL AS dateFail,
+        nvl(u.FAIL_TIMES, 0)  AS failTimes,
+        u.SKIN as skin,
+        u.USEREXTVALUE1 as userextvalue1,
+        u.USEREXTVALUE2 as userextvalue2,
+        u.USEREXTVALUE3 as userextvalue3,
+        u.USEREXTVALUE4 as userextvalue4,
+        u.USEREXTVALUE5 as userextvalue5, u.USERPHOTO,u.LEVELMARKID, u.SEX,
+        m.name as menuname
+        from sys_user u
+        left join  sys_menu m
+        on m.url = u.userextvalue4 where CHINESENAME = #{chinesename}
+	</select>
+
+    <select id="queryListByConditions" resultType="io.jeasyframework.entity.SysUserEntity">
+        select u.user_id as userId,
+        u.username,
+        u.password,
+        u.email,
+        u.mobile,
+        u.status,
+        u.create_user_id as createuserid,
+        u.create_time as createtime,
+        u.CHINESENAME,
+        u.DATELASTLOGIN as DATELASTLOGIN,
+        u.DATE_PASSWORD AS datePassword,
+        u.DATE_FAIL AS dateFail,
+        nvl(u.FAIL_TIMES, 0)  AS failTimes,
+        u.SKIN as skin,
+        u.USEREXTVALUE1 as userextvalue1,
+        u.USEREXTVALUE2 as userextvalue2,
+        u.USEREXTVALUE3 as userextvalue3,
+        u.USEREXTVALUE4 as userextvalue4,
+        u.USEREXTVALUE5 as userextvalue5, u.USERPHOTO,u.LEVELMARKID, u.SEX,
+        m.name as menuname
+        from sys_user u
+        left join  sys_menu m
+        on m.url = u.userextvalue4
+        <where>
+            <choose>
+                <when test="name != null and name.trim()!=''">
+                    username like '%${name}%'
+                </when>
+            </choose>
+            <if test="startTime!=null">
+                and create_time &gt;= #{startTime}
+            </if>
+            <if test="endTime!=null">
+                and create_time &lt;= #{endTime}
+            </if>
+        </where>
+        order by ${orderType} ${order}
+    </select>
+
+    <select id="queryTotalByConditions" resultType="int">
+        select count(*) from sys_user
+        <where>
+            <choose>
+                <when test="name != null and name.trim()!=''">
+                    username like '%${name}%'
+                </when>
+                <otherwise>
+                    user_id like '%${id}%'
+                </otherwise>
+            </choose>
+            <if test="startTime!=null">
+                and create_time &gt;= #{startTime}
+            </if>
+            <if test="endTime!=null">
+                and create_time &lt;= #{endTime}
+            </if>
+        </where>
+
+    </select>
+
+
+    <insert id="saveBatch" parameterType="java.lang.Object">
+        merge into sys_user t1
+        using (
+        <foreach collection="list" item="item" index="index" separator="union">
+            select '${item.userId}' as user_id,
+            '${item.username}' as username,
+            '${item.password}' as password,
+            '${item.email}' as email,
+            '${item.mobile}' as mobile,
+            '${item.status}' as status,
+            '${item.createUserId}' as create_user_id,
+            '${item.createTime}' as create_time,
+            '${item.datePassword}' as date_password,
+            '${item.chineseName}' as chinesename,
+            '${item.skin}' as skin,
+            '${item.userextvalue1}' as userextvalue1,
+            '${item.userextvalue2}' as userextvalue2,
+            '${item.userextvalue3}' as userextvalue3,
+            '${item.userextvalue4}' as userextvalue4,
+            '${item.userextvalue5}' as userextvalue5,
+            '${item.userPhoto}' as userphoto,
+            '${item.levelmarkid}' as levelmarkid,
+            '${item.sex}' as sex
+            from dual
+        </foreach>) t2
+        on(t1.user_id= t2.user_id)
+        /*数据存在*/
+        when matched then
+        update set
+        t1.username = t2.username
+
+        when not matched then
+        insert into sys_user
+        (
+        user_id,
+        username,
+        password,
+        email,
+        mobile,
+        status,
+        create_user_id,
+        create_time,
+        date_password,
+        chineseName,
+        skin,
+        userextvalue1,
+        userextvalue2,
+        userextvalue3,
+        userextvalue4,
+        userextvalue5,
+        userphoto,
+        levelmarkid,
+        sex
+        )
+        values
+        (
+        #{userId},
+        #{username},
+        #{password},
+        #{email},
+        #{mobile},
+        #{status},
+        #{createUserId},
+        sysdate,
+        sysdate,
+        #{chineseName},
+        #{skin},
+        #{userextvalue1},
+        #{userextvalue2},
+        #{userextvalue3},
+        #{userextvalue4},
+        #{userextvalue5},
+        #{userPhoto},
+        #{levelmarkid},
+        #{sex}
+        )
+    </insert>
+
+    <insert id="save" parameterType="io.jeasyframework.entity.SysUserEntity" useGeneratedKeys="true"
+            keyProperty="userId">
+        <selectKey resultType="java.lang.Long" keyProperty="userId" order="BEFORE">
+            <if test="userId == null">
+                select seq_user_id.nextval as userId from dual
+            </if>
+            <if test="userId != null">
+                select ${userId} as userId from dual
+            </if>
+        </selectKey>
+
+        insert into sys_user
+        (
+        user_id,
+        username,
+        chineseName,
+        password,
+        email,
+        mobile,
+        status,
+        create_user_id,
+        create_time,
+        date_password,
+        levelmarkid,
+        sex,
+        skin,
+        userextvalue3,
+        userextvalue4,
+        userextvalue5
+        )
+        values
+        (
+        #{userId},
+        #{username},
+        #{chineseName},
+        #{password},
+        #{email},
+        #{mobile},
+        #{status},
+        #{createUserId},
+        sysdate,
+        sysdate,
+        #{levelmarkid},
+        #{sex},
+        #{skin},
+        #{userextvalue3},
+        #{userextvalue4},
+        #{userextvalue5}
+        )
+    </insert>
+
+    <update id="update" parameterType="io.jeasyframework.entity.SysUserEntity">
+        update sys_user
+        <set>
+            <if test="username != null">username = #{username},</if>
+            <if test="password != null">password = #{password},</if>
+            <if test="email != null">email = #{email},</if>
+            <if test="mobile != null">mobile = #{mobile},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="chineseName != null">chineseName = #{chineseName},</if>
+            <if test="levelmarkid != null">levelmarkid = #{levelmarkid},</if>
+            <if test="sex != null">sex = #{sex},</if>
+            <if test="userextvalue4!=null">userextvalue4 = #{userextvalue4},</if>
+            <if test="userextvalue5!=null">userextvalue5 = #{userextvalue5},</if>
+        </set>
+        where user_id = #{userId}
+    </update>
+    <update id="updateLoginCount" parameterType="map">
+        update sys_user
+        set userextvalue2=nvl(userextvalue2, 0)+1 ,
+            dateLastLogin = sysdate
+        WHERE username = #{username} and password = #{password}
+    </update>
+
+    <update id="updateLoginStatus" parameterType="map">
+        update sys_user
+        set USERPHOTO = #{status}
+        WHERE username = #{username} and password = #{password}
+    </update>
+
+    <update id="updatePassword" parameterType="map">
+		update sys_user set password = #{newPassword},
+		date_password = sysdate
+			where user_id = #{userId} and password = #{password}
+	</update>
+
+    <update id="resetPassword" parameterType="map">
+		update sys_user set password = #{password},
+		date_password = sysdate
+			where user_id = #{userId}
+	</update>
+
+    <delete id="deleteBatch">
+        delete from sys_user where user_id in
+        <foreach item="userId" collection="array" open="(" separator="," close=")">
+            #{userId}
+        </foreach>
+    </delete>
+
+    <select id="queryAllLevelMarkId" resultType="io.jeasyframework.entity.SysUserEntity">
+        select user_id as userId,username,levelmarkid,sex from sys_user where sys_user.levelmarkid in (select sys_levelmark.levelmarkid from sys_levelmark)
+    </select>
+
+    <select id="queryByLevelMarkId" resultType="io.jeasyframework.entity.SysUserEntity">
+    select  user_id as userId,
+			username,
+			password,
+			email,
+			mobile,
+			status,
+			create_user_id as createuserid,
+			create_time as  createtime,
+			CHINESENAME,DATELASTLOGIN,
+            DATE_PASSWORD AS datePassword,
+            DATE_FAIL AS dateFail,
+            nvl(FAIL_TIMES, 0) AS failTimes,
+			SKIN as  skin,
+		    USEREXTVALUE1 as  userextvalue1,
+		    USEREXTVALUE2 as  userextvalue2,
+		    USEREXTVALUE3 as  userextvalue3,
+		    USEREXTVALUE4 as  userextvalue4,
+		    USEREXTVALUE5 as  userextvalue5, USERPHOTO,LEVELMARKID, SEX from sys_user su where su.user_id in (select t.userid from SYS_USER_LEVELMARK t where t.levelmarkid =  #{value})
+    </select>
+
+    <select id="queryListByLid" resultType="io.jeasyframework.entity.SysUserEntity">
+        select u.user_id as userId,
+        u.username,
+        u.password,
+        u.email,
+        u.mobile,
+        u.status,
+        u.create_user_id as createuserid,
+        u.create_time as createtime,
+        u.CHINESENAME,
+        u.DATELASTLOGIN as DATELASTLOGIN,
+        u.DATE_PASSWORD AS datePassword,
+        u.DATE_FAIL AS dateFail,
+        nvl(u.FAIL_TIMES, 0)  AS failTimes,
+        u.SKIN as skin,
+        u.USEREXTVALUE1 as userextvalue1,
+        u.USEREXTVALUE2 as userextvalue2,
+        u.USEREXTVALUE3 as userextvalue3,
+        u.USEREXTVALUE4 as userextvalue4,
+        u.USEREXTVALUE5 as userextvalue5, u.USERPHOTO,u.LEVELMARKID, u.SEX,
+        m.name as menuname
+        from sys_user u
+        left join  sys_menu m
+        on m.url = u.userextvalue4
+        where 1=1
+        <if test="username != null and username.trim() != '' ">
+            AND ( u.username like '%' || #{username} || '%' )
+        </if>
+    </select>
+
+    <select id="queryLoginCount" resultType="int">
+        SELECT SUM(USEREXTVALUE2) FROM "SYS_USER"
+    </select>
+
+    <select id="queryLastLogin" resultType="date">
+SELECT * FROM
+	( SELECT DATELASTLOGIN FROM "SYS_USER" WHERE DATELASTLOGIN IS NOT NULL ORDER BY DATELASTLOGIN DESC )
+WHERE
+	ROWNUM = 1
+    </select>
+
+    <update id="updateFailTimes" parameterType="map">
+        update sys_user
+        set fail_times = #{failTimes}
+        WHERE username = #{username}
+    </update>
+
+    <update id="updateDateFail" parameterType="map">
+        update sys_user
+        set date_fail = sysdate,fail_times = 0
+        WHERE username = #{username}
+    </update>
+
+    <update id="updateDatePassword" parameterType="map">
+        update sys_user
+        set date_password = sysdate
+        WHERE username = #{username}
+    </update>
+</mapper>

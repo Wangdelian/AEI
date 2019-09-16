@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>质量履历报表</title>
+    <link rel="stylesheet" href="${siteurl}/templates/skin2/template/plugins/layui/css/layui.css" media="all">
+    <script src="${siteurl}/public/js/utils.js"></script>
+</head>
+<body>
+<br>
+<div class="layui-form layui-form-pane" id="main">
+    <div class="layui-row">
+        <div class="layui-col-xs12">
+
+            <div class="layui-form-item">
+                <div class="layui-inline ">
+                    <div class="layui-inline">
+                        <span class="layui-form-label">发动机号</span>
+                        <div class="layui-input-inline">
+                            <input type="text" name="engineno"  placeholder="请输入机号" class="layui-input" id="engineno">
+                        </div>
+                    </div>
+                    <%
+                    if(has(token_86)){
+                    println('<button class="layui-btn" data-type="query">查询</button>');
+                    }
+                    if(has(token_87)){
+                    println('<button class="layui-btn" data-type="export">导出</button>');
+                    }
+                    %>
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <div class="layui-inline ">
+                    <div class="layui-inline">
+                        <span class="layui-form-label">生产单位</span>
+                        <div class="layui-input-inline">
+                            <input type="text" name="productiondeptname" placeholder="" class="layui-input" id="productiondeptname" readonly>
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">发动机号</label>
+                        <div class="layui-input-inline" >
+                            <input type="text" name="engineno" id="enginenoTitle" placeholder="" class="layui-input" readonly>
+                        </div>
+                    </div>
+                </div>
+                <br>
+
+                <div class="layui-inline ">
+                    <div class="layui-inline">
+                        <span class="layui-form-label">系列</span>
+                        <div class="layui-input-inline">
+                            <input type="text" name="enginemodel" placeholder="" class="layui-input" id="enginemodel" readonly>
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">生产线</label>
+                        <div class="layui-input-inline" >
+                            <input type="text" name="productionlinename" placeholder="" class="layui-input" id="productionlinename" readonly>
+
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <div class="layui-inline ">
+                    <div class="layui-inline">
+                        <span class="layui-form-label">机型</span>
+                        <div class="layui-input-inline">
+                            <input type="text" name="enginetype" placeholder="" class="layui-input" id="enginetype" readonly>
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">下线日期</label>
+                        <div class="layui-input-inline" >
+                            <input type="text" name="deadlinedate" placeholder="" class="layui-input" id="deadlinedate" readonly>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+
+            </div>
+
+            <div class="layui-form-item">
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<table class="layui-hide" id="table" lay-filter="demo"></table>
+<div id="pagination"></div>
+<script type="text/javascript" src="${siteurl}/templates/default/media/js/jquery1.9.1.js"></script>
+<script src="${siteurl}/templates/skin2/template/plugins/layui/layui.js"></script>
+<script type="text/javascript" src="${siteurl}/public/libs/vue.min.js"></script>
+<!--业务逻辑JS-->
+<script src="${siteurl}/templates/skin2/media/js/biz/MqsReport/qualityresumeReport.js"></script>
+<script type="text/javascript">
+    var siteurl='${siteurl}';
+</script>
+
+</body>
+</html>

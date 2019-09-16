@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>新增web用户信息</title>
+    <link rel="stylesheet" href="${siteurl}/templates/skin2/template/plugins/layui/css/layui.css" media="all">
+    <style>
+        .ztree-nodes {
+            width: 100%;
+            height: 220px;
+            overflow: auto;
+        }
+
+        .user-list {
+            width: 287px;
+            padding: 5px;
+            border-radius: 2px;
+            background-color: #fff;
+            border: 1px #d2d2d2 solid;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, .12);
+            position: absolute;
+            margin-top: 100px;
+            z-index: -1000;
+            opacity: 0;
+        }
+
+        input[readonly] {
+            cursor: pointer;
+        }
+
+        .levelmark-header {
+            margin-top: 4px;
+            color: #666;
+        }
+
+        .levelmark-header div {
+            width: 100%;
+            text-align: center;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+    </style>
+</head>
+
+<body class="layui-container" style="position: static">
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 50px;">
+    <legend>新增web用户</legend>
+</fieldset>
+<form class="layui-form layui-form-pane" action="" id="main">
+    <div class="layui-form-item">
+        <!--用户名-->
+
+        <div class="layui-inline">
+            <label class="layui-form-label">用户名</label>
+            <div class="layui-input-block" id="userwidth">
+                <input type="text" name="username" id="username" autocomplete="off" placeholder="请输入用户名"
+                       lay-verify="required|username" class="layui-input">
+            </div>
+        </div>
+        <!--用户密码-->
+        <div class="layui-inline">
+            <label class="layui-form-label">用户密码</label>
+            <div class="layui-input-block">
+                <input type="password" name="password" autocomplete="off" placeholder="请输入用户密码" lay-verify="required"
+                       class="layui-input">
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">电子邮箱</label>
+            <div class="layui-input-block">
+                <input type="text" name="email" autocomplete="off" placeholder="请输入电子邮箱" lay-verify=""
+                       class="layui-input">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label" for="levelname">所属机构</label>
+            <div class="layui-input-inline">
+                <input type="text" name="levelname" id="levelname" placeholder="请选择" lay-verify="select"
+                       class="layui-input" readonly>
+            </div>
+            <div id="projectDept-options" class="user-list">
+                <div class="levelmark-header">
+                    <div>
+                        <span>部门列表-所属部门选择</span>
+                    </div>
+                </div>
+                <hr>
+                <div class="ztree-nodes">
+                    <ul id="menuTree" class="ztree"></ul>
+                </div>
+                <hr>
+                <div class="layui-btn-group" style="text-align: right;display: block">
+                    <button type="button" class="layui-btn layui-btn-primary layui-btn-sm">完成</button>
+                    <button type="button" class="layui-btn layui-btn-primary layui-btn-sm">清空</button>
+                    <button type="button" class="layui-btn layui-btn-primary layui-btn-sm">返回</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <!--所属班组-->
+        <div class="layui-inline">
+            <label class="layui-form-label">所属班组</label>
+            <div class="layui-input-block" id="userextvalue4width">
+                <select name="userextvalue4" lay-search="" lay-filter="filter1">
+                    <option value="">请选择所属班组</option>
+                </select>
+            </div>
+        </div>
+        <!--所属采集点-->
+        <div class="layui-inline">
+            <label class="layui-form-label">所属采集点</label>
+            <div class="layui-input-inline">
+                <input type="text" name="userextvalue5" id="userextvalue5" placeholder="请选择"
+                       class="layui-input" readonly>
+            </div>
+            <div id="userextvalue5-Deptoptions" class="user-list">
+                <div class="levelmark-header">
+                    <div>
+                        <span>所属采集点选择</span>
+                    </div>
+                </div>
+                <hr>
+                <div class="ztree-nodes">
+                    <ul id="userextvalue5menuTree" class="ztree"></ul>
+                </div>
+                <hr>
+                <div class="layui-btn-group" style="text-align: right;display: block">
+                    <button type="button" class="layui-btn layui-btn-primary layui-btn-sm">完成</button>
+                    <button type="button" class="layui-btn layui-btn-primary layui-btn-sm">清空</button>
+                    <button type="button" class="layui-btn layui-btn-primary layui-btn-sm">返回</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <!--中文名称-->
+        <div class="layui-inline">
+            <label class="layui-form-label">中文名称</label>
+            <div class="layui-input-block">
+                <input type="text" name="chineseName" autocomplete="off" placeholder="请输入中文名称" lay-verify="required"
+                       class="layui-input">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">状态</label>
+            <div class="layui-input-block">
+                <input type="radio" name="status" value="0" title="禁用">
+                <input type="radio" name="status" value="1" title="正常" checked="">
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">办公电话</label>
+            <div class="layui-input-block">
+                <input type="text" name="mobile" autocomplete="off" placeholder="请输入办公电话" lay-verify="required"
+                       class="layui-input">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">性别</label>
+            <div class="layui-input-block">
+                <input type="radio" name="sex" value="0" title="女" checked="">
+                <input type="radio" name="sex" value="1" title="男">
+            </div>
+        </div>
+        <input type="hidden"  name="userextvalue3"  value="web用户" class="layui-input">
+
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn" lay-submit="" lay-filter="demo1">保存</button>
+            <button class="layui-btn" onclick="javascript:onReturn()">关闭</button>
+        </div>
+    </div>
+
+    <h2 class="subfild">
+        <span>角色设置</span>
+    </h2>
+
+    <div v-for="n in roleNum" class="subfild-content remarkes-info">
+        <span v-for="(role , index) in roleList" v-if="index >= (n-1)*4 && index < n * 4" class="checkbox-inline"
+              style="width:120px">
+            <input type="checkbox" name="roleId" :value="role.roleId" lay-skin="primary" v-model="user.roleIdList"/>{{role.roleName}}
+        </span>
+    </div>
+
+</form>
+
+<script type="text/javascript" src="${siteurl}/templates/default/media/js/jquery1.9.1.js"></script>
+<script src="${siteurl}/templates/skin2/template/plugins/layui/layui.js"></script>
+<script type="text/javascript" src="${siteurl}/public/libs/vue.min.js"></script>
+<!--ztree开始-->
+<link rel="stylesheet" type="text/css"
+      href="${siteurl}/templates/skin2/media/js/plugins/zTree_v3/css/zTreeStyle/zTreeStyle.css"/>
+<script type="text/javascript"
+        src="${siteurl}/templates/skin2/media/js/plugins/zTree_v3/js/jquery.ztree.core.js"></script>
+<script type="text/javascript"
+        src="${siteurl}/templates/skin2/media/js/plugins/zTree_v3/js/jquery.ztree.excheck.js"></script>
+<!--ztree结束-->
+<!--业务逻辑JS-->
+<script type="text/javascript" src="${siteurl}/templates/skin2/media/js/biz/UserMgr/adduser.js"></script>
+</body>
+<script type="text/javascript">
+    var siteurl = '${siteurl}';
+    var flag = 'web';
+
+    function onReturn() {
+        //parent.app.addTab('1');
+        parent.app.closeTab('12');
+    }
+
+    $("#userextvalue4width").width($("#userwidth").width());
+</script>
+
+</html>

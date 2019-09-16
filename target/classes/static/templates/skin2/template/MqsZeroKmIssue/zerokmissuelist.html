@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>table模块快速使用</title>
+    <link rel="stylesheet" href="${siteurl}/templates/skin2/template/plugins/layui/css/layui.css" media="all">
+    <script src="${siteurl}/public/js/utils.js"></script>
+</head>
+
+<body>
+<br>
+<div class="layui-form layui-form-pane" id="main">
+    <div class="layui-row">
+        <div class="layui-col-xs12">
+            <div class="layui-form-item">
+                <div class="layui-inline ">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">生产单位</label>
+                        <div class="layui-input-inline" id="productiondeptnamediv">
+                            <select name="productiondeptname" lay-search="" lay-verify="required" lay-filter="filter2"
+                                    id="productiondeptname">
+                                <option value="">请选择生产单位</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-inline ">
+                        <label class="layui-form-label">生产线</label>
+                        <div class="layui-input-inline layui-form" id="productionlinenamediv" width="300px">
+                            <select name="productionlinename" lay-search="" lay-verify="required" lay-filter="filter2"
+                                    id="productionlinename">
+                                <option value="">请选择生产线</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-inline ">
+                        <span class="layui-form-label">发生基地</span>
+                        <div class="layui-input-inline">
+                            <select name="productionbase" lay-search="" lay-verify="required" lay-filter="select1"
+                                    id="productionbase">
+                                <option value="">请选择发生基地</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <div class="layui-inline ">
+                    <div class="layui-inline">
+                        <span class="layui-form-label">系列</span>
+                        <div class="layui-input-inline">
+                            <select name="enginemodel" lay-search="" lay-verify="required" lay-filter="select1"
+                                    id="enginemodel">
+                                <option value="">请选择系列</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">开始日期</label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="startTime" lay-verify="date" placeholder="请输入开始日期"
+                                   class="layui-input" id="startTime">
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">结束日期</label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="endTime" lay-verify="date" placeholder="请输入结束日期"
+                                   class="layui-input" id="endTime">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <div class="layui-inline ">
+                    <div class="layui-inline">
+                        <span class="layui-form-label">机号</span>
+                        <div class="layui-input-inline">
+                            <input type="text" name="engineno" placeholder="请输入机号" class="layui-input" id="engineno">
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <span class="layui-form-label">ICC</span>
+                        <div class="layui-input-inline">
+                            <input type="text" name="icc" placeholder="请输入ICC" class="layui-input" id="icc">
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <span class="layui-form-label">CCC</span>
+                        <div class="layui-input-inline">
+                            <input type="text" name="ccc" placeholder="请输入CCC" class="layui-input" id="ccc">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <div class="layui-inline ">
+                    <div class="layui-inline">
+                        <span class="layui-form-label">责任单位</span>
+                        <div class="layui-input-inline">
+                            <select name="dutydept" lay-search="" lay-verify="required" lay-filter="select1"
+                                    id="dutydept">
+                                <option value="">请选择责任单位</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-inline ">
+                        <span class="layui-form-label">问题属性</span>
+                        <div class="layui-input-inline">
+                            <select name="issueattr" lay-search="" lay-verify="required" lay-filter="select1"
+                                    id="issueattr">
+                                <option value="">请选择问题属性</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-inline ">
+                        <span class="layui-form-label">状态</span>
+                        <div class="layui-input-inline">
+                            <select name="zkissuestatus" lay-search="" lay-verify="required" lay-filter="select1"
+                                    id="zkissuestatus">
+                                <option value="">请选择状态</option>
+                            </select>
+                        </div>
+                    </div>
+                    <%
+                    if(has(token_121)){
+                    println('<button class="layui-btn" onclick="javascript:vm.query(1,1)">查询</button>');
+                    }
+                    if(has(token_122)){
+                    println('<button class="layui-btn" data-type="addZeroKmIssue">新增</button>');
+                    }
+                    if(has(token_123)){
+                    println('<button class="layui-btn" data-type="build">导出</button>');
+                    }
+                    if(has(token_124)){
+                    println('<button class="layui-btn" data-type="getCheckData">删除</button>');
+                    }
+                    %>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<table class="layui-hide" id="test" lay-filter="demo"></table>
+
+<script type="text/html" id="barDemo">
+    <%
+    if(has(token_125)){
+    println('<a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>');
+    }
+    if(has(token_126)){
+    println('<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>');
+    }
+    %>
+</script>
+
+<div id="pagination"></div>
+<script type="text/javascript" src="${siteurl}/templates/default/media/js/jquery1.9.1.js"></script>
+<script src="${siteurl}/templates/skin2/template/plugins/layui/layui.js"></script>
+<script type="text/javascript" src="${siteurl}/public/libs/vue.min.js"></script>
+<!--业务逻辑JS-->
+<script src="${siteurl}/templates/skin2/media/js/biz/MqsZeroKmIssue/zerokmissuelist.js"></script>
+
+</body>
+<script type="text/javascript">
+    var siteurl = '${siteurl}';
+
+</script>
+
+</html>

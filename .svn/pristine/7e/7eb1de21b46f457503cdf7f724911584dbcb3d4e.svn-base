@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>编辑采集点管理</title>
+    <link rel="stylesheet" href="${siteurl}/templates/skin2/template/plugins/layui/css/layui.css" media="all">
+    <script type="text/javascript" src="${siteurl}/templates/default/media/js/jquery1.9.1.js"></script>
+    <script src="${siteurl}/templates/skin2/template/plugins/layui/layui.js"></script>
+    <script type="text/javascript" src="${siteurl}/public/libs/vue.min.js"></script>
+</head>
+
+<body class="layui-container">
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 50px;">
+    <legend>编辑采集点管理</legend>
+</fieldset>
+<div class="layui-tab" id="main">
+    <form class="layui-form layui-form-pane" action="">
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">采集点编码</label>
+            <div class="layui-input-block">
+                <input type="text" name="stationcode" autocomplete="off" placeholder="请输入采集点编码" class="layui-input" lay-verify="required" >
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">采集点名称</label>
+            <div class="layui-input-block">
+                <input type="text" name="stationname" autocomplete="off" placeholder="请输入采集点编码" class="layui-input" lay-verify="required" >
+            </div>
+        </div>
+
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">所属生产线</label>
+            <div class="layui-input-inline">
+                <select  name="productionlineid"  lay-verify="required" lay-filter="select1" >
+                </select>
+            </div>
+        </div>
+
+        <div class=" layui-form-item">
+            <label class="layui-form-label">所属区域</label>
+            <div class="layui-input-inline">
+                <select  name="regionid"  lay-verify="required" lay-filter="select1">
+                </select>
+            </div>
+        </div>
+
+        <div class=" layui-form-item">
+            <label class="layui-form-label">MES工位</label>
+            <div class="layui-input-inline">
+                <select  name="mesStationid"  lay-verify="required" lay-filter="select1">
+                </select>
+            </div>
+        </div>
+
+        <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label">备注</label>
+            <div class="layui-input-block">
+                <textarea name="remark" placeholder="请输入内容" class="layui-textarea"></textarea>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" lay-submit="" lay-filter="demo1">保存并添加下一台</button>
+                <button type="button" class="layui-btn layui-btn-primary" onclick="javascript:onReturn();">返回</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<table class="layui-hide" id="test" lay-filter="demo"></table>
+
+<!--业务逻辑JS-->
+<script type="text/javascript" src="${siteurl}/templates/skin2/media/js/biz/MqsStation/editstation.js"></script>
+</body>
+<script type="text/javascript">
+    var siteurl = '${siteurl}';
+    var stationid = '${mqsStation.stationid}'
+
+    function onReturn()
+    {
+        //parent.app.addTab('232');
+        parent.app.closeTab('21');
+    }
+</script>
+
+</html>

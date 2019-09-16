@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="io.jeasyframework.dao.master.UmUsermasterDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="io.jeasyframework.entity.UmUsermasterEntity" id="umUsermasterMap">
+        <result property="userid" column="USERID"/>
+        <result property="usercode" column="USERCODE"/>
+        <result property="loginname" column="LOGINNAME"/>
+        <result property="loginpwd" column="LOGINPWD"/>
+        <result property="chinesename" column="CHINESENAME"/>
+        <result property="isenable" column="ISENABLE"/>
+        <result property="levelmarkid" column="LEVELMARKID"/>
+        <result property="sex" column="SEX"/>
+        <result property="email" column="EMAIL"/>
+        <result property="mobile" column="MOBILE"/>
+        <result property="tel" column="TEL"/>
+        <result property="userskinpath" column="USERSKINPATH"/>
+        <result property="bqq" column="BQQ"/>
+        <result property="qq" column="QQ"/>
+        <result property="weixin" column="WEIXIN"/>
+        <result property="weibo" column="WEIBO"/>
+        <result property="jobtitleid" column="JOBTITLEID"/>
+        <result property="introduce" column="INTRODUCE"/>
+        <result property="datecreated" column="DATECREATED"/>
+        <result property="createdby" column="CREATEDBY"/>
+        <result property="createdbyname" column="CREATEDBYNAME"/>
+        <result property="datemodified" column="DATEMODIFIED"/>
+        <result property="modifiedby" column="MODIFIEDBY"/>
+        <result property="modifiedbyname" column="MODIFIEDBYNAME"/>
+        <result property="datelastlogin" column="DATELASTLOGIN"/>
+        <result property="userphoto" column="USERPHOTO"/>
+        <result property="userlevel" column="USERLEVEL"/>
+        <result property="directlyleaderid" column="DIRECTLYLEADERID"/>
+        <result property="userremindflag1" column="USERREMINDFLAG1"/>
+        <result property="userremindflag2" column="USERREMINDFLAG2"/>
+        <result property="userremindflag3" column="USERREMINDFLAG3"/>
+        <result property="userextvalue1" column="USEREXTVALUE1"/>
+        <result property="userextvalue2" column="USEREXTVALUE2"/>
+        <result property="userextvalue3" column="USEREXTVALUE3"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+USERID, USERCODE, LOGINNAME, LOGINPWD, CHINESENAME, ISENABLE, LEVELMARKID, SEX, EMAIL, MOBILE, TEL, USERSKINPATH, BQQ, QQ, WEIXIN, WEIBO, JOBTITLEID, INTRODUCE, DATECREATED, CREATEDBY, CREATEDBYNAME, DATEMODIFIED, MODIFIEDBY, MODIFIEDBYNAME, DATELASTLOGIN, USERPHOTO, USERLEVEL, DIRECTLYLEADERID, USERREMINDFLAG1, USERREMINDFLAG2, USERREMINDFLAG3, USEREXTVALUE1, USEREXTVALUE2, USEREXTVALUE3
+	</sql>
+	<select id="queryObject" resultType="io.jeasyframework.entity.UmUsermasterEntity">
+		select * from UM_USERMASTER where USERID = #{value}
+	</select>
+
+	<select id="queryByUserName" resultType="io.jeasyframework.entity.SysUserEntity">
+		select  *  from UM_USERMASTER where loginname = #{loginname} and rownum &lt;= 1
+	</select>
+
+	<select id="queryList" resultType="io.jeasyframework.entity.UmUsermasterEntity">
+		select * from UM_USERMASTER
+        <choose>
+            <when test="sidx != null and sidx.trim() != ''">
+                order by ${sidx} ${order}
+            </when>
+			<otherwise>
+                order by USERID desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="queryTotal" resultType="int">
+		select count(*) from UM_USERMASTER 
+	</select>
+	 
+	<insert id="save" parameterType="io.jeasyframework.entity.UmUsermasterEntity">
+		insert into UM_USERMASTER
+		(
+			`USERID`, 
+			`USERCODE`, 
+			`LOGINNAME`, 
+			`LOGINPWD`, 
+			`CHINESENAME`, 
+			`ISENABLE`, 
+			`LEVELMARKID`, 
+			`SEX`, 
+			`EMAIL`, 
+			`MOBILE`, 
+			`TEL`, 
+			`USERSKINPATH`, 
+			`BQQ`, 
+			`QQ`, 
+			`WEIXIN`, 
+			`WEIBO`, 
+			`JOBTITLEID`, 
+			`INTRODUCE`, 
+			`DATECREATED`, 
+			`CREATEDBY`, 
+			`CREATEDBYNAME`, 
+			`DATEMODIFIED`, 
+			`MODIFIEDBY`, 
+			`MODIFIEDBYNAME`, 
+			`DATELASTLOGIN`, 
+			`USERPHOTO`, 
+			`USERLEVEL`, 
+			`DIRECTLYLEADERID`, 
+			`USERREMINDFLAG1`, 
+			`USERREMINDFLAG2`, 
+			`USERREMINDFLAG3`, 
+			`USEREXTVALUE1`, 
+			`USEREXTVALUE2`, 
+			`USEREXTVALUE3`
+		)
+		values
+		(
+			#{userid}, 
+			#{usercode}, 
+			#{loginname}, 
+			#{loginpwd}, 
+			#{chinesename}, 
+			#{isenable}, 
+			#{levelmarkid}, 
+			#{sex}, 
+			#{email}, 
+			#{mobile}, 
+			#{tel}, 
+			#{userskinpath}, 
+			#{bqq}, 
+			#{qq}, 
+			#{weixin}, 
+			#{weibo}, 
+			#{jobtitleid}, 
+			#{introduce}, 
+			#{datecreated}, 
+			#{createdby}, 
+			#{createdbyname}, 
+			#{datemodified}, 
+			#{modifiedby}, 
+			#{modifiedbyname}, 
+			#{datelastlogin}, 
+			#{userphoto}, 
+			#{userlevel}, 
+			#{directlyleaderid}, 
+			#{userremindflag1}, 
+			#{userremindflag2}, 
+			#{userremindflag3}, 
+			#{userextvalue1}, 
+			#{userextvalue2}, 
+			#{userextvalue3}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="io.jeasyframework.entity.UmUsermasterEntity">
+		update UM_USERMASTER 
+		<set>
+			<if test="usercode != null">`USERCODE` = #{usercode}, </if>
+			<if test="loginname != null">`LOGINNAME` = #{loginname}, </if>
+			<if test="loginpwd != null">`LOGINPWD` = #{loginpwd}, </if>
+			<if test="chinesename != null">`CHINESENAME` = #{chinesename}, </if>
+			<if test="isenable != null">`ISENABLE` = #{isenable}, </if>
+			<if test="levelmarkid != null">`LEVELMARKID` = #{levelmarkid}, </if>
+			<if test="sex != null">`SEX` = #{sex}, </if>
+			<if test="email != null">`EMAIL` = #{email}, </if>
+			<if test="mobile != null">`MOBILE` = #{mobile}, </if>
+			<if test="tel != null">`TEL` = #{tel}, </if>
+			<if test="userskinpath != null">`USERSKINPATH` = #{userskinpath}, </if>
+			<if test="bqq != null">`BQQ` = #{bqq}, </if>
+			<if test="qq != null">`QQ` = #{qq}, </if>
+			<if test="weixin != null">`WEIXIN` = #{weixin}, </if>
+			<if test="weibo != null">`WEIBO` = #{weibo}, </if>
+			<if test="jobtitleid != null">`JOBTITLEID` = #{jobtitleid}, </if>
+			<if test="introduce != null">`INTRODUCE` = #{introduce}, </if>
+			<if test="datecreated != null">`DATECREATED` = #{datecreated}, </if>
+			<if test="createdby != null">`CREATEDBY` = #{createdby}, </if>
+			<if test="createdbyname != null">`CREATEDBYNAME` = #{createdbyname}, </if>
+			<if test="datemodified != null">`DATEMODIFIED` = #{datemodified}, </if>
+			<if test="modifiedby != null">`MODIFIEDBY` = #{modifiedby}, </if>
+			<if test="modifiedbyname != null">`MODIFIEDBYNAME` = #{modifiedbyname}, </if>
+			<if test="datelastlogin != null">`DATELASTLOGIN` = #{datelastlogin}, </if>
+			<if test="userphoto != null">`USERPHOTO` = #{userphoto}, </if>
+			<if test="userlevel != null">`USERLEVEL` = #{userlevel}, </if>
+			<if test="directlyleaderid != null">`DIRECTLYLEADERID` = #{directlyleaderid}, </if>
+			<if test="userremindflag1 != null">`USERREMINDFLAG1` = #{userremindflag1}, </if>
+			<if test="userremindflag2 != null">`USERREMINDFLAG2` = #{userremindflag2}, </if>
+			<if test="userremindflag3 != null">`USERREMINDFLAG3` = #{userremindflag3}, </if>
+			<if test="userextvalue1 != null">`USEREXTVALUE1` = #{userextvalue1}, </if>
+			<if test="userextvalue2 != null">`USEREXTVALUE2` = #{userextvalue2}, </if>
+			<if test="userextvalue3 != null">`USEREXTVALUE3` = #{userextvalue3}</if>
+		</set>
+		where USERID = #{userid}
+	</update>
+	
+	<delete id="delete">
+		delete from UM_USERMASTER where USERID = #{value}
+	</delete>
+	
+	<delete id="deleteBatch">
+		delete from UM_USERMASTER where USERID in 
+		<foreach item="userid" collection="array" open="(" separator="," close=")">
+			#{userid}
+		</foreach>
+	</delete>
+
+</mapper>

@@ -1,0 +1,511 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="io.jeasyframework.dao.master.DocFileDao">
+    <resultMap id="BaseResultMap" type="io.jeasyframework.entity.DocFile">
+        <id column="FILE_ID" jdbcType="DECIMAL" property="fileId"/>
+        <result column="FILE_NAME" jdbcType="OTHER" property="fileName"/>
+        <result column="FILE_FOLDER_ID" jdbcType="DECIMAL" property="fileFolderId"/>
+        <result column="FILE_FOLDER_NAME" jdbcType="OTHER" property="fileFolderName"/>
+        <result column="FILE_SIZE" jdbcType="DECIMAL" property="fileSize"/>
+        <result column="FILE_TYPE" jdbcType="OTHER" property="fileType"/>
+        <result column="FILE_PATH" jdbcType="OTHER" property="filePath"/>
+        <result column="FILE_COMMENT" jdbcType="OTHER" property="fileComment"/>
+        <result column="FILE_VERSION" jdbcType="DECIMAL" property="fileVersion"/>
+        <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="CREATOR_ID" jdbcType="DECIMAL" property="creatorId"/>
+        <result column="CREATOR_NAME" jdbcType="OTHER" property="creatorName"/>
+        <result column="MDED_TIME" jdbcType="TIMESTAMP" property="mdedTime"/>
+        <result column="MENDER_ID" jdbcType="DECIMAL" property="menderId"/>
+        <result column="MENDER_NAME" jdbcType="OTHER" property="menderName"/>
+        <result column="ISENABLE" jdbcType="DECIMAL" property="isenable"/>
+        <result column="MD5" jdbcType="VARCHAR" property="md5"/>
+        <result column="SHA1" jdbcType="VARCHAR" property="sha1"/>
+        <result column="VISIT_COUNT" jdbcType="DECIMAL" property="visitCount"/>
+        <result column="DOWNLOAD_COUNT" jdbcType="DECIMAL" property="downloadCount"/>
+        <result column="STANDBY1" jdbcType="OTHER" property="standby1"/>
+        <result column="STANDBY2" jdbcType="OTHER" property="standby2"/>
+        <result column="STANDBY3" jdbcType="OTHER" property="standby3"/>
+        <result column="STANDBY4" jdbcType="OTHER" property="standby4"/>
+        <result column="STANDBY5" jdbcType="OTHER" property="standby5"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    FILE_ID, FILE_NAME, FILE_FOLDER_ID, FILE_FOLDER_NAME, FILE_SIZE, FILE_TYPE, FILE_PATH, 
+    FILE_COMMENT, FILE_VERSION, CREATE_TIME, CREATOR_ID, CREATOR_NAME, MDED_TIME, MENDER_ID, 
+    MENDER_NAME, ISENABLE, MD5, SHA1, VISIT_COUNT, DOWNLOAD_COUNT, STANDBY1, STANDBY2, 
+    STANDBY3, STANDBY4, STANDBY5
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Object" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from DOC_FILE
+        where FILE_ID = #{fileId,jdbcType=DECIMAL} AND ISENABLE = 1 ORDER BY CREATE_TIME DESC
+    </select>
+    <select id="selectByFolderId" parameterType="java.lang.Object" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from DOC_FILE
+        where FILE_FOLDER_ID = #{fileFolderId,jdbcType=DECIMAL} AND ISENABLE = 1 ORDER BY CREATE_TIME DESC
+    </select>
+    <select id="selectByFileName" parameterType="java.lang.Object" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from DOC_FILE
+
+        <where>
+            <if test="_parameter != null">
+                FILE_NAME like '%${_parameter}%' AND ISENABLE = 1 ORDER BY CREATE_TIME DESC
+            </if>
+        </where>
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Object">
+    delete from DOC_FILE
+    where FILE_FOLDER_ID = #{fileFolderId,jdbcType=DECIMAL}
+  </delete>
+    <insert id="insert" parameterType="io.jeasyframework.entity.DocFile" useGeneratedKeys="true"
+            keyProperty="fileId">
+        <selectKey resultType="java.lang.Long" keyProperty="fileId" order="BEFORE">
+            select SEQ_FILE_ID.nextval as fileId from dual
+        </selectKey>
+
+        insert into DOC_FILE
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="fileId != null">
+                FILE_ID,
+            </if>
+            <if test="fileName != null">
+                FILE_NAME,
+            </if>
+            <if test="fileFolderId != null">
+                FILE_FOLDER_ID,
+            </if>
+            <if test="fileFolderName != null">
+                FILE_FOLDER_NAME,
+            </if>
+            <if test="fileSize != null">
+                FILE_SIZE,
+            </if>
+            <if test="fileType != null">
+                FILE_TYPE,
+            </if>
+            <if test="filePath != null">
+                FILE_PATH,
+            </if>
+            <if test="fileComment != null">
+                FILE_COMMENT,
+            </if>
+            <if test="fileVersion != null">
+                FILE_VERSION,
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME,
+            </if>
+            <if test="creatorId != null">
+                CREATOR_ID,
+            </if>
+            <if test="creatorName != null">
+                CREATOR_NAME,
+            </if>
+            <if test="mdedTime != null">
+                MDED_TIME,
+            </if>
+            <if test="menderId != null">
+                MENDER_ID,
+            </if>
+            <if test="menderName != null">
+                MENDER_NAME,
+            </if>
+            <if test="isenable != null">
+                ISENABLE,
+            </if>
+            <if test="md5 != null">
+                MD5,
+            </if>
+            <if test="sha1 != null">
+                SHA1,
+            </if>
+            <if test="visitCount != null">
+                VISIT_COUNT,
+            </if>
+            <if test="downloadCount != null">
+                DOWNLOAD_COUNT,
+            </if>
+            <if test="standby1 != null">
+                STANDBY1,
+            </if>
+            <if test="standby2 != null">
+                STANDBY2,
+            </if>
+            <if test="standby3 != null">
+                STANDBY3,
+            </if>
+            <if test="standby4 != null">
+                STANDBY4,
+            </if>
+            <if test="standby5 != null">
+                STANDBY5,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="fileId != null">
+                #{fileId,jdbcType=DECIMAL},
+            </if>
+            <if test="fileName != null">
+                #{fileName,jdbcType=OTHER},
+            </if>
+            <if test="fileFolderId != null">
+                #{fileFolderId,jdbcType=DECIMAL},
+            </if>
+            <if test="fileFolderName != null">
+                #{fileFolderName,jdbcType=OTHER},
+            </if>
+            <if test="fileSize != null">
+                #{fileSize,jdbcType=DECIMAL},
+            </if>
+            <if test="fileType != null">
+                #{fileType,jdbcType=OTHER},
+            </if>
+            <if test="filePath != null">
+                #{filePath,jdbcType=OTHER},
+            </if>
+            <if test="fileComment != null">
+                #{fileComment,jdbcType=OTHER},
+            </if>
+            <if test="fileVersion != null">
+                #{fileVersion,jdbcType=DECIMAL},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="creatorId != null">
+                #{creatorId,jdbcType=DECIMAL},
+            </if>
+            <if test="creatorName != null">
+                #{creatorName,jdbcType=OTHER},
+            </if>
+            <if test="mdedTime != null">
+                #{mdedTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="menderId != null">
+                #{menderId,jdbcType=DECIMAL},
+            </if>
+            <if test="menderName != null">
+                #{menderName,jdbcType=OTHER},
+            </if>
+            <if test="isenable != null">
+                #{isenable,jdbcType=DECIMAL},
+            </if>
+            <if test="md5 != null">
+                #{md5,jdbcType=VARCHAR},
+            </if>
+            <if test="sha1 != null">
+                #{sha1,jdbcType=VARCHAR},
+            </if>
+            <if test="visitCount != null">
+                #{visitCount,jdbcType=DECIMAL},
+            </if>
+            <if test="downloadCount != null">
+                #{downloadCount,jdbcType=DECIMAL},
+            </if>
+            <if test="standby1 != null">
+                #{standby1,jdbcType=OTHER},
+            </if>
+            <if test="standby2 != null">
+                #{standby2,jdbcType=OTHER},
+            </if>
+            <if test="standby3 != null">
+                #{standby3,jdbcType=OTHER},
+            </if>
+            <if test="standby4 != null">
+                #{standby4,jdbcType=OTHER},
+            </if>
+            <if test="standby5 != null">
+                #{standby5,jdbcType=OTHER},
+            </if>
+        </trim>
+    </insert>
+    <insert id="insertSelective" parameterType="io.jeasyframework.entity.DocFile">
+        insert into DOC_FILE
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="fileId != null">
+                FILE_ID,
+            </if>
+            <if test="fileName != null">
+                FILE_NAME,
+            </if>
+            <if test="fileFolderId != null">
+                FILE_FOLDER_ID,
+            </if>
+            <if test="fileFolderName != null">
+                FILE_FOLDER_NAME,
+            </if>
+            <if test="fileSize != null">
+                FILE_SIZE,
+            </if>
+            <if test="fileType != null">
+                FILE_TYPE,
+            </if>
+            <if test="filePath != null">
+                FILE_PATH,
+            </if>
+            <if test="fileComment != null">
+                FILE_COMMENT,
+            </if>
+            <if test="fileVersion != null">
+                FILE_VERSION,
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME,
+            </if>
+            <if test="creatorId != null">
+                CREATOR_ID,
+            </if>
+            <if test="creatorName != null">
+                CREATOR_NAME,
+            </if>
+            <if test="mdedTime != null">
+                MDED_TIME,
+            </if>
+            <if test="menderId != null">
+                MENDER_ID,
+            </if>
+            <if test="menderName != null">
+                MENDER_NAME,
+            </if>
+            <if test="isenable != null">
+                ISENABLE,
+            </if>
+            <if test="md5 != null">
+                MD5,
+            </if>
+            <if test="sha1 != null">
+                SHA1,
+            </if>
+            <if test="visitCount != null">
+                VISIT_COUNT,
+            </if>
+            <if test="downloadCount != null">
+                DOWNLOAD_COUNT,
+            </if>
+            <if test="standby1 != null">
+                STANDBY1,
+            </if>
+            <if test="standby2 != null">
+                STANDBY2,
+            </if>
+            <if test="standby3 != null">
+                STANDBY3,
+            </if>
+            <if test="standby4 != null">
+                STANDBY4,
+            </if>
+            <if test="standby5 != null">
+                STANDBY5,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="fileId != null">
+                #{fileId,jdbcType=DECIMAL},
+            </if>
+            <if test="fileName != null">
+                #{fileName,jdbcType=OTHER},
+            </if>
+            <if test="fileFolderId != null">
+                #{fileFolderId,jdbcType=DECIMAL},
+            </if>
+            <if test="fileFolderName != null">
+                #{fileFolderName,jdbcType=OTHER},
+            </if>
+            <if test="fileSize != null">
+                #{fileSize,jdbcType=DECIMAL},
+            </if>
+            <if test="fileType != null">
+                #{fileType,jdbcType=OTHER},
+            </if>
+            <if test="filePath != null">
+                #{filePath,jdbcType=OTHER},
+            </if>
+            <if test="fileComment != null">
+                #{fileComment,jdbcType=OTHER},
+            </if>
+            <if test="fileVersion != null">
+                #{fileVersion,jdbcType=DECIMAL},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="creatorId != null">
+                #{creatorId,jdbcType=DECIMAL},
+            </if>
+            <if test="creatorName != null">
+                #{creatorName,jdbcType=OTHER},
+            </if>
+            <if test="mdedTime != null">
+                #{mdedTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="menderId != null">
+                #{menderId,jdbcType=DECIMAL},
+            </if>
+            <if test="menderName != null">
+                #{menderName,jdbcType=OTHER},
+            </if>
+            <if test="isenable != null">
+                #{isenable,jdbcType=DECIMAL},
+            </if>
+            <if test="md5 != null">
+                #{md5,jdbcType=VARCHAR},
+            </if>
+            <if test="sha1 != null">
+                #{sha1,jdbcType=VARCHAR},
+            </if>
+            <if test="visitCount != null">
+                #{visitCount,jdbcType=DECIMAL},
+            </if>
+            <if test="downloadCount != null">
+                #{downloadCount,jdbcType=DECIMAL},
+            </if>
+            <if test="standby1 != null">
+                #{standby1,jdbcType=OTHER},
+            </if>
+            <if test="standby2 != null">
+                #{standby2,jdbcType=OTHER},
+            </if>
+            <if test="standby3 != null">
+                #{standby3,jdbcType=OTHER},
+            </if>
+            <if test="standby4 != null">
+                #{standby4,jdbcType=OTHER},
+            </if>
+            <if test="standby5 != null">
+                #{standby5,jdbcType=OTHER},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="io.jeasyframework.entity.DocFile">
+        update DOC_FILE
+        <set>
+            <if test="fileName != null">
+                FILE_NAME = #{fileName,jdbcType=OTHER},
+            </if>
+            <if test="fileFolderId != null">
+                FILE_FOLDER_ID = #{fileFolderId,jdbcType=DECIMAL},
+            </if>
+            <if test="fileFolderName != null">
+                FILE_FOLDER_NAME = #{fileFolderName,jdbcType=OTHER},
+            </if>
+            <if test="fileSize != null">
+                FILE_SIZE = #{fileSize,jdbcType=DECIMAL},
+            </if>
+            <if test="fileType != null">
+                FILE_TYPE = #{fileType,jdbcType=OTHER},
+            </if>
+            <if test="filePath != null">
+                FILE_PATH = #{filePath,jdbcType=OTHER},
+            </if>
+            <if test="fileComment != null">
+                FILE_COMMENT = #{fileComment,jdbcType=OTHER},
+            </if>
+            <if test="fileVersion != null">
+                FILE_VERSION = #{fileVersion,jdbcType=DECIMAL},
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="creatorId != null">
+                CREATOR_ID = #{creatorId,jdbcType=DECIMAL},
+            </if>
+            <if test="creatorName != null">
+                CREATOR_NAME = #{creatorName,jdbcType=OTHER},
+            </if>
+            <if test="mdedTime != null">
+                MDED_TIME = #{mdedTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="menderId != null">
+                MENDER_ID = #{menderId,jdbcType=DECIMAL},
+            </if>
+            <if test="menderName != null">
+                MENDER_NAME = #{menderName,jdbcType=OTHER},
+            </if>
+            <if test="isenable != null">
+                ISENABLE = #{isenable,jdbcType=DECIMAL},
+            </if>
+            <if test="md5 != null">
+                MD5 = #{md5,jdbcType=VARCHAR},
+            </if>
+            <if test="sha1 != null">
+                SHA1 = #{sha1,jdbcType=VARCHAR},
+            </if>
+            <if test="visitCount != null">
+                VISIT_COUNT = #{visitCount,jdbcType=DECIMAL},
+            </if>
+            <if test="downloadCount != null">
+                DOWNLOAD_COUNT = #{downloadCount,jdbcType=DECIMAL},
+            </if>
+            <if test="standby1 != null">
+                STANDBY1 = #{standby1,jdbcType=OTHER},
+            </if>
+            <if test="standby2 != null">
+                STANDBY2 = #{standby2,jdbcType=OTHER},
+            </if>
+            <if test="standby3 != null">
+                STANDBY3 = #{standby3,jdbcType=OTHER},
+            </if>
+            <if test="standby4 != null">
+                STANDBY4 = #{standby4,jdbcType=OTHER},
+            </if>
+            <if test="standby5 != null">
+                STANDBY5 = #{standby5,jdbcType=OTHER},
+            </if>
+        </set>
+        where FILE_ID = #{fileId,jdbcType=DECIMAL}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="io.jeasyframework.entity.DocFile">
+        update DOC_FILE
+        <set>
+            <if test="fileName != null and fileName != ''">
+                FILE_NAME = #{fileName,jdbcType=OTHER},
+            </if>
+            <if test="fileFolderId != null and fileFolderId != ''">
+                FILE_FOLDER_ID = #{fileFolderId,jdbcType=DECIMAL},
+            </if>
+            <if test="fileFolderName != null and fileFolderName != ''">
+                FILE_FOLDER_NAME = #{fileFolderName,jdbcType=OTHER},
+            </if>
+            <if test="fileType != null and fileType != ''">
+                FILE_TYPE = #{fileType,jdbcType=OTHER},
+            </if>
+            <if test="filePath != null and filePath != ''">
+                FILE_PATH = #{filePath,jdbcType=OTHER},
+            </if>
+            <if test="fileComment != null and fileComment != ''">
+                FILE_COMMENT = #{fileComment,jdbcType=OTHER},
+            </if>
+            <if test="fileVersion != null and fileVersion != ''">
+                FILE_VERSION = #{fileVersion,jdbcType=DECIMAL},
+            </if>
+            <if test="mdedTime != null">
+                MDED_TIME = #{mdedTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="menderId != null and menderId != ''">
+                MENDER_ID = #{menderId,jdbcType=DECIMAL},
+            </if>
+            <if test="menderName != null and menderName != ''">
+                MENDER_NAME = #{menderName,jdbcType=DECIMAL},
+            </if>
+            <if test="md5 != null and md5 != ''">
+                MD5 = #{md5,jdbcType=VARCHAR},
+            </if>
+            <if test="sha1 != null and sha1 != ''">
+                SHA1 = #{sha1,jdbcType=VARCHAR},
+            </if>
+            <if test="visitCount != null and visitCount != ''">
+                VISIT_COUNT = #{visitCount,jdbcType=DECIMAL},
+            </if>
+            <if test="downloadCount != null and downloadCount != ''">
+                DOWNLOAD_COUNT = #{downloadCount,jdbcType=DECIMAL},
+            </if>
+            ISENABLE = #{isenable,jdbcType=DECIMAL}
+        </set>
+        where FILE_ID = #{fileId,jdbcType=DECIMAL}
+    </update>
+</mapper>

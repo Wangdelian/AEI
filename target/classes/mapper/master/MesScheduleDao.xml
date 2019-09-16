@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="io.jeasyframework.dao.master.MesScheduleDao">
+	<select id="queryList" resultType="io.jeasyframework.entity.MesScheduleEntity" >
+		select  F_PRODUCESCHEDULEID as fProducescheduleid,F_PRODUCESCHEDULENAME as fProduceschedulename,F_DATESTART as fDatestart,F_DATEEND as fDateend,F_PLANID as fPlanid,F_DATECREATED as fDatecreated,F_ISENABLE as fIsenable
+		from MES_PRODUCESCHEDULE
+		<if test="name != null and name != '' ">
+			WHERE  ( F_PRODUCESCHEDULENAME like    '%' || #{name} || '%' )
+		</if>
+	</select>
+	<select id="queryTotal" resultType="int">
+		select  COUNT(*) from MES_PRODUCESCHEDULE
+		<if test="name != null and name != '' ">
+			WHERE  ( F_PRODUCESCHEDULENAME like    '%' || #{name} || '%' )
+		</if>
+	</select>
+	<select id="queryObject" resultType="io.jeasyframework.entity.MesScheduleEntity" >
+		select  F_PRODUCESCHEDULEID as fProducescheduleid,F_PRODUCESCHEDULENAME as fProduceschedulename,F_DATESTART as fDatestart,F_DATEEND as fDateend,F_PLANID as fPlanid,F_DATECREATED as fDatecreated,F_ISENABLE as fIsenable
+		from MES_PRODUCESCHEDULE WHERE F_PRODUCESCHEDULEID = #{value}
+	</select>
+	<update id="update" parameterType="io.jeasyframework.entity.MesScheduleEntity">
+		update MES_PRODUCESCHEDULE
+		<set>
+			<if test="fProduceschedulename != null">F_PRODUCESCHEDULENAME = #{fProduceschedulename}, </if>
+			<if test="fDatestart != null">F_DATESTART = #{fDatestart},</if>
+			<if test="fDateend != null">F_DATEEND = #{fDateend},</if>
+			<if test="fPlanid != null">f_Planid = #{fPlanid},</if>
+			<if test="fIsenable != null">f_Isenable = #{fIsenable},</if>
+		</set>
+		where F_PRODUCESCHEDULEID = #{fProducescheduleid}
+	</update>
+	<insert id="save" parameterType="io.jeasyframework.entity.MesScheduleEntity" useGeneratedKeys="true" keyProperty="fProducescheduleid">
+		<selectKey resultType="java.lang.Long" keyProperty="fProducescheduleid" order="BEFORE">
+			select MES_SCHEDULE_ID.nextval as fProducescheduleid from dual
+		</selectKey>
+		INSERT  into MES_PRODUCESCHEDULE
+		(
+		F_PRODUCESCHEDULEID,
+		F_PRODUCESCHEDULENAME,
+		F_DATESTART,
+		F_DATEEND,
+		f_Planid,
+		f_Isenable,
+		F_DATECREATED
+		)
+		VALUES
+		(
+		#{fProducescheduleid},
+		#{fProduceschedulename},
+		#{fDatestart},
+		#{fDateend},
+		#{fPlanid},
+		#{fIsenable},
+		sysdate
+		)
+
+	</insert>
+	<select id="getMaxent" resultType="io.jeasyframework.entity.MesScheduleEntity">
+		select  F_PRODUCESCHEDULEID as fProducescheduleid,F_PRODUCESCHEDULENAME as fProduceschedulename,F_DATESTART as fDatestart,F_DATEEND as fDateend,F_PLANID as fPlanid,F_DATECREATED as fDatecreated,F_ISENABLE as fIsenable
+		from MES_PRODUCESCHEDULE where F_dateend in (select max(f_dateend) from mes_produceschedule WHERE F_PRODUCESCHEDULEID &lt;&gt; #{value} )
+	</select>
+	<select id="queryListCase" resultType="io.jeasyframework.entity.MesScheduleEntity">
+select  F_PRODUCESCHEDULEID as fProducescheduleid,F_PRODUCESCHEDULENAME as fProduceschedulename,F_DATESTART as fDatestart,F_DATEEND as fDateend,F_PLANID as fPlanid,F_DATECREATED as fDatecreated,F_ISENABLE as fIsenable
+	from MES_PRODUCESCHEDULE where (F_dateend between #{timeStart} and #{timeEnd} or f_datestart  between  #{timeStart} and #{timeEnd})
+		<if test="id != null">and F_PRODUCESCHEDULEID &lt;&gt; #{id}</if>
+	</select>
+	<delete id="deleteBatch">
+		delete from MES_PRODUCESCHEDULE where F_PRODUCESCHEDULEID in
+		<foreach item="fProducescheduleid" collection="array" open="(" separator="," close=")">
+			#{fProducescheduleid}
+		</foreach>
+	</delete>
+</mapper>

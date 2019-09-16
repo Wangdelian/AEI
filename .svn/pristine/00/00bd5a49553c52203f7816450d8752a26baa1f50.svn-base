@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="io.jeasyframework.dao.master.DocFileLogDao">
+    <resultMap id="BaseResultMap" type="io.jeasyframework.entity.DocFileLog">
+        <id column="LOG_ID" jdbcType="DECIMAL" property="logId"/>
+        <result column="LOG_TIME" jdbcType="TIMESTAMP" property="logTime"/>
+        <result column="LOG_OPERATE_TYPE" jdbcType="OTHER" property="logOperateType"/>
+        <result column="LOG_FILE_ID" jdbcType="DECIMAL" property="logFileId"/>
+        <result column="LOG_CONTENT" jdbcType="VARCHAR" property="logContent"/>
+        <result column="CREATOR_ID" jdbcType="DECIMAL" property="creatorId"/>
+        <result column="CREATOR_NAME" jdbcType="OTHER" property="creatorName"/>
+        <result column="CREATOR_IP" jdbcType="OTHER" property="creatorIp"/>
+        <result column="STANDBY1" jdbcType="OTHER" property="standby1"/>
+        <result column="STANDBY2" jdbcType="OTHER" property="standby2"/>
+        <result column="STANDBY3" jdbcType="OTHER" property="standby3"/>
+        <result column="STANDBY4" jdbcType="OTHER" property="standby4"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    LOG_ID, LOG_TIME, LOG_OPERATE_TYPE, LOG_FILE_ID, LOG_CONTENT, CREATOR_ID, CREATOR_NAME, 
+    CREATOR_IP, STANDBY1, STANDBY2, STANDBY3, STANDBY4
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Short" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from DOC_FILE_LOG
+        where LOG_ID = #{logId,jdbcType=DECIMAL}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Short">
+    delete from DOC_FILE_LOG
+    where LOG_ID = #{logId,jdbcType=DECIMAL}
+  </delete>
+    <insert id="insert" parameterType="io.jeasyframework.entity.DocFileLog" useGeneratedKeys="true"
+            keyProperty="logId">
+        <selectKey resultType="java.lang.Long" keyProperty="logId" order="BEFORE">
+            select SEQ_FILELOG_ID.nextval as logId from dual
+        </selectKey>
+        insert into DOC_FILE_LOG
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="logId != null">
+                LOG_ID,
+            </if>
+            <if test="logTime != null">
+                LOG_TIME,
+            </if>
+            <if test="logOperateType != null">
+                LOG_OPERATE_TYPE,
+            </if>
+            <if test="logFileId != null">
+                LOG_FILE_ID,
+            </if>
+            <if test="logContent != null">
+                LOG_CONTENT,
+            </if>
+            <if test="creatorId != null">
+                CREATOR_ID,
+            </if>
+            <if test="creatorName != null">
+                CREATOR_NAME,
+            </if>
+            <if test="creatorIp != null">
+                CREATOR_IP,
+            </if>
+            <if test="standby1 != null">
+                STANDBY1,
+            </if>
+            <if test="standby2 != null">
+                STANDBY2,
+            </if>
+            <if test="standby3 != null">
+                STANDBY3,
+            </if>
+            <if test="standby4 != null">
+                STANDBY4,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="logId != null">
+                #{logId,jdbcType=DECIMAL},
+            </if>
+            <if test="logTime != null">
+                #{logTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="logOperateType != null">
+                #{logOperateType,jdbcType=OTHER},
+            </if>
+            <if test="logFileId != null">
+                #{logFileId,jdbcType=DECIMAL},
+            </if>
+            <if test="logContent != null">
+                #{logContent,jdbcType=VARCHAR},
+            </if>
+            <if test="creatorId != null">
+                #{creatorId,jdbcType=DECIMAL},
+            </if>
+            <if test="creatorName != null">
+                #{creatorName,jdbcType=OTHER},
+            </if>
+            <if test="creatorIp != null">
+                #{creatorIp,jdbcType=OTHER},
+            </if>
+            <if test="standby1 != null">
+                #{standby1,jdbcType=OTHER},
+            </if>
+            <if test="standby2 != null">
+                #{standby2,jdbcType=OTHER},
+            </if>
+            <if test="standby3 != null">
+                #{standby3,jdbcType=OTHER},
+            </if>
+            <if test="standby4 != null">
+                #{standby4,jdbcType=OTHER},
+            </if>
+        </trim>
+    </insert>
+    <insert id="insertSelective" parameterType="io.jeasyframework.entity.DocFileLog">
+        insert into DOC_FILE_LOG
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="logId != null">
+                LOG_ID,
+            </if>
+            <if test="logTime != null">
+                LOG_TIME,
+            </if>
+            <if test="logOperateType != null">
+                LOG_OPERATE_TYPE,
+            </if>
+            <if test="logFileId != null">
+                LOG_FILE_ID,
+            </if>
+            <if test="logContent != null">
+                LOG_CONTENT,
+            </if>
+            <if test="creatorId != null">
+                CREATOR_ID,
+            </if>
+            <if test="creatorName != null">
+                CREATOR_NAME,
+            </if>
+            <if test="creatorIp != null">
+                CREATOR_IP,
+            </if>
+            <if test="standby1 != null">
+                STANDBY1,
+            </if>
+            <if test="standby2 != null">
+                STANDBY2,
+            </if>
+            <if test="standby3 != null">
+                STANDBY3,
+            </if>
+            <if test="standby4 != null">
+                STANDBY4,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="logId != null">
+                #{logId,jdbcType=DECIMAL},
+            </if>
+            <if test="logTime != null">
+                #{logTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="logOperateType != null">
+                #{logOperateType,jdbcType=OTHER},
+            </if>
+            <if test="logFileId != null">
+                #{logFileId,jdbcType=DECIMAL},
+            </if>
+            <if test="logContent != null">
+                #{logContent,jdbcType=VARCHAR},
+            </if>
+            <if test="creatorId != null">
+                #{creatorId,jdbcType=DECIMAL},
+            </if>
+            <if test="creatorName != null">
+                #{creatorName,jdbcType=OTHER},
+            </if>
+            <if test="creatorIp != null">
+                #{creatorIp,jdbcType=OTHER},
+            </if>
+            <if test="standby1 != null">
+                #{standby1,jdbcType=OTHER},
+            </if>
+            <if test="standby2 != null">
+                #{standby2,jdbcType=OTHER},
+            </if>
+            <if test="standby3 != null">
+                #{standby3,jdbcType=OTHER},
+            </if>
+            <if test="standby4 != null">
+                #{standby4,jdbcType=OTHER},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="io.jeasyframework.entity.DocFileLog">
+        update DOC_FILE_LOG
+        <set>
+            <if test="logTime != null">
+                LOG_TIME = #{logTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="logOperateType != null">
+                LOG_OPERATE_TYPE = #{logOperateType,jdbcType=OTHER},
+            </if>
+            <if test="logFileId != null">
+                LOG_FILE_ID = #{logFileId,jdbcType=DECIMAL},
+            </if>
+            <if test="logContent != null">
+                LOG_CONTENT = #{logContent,jdbcType=VARCHAR},
+            </if>
+            <if test="creatorId != null">
+                CREATOR_ID = #{creatorId,jdbcType=DECIMAL},
+            </if>
+            <if test="creatorName != null">
+                CREATOR_NAME = #{creatorName,jdbcType=OTHER},
+            </if>
+            <if test="creatorIp != null">
+                CREATOR_IP = #{creatorIp,jdbcType=OTHER},
+            </if>
+            <if test="standby1 != null">
+                STANDBY1 = #{standby1,jdbcType=OTHER},
+            </if>
+            <if test="standby2 != null">
+                STANDBY2 = #{standby2,jdbcType=OTHER},
+            </if>
+            <if test="standby3 != null">
+                STANDBY3 = #{standby3,jdbcType=OTHER},
+            </if>
+            <if test="standby4 != null">
+                STANDBY4 = #{standby4,jdbcType=OTHER},
+            </if>
+        </set>
+        where LOG_ID = #{logId,jdbcType=DECIMAL}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="io.jeasyframework.entity.DocFileLog">
+    update DOC_FILE_LOG
+    set LOG_TIME = #{logTime,jdbcType=TIMESTAMP},
+      LOG_OPERATE_TYPE = #{logOperateType,jdbcType=OTHER},
+      LOG_FILE_ID = #{logFileId,jdbcType=DECIMAL},
+      LOG_CONTENT = #{logContent,jdbcType=VARCHAR},
+      CREATOR_ID = #{creatorId,jdbcType=DECIMAL},
+      CREATOR_NAME = #{creatorName,jdbcType=OTHER},
+      CREATOR_IP = #{creatorIp,jdbcType=OTHER},
+      STANDBY1 = #{standby1,jdbcType=OTHER},
+      STANDBY2 = #{standby2,jdbcType=OTHER},
+      STANDBY3 = #{standby3,jdbcType=OTHER},
+      STANDBY4 = #{standby4,jdbcType=OTHER}
+    where LOG_ID = #{logId,jdbcType=DECIMAL}
+  </update>
+</mapper>

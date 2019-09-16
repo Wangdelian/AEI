@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="io.jeasyframework.dao.master.SysGeneratorDao">
+	<select id="queryList" resultType="map">
+		select table_name tableName,table_type engine, comments tableComment, '' createTime from user_tab_comments
+			where 1=1
+		<if test="tableName != null and tableName.trim() != ''">
+			and table_name like '${tableName}%' 
+		</if>
+	</select>
+	<select id="queryListForEntity" resultType="io.jeasyframework.plugins.codegenerator.entity.TableEntity">
+		select table_name tableName,comments comments from user_tab_comments
+			where 1=1
+		<if test="tableName != null and tableName.trim() != ''">
+			and table_name like '${tableName}%' 
+		</if>
+	</select>
+	<select id="queryTotal" resultType="int">
+		select count(*) from user_tab_comments where 1=1
+		<if test="tableName != null and tableName.trim() != ''">
+			and table_name like '${tableName}%' 
+		</if> 
+	</select> 
+	
+	<select id="queryTable" resultType="map">
+		select table_name tableName,table_type engine, comments tableComment, '' createTime from user_tab_comments
+			where table_name = #{tableName}
+	</select> 
+	
+	<select id="queryColumns" resultType="map">
+		select user_tab_columns.COLUMN_NAME columnName, DATA_TYPE dataType, user_col_comments.comments columnComment, COLUMN_ID columnKey, '' extra from user_tab_columns
+        inner join user_col_comments on user_col_comments.column_name=user_tab_columns.COLUMN_NAME and user_col_comments.table_name=user_tab_columns.TABLE_NAME
+ 			where user_tab_columns.TABLE_NAME = #{tableName} order by COLUMN_ID
+	</select>
+</mapper>

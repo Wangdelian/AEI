@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="io.jeasyframework.dao.master.MesOeeTrendDao">
+	<select id="queryList" resultType="io.jeasyframework.entity.MesOeeTrendEntity">
+		select * from MES_OEETREND  order by workline,dateinfo
+	</select>
+	<select id="queryLine" resultType="io.jeasyframework.entity.MesOeeTrendEntity">
+		SELECT  distinct(workline),1 as oeetrendid   from MES_OEETREND
+	</select>
+	<select id="queryLineDay" resultType="io.jeasyframework.entity.MesOeeTrendEntity">
+		SELECT  distinct(dateinfo),workline   from MES_OEETREND order by workline,dateinfo
+	</select>
+	<select id="queryLineShiftName" resultType="io.jeasyframework.entity.MesOeeTrendEntity">
+		SELECT  distinct(shiftname),workline   from MES_OEETREND order by workline,shiftname
+	</select>
+</mapper>

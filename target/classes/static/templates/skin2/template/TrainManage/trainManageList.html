@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>过车管理</title>
+    <style type="text/css">
+        .selectWidth{
+            width: 160px !important;
+        }
+        .labelWidth{
+            width: 90px !important;
+        }
+        #main .layui-table-view .layui-table th, #main .layui-table-view .layui-table td {
+            padding: 5px 0;
+            font-size: 12px;
+            -webkit-transform-origin-x: 0;
+        }
+
+        body {
+            overflow-y: scroll;
+        }
+    </style>
+    <link rel="stylesheet" href="${siteurl}/templates/skin2/template/plugins/layui/css/layui.css" media="all">
+    <script src="${siteurl}/public/js/utils.js"></script>
+
+</head>
+<body id="main">
+<br>
+<form class="layui-form layui-form-pane" action="">
+    <div class="layui-form-item">
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label labelWidth">筛选</label>
+                <div class="layui-input-inline selectWidth">
+                    <select name="tagstatus" lay-filter="tagstatus" id="tagstatus">
+                        <option value="0">请选择</option>
+                        <option value="1">标签不可识别</option>
+                        <option value="2">标签识别错误</option>
+                        <option value="3">标签识别正确</option>
+                    </select>
+                </div>
+            </div>
+            <div class="layui-inline" id="selec1">
+                <label class="layui-form-label labelWidth">铁路局</label>
+                <div class="layui-input-inline selectWidth">
+                    <select name="fBureauname" lay-filter="fBureauname" id="fBureauname" >
+                        <option value="">请选择</option>
+                    </select>
+                </div>
+            </div>
+            <div class="layui-inline" id="selec2">
+                <label class="layui-form-label labelWidth">机务段</label>
+                <div class="layui-input-inline selectWidth">
+                    <select name="fSectionname" lay-filter="fSectionname" id="fSectionname">
+                        <option value="">请选择铁路局</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline" id="selec3">
+                <label class="layui-form-label labelWidth">整备场</label>
+                <div class="layui-input-inline selectWidth">
+                    <select name="fpasssite" lay-filter="fpasssite" id="fpasssite">
+                        <option value="">请选择机务段</option>
+                    </select>
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label labelWidth">进出方向</label>
+                <div class="layui-input-inline selectWidth">
+                    <select name="fdirection" lay-filter="fdirection" id="fdirection">
+                        <option value="">请选择</option>
+                        <option value="进段">进段</option>
+                        <option value="出段">出段</option>
+                    </select>
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label labelWidth">通过地点</label>
+                <div class="layui-input-inline selectWidth">
+                    <input type="text" lay-verify="inputVerify" id="fpasspoint"  name="fpasspoint", class="layui-input" placeholder="请输入通过地点">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <span class="layui-form-label labelWidth">通过时间</span>
+                <div class="layui-input-inline selectWidth">
+                    <input type="text" class="layui-input" id="startTime" name="startTime"
+                           placeholder="yyyy-MM-dd HH:mm:ss" readonly="readonly">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <span class="layui-form-label labelWidth">至</span>
+                <div class="layui-input-inline selectWidth">
+                    <input type="text" class="layui-input" id="endTime" name="endTime"
+                           placeholder="yyyy-MM-dd HH:mm:ss" readonly="readonly">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <span class="layui-form-label labelWidth">车型</span>
+                <div class="layui-input-inline selectWidth">
+                    <input type="text"  id="type" lay-verify="inputVerify" name="type" class="layui-input" placeholder="请输入车型">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <span class="layui-form-label labelWidth">车号</span>
+                <div class="layui-input-inline selectWidth">
+                    <input type="text" lay-verify="inputVerify" id="number" name="number" class="layui-input" placeholder="请输入车号">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <button class="layui-btn" lay-submit="" lay-filter="demo1">查询</button>
+                <button class="layui-btn" lay-submit lay-filter="export">导出</button>
+            </div>
+        </div>
+        </div>
+    </div>
+</form>
+<table class="layui-hide" id="test" lay-filter="demo"></table>
+<div id="pagination"></div>
+
+<script type="text/javascript" src="${siteurl}/templates/default/media/js/jquery1.9.1.js"></script>
+<script src="${siteurl}/templates/skin2/template/plugins/layui/layui.js"></script>
+<script type="text/javascript" src="${siteurl}/public/libs/vue.min.js"></script>
+<!--业务逻辑JS-->
+<script src="${siteurl}/templates/skin2/media/js/biz/TrainManage/trainManageList.js"></script>
+<script>
+    var siteurl = '${siteurl}';
+    var levelmarkid = '${levelmarkid}';
+    var abname = '${abname}';
+    var abnameTotal = '${abnameTotal}';
+    var levelmarkidTotal = '${levelmarkidTotal}';
+    var mileage = '${mileage}';
+</script>
+</body>
+</html>

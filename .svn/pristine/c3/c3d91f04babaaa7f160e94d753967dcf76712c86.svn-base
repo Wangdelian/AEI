@@ -1,0 +1,105 @@
+spring.beetl.root = classpath:/static/templates/
+spring.beetl.prefix =
+spring.beetl.suffix = .html
+spring.beetl.order = 0
+spring.beetl.cofig = classpath:beetl.properties
+
+banner.charset=UTF-8
+server.tomcat.uri-encoding=UTF-8
+spring.http.encoding.charset=UTF-8
+spring.http.encoding.enabled=true
+spring.http.encoding.force=true
+spring.messages.encoding=UTF-8
+
+#文件上传大小限制设置
+#Spring Boot 1.3.x--
+multipart.maxFileSize=10240Mb
+multipart.maxRequestSize=10240Mb
+
+#Spring Boot 1.4.x++
+spring.http.multipart.maxFileSize=10240Mb
+spring.http.multipart.maxRequestSize=10240Mb
+spring.jmx.default-domain=H1MQS
+
+
+# Master datasource config
+spring.datasource.druid.master.name=master
+spring.datasource.druid.master.driver-class-name=oracle.jdbc.driver.OracleDriver
+spring.datasource.druid.master.url=jdbc:oracle:thin:@10.211.195.15:1521:jwpt
+spring.datasource.druid.master.username=ATIS_LZJ
+spring.datasource.druid.master.password=ATIS_ATIS_LZJ
+
+
+# SlaveAlpha datasource config
+spring.datasource.druid.slave-alpha.name=SlaveAlpha
+spring.datasource.druid.slave-alpha.driver-class-name=oracle.jdbc.driver.OracleDriver
+spring.datasource.druid.slave-alpha.url=jdbc:oracle:thin:@127.0.0.1:1521:orcl
+spring.datasource.druid.slave-alpha.username=mqs_system
+spring.datasource.druid.slave-alpha.password=123456
+
+# SlaveBeta datasource config
+spring.datasource.druid.slave-beta.name=SlaveBeta
+spring.datasource.druid.slave-beta.driver-class-name=oracle.jdbc.driver.OracleDriver
+spring.datasource.druid.slave-beta.url=jdbc:oracle:thin:@127.0.0.1:1521:orcl
+spring.datasource.druid.slave-beta.username=mqs_system
+spring.datasource.druid.slave-beta.password=123456
+
+# SlaveGamma datasource config
+spring.datasource.druid.slave-gamma.name=SlaveGamma
+spring.datasource.druid.slave-gamma.driver-class-name=oracle.jdbc.driver.OracleDriver
+spring.datasource.druid.slave-gamma.url=jdbc:oracle:thin:@127.0.0.1:1521:orcl
+spring.datasource.druid.slave-gamma.username=mqs_system
+spring.datasource.druid.slave-gamma.password=123456
+
+# Druid dataSource config
+spring.datasource.type=com.alibaba.druid.pool.DruidDataSource
+spring.datasource.druid.initial-size=5
+spring.datasource.druid.max-active=20
+spring.datasource.druid.min-idle=5
+spring.datasource.druid.max-wait=60000
+spring.datasource.druid.pool-prepared-statements=false
+spring.datasource.druid.validation-query=SELECT 1 FROM DUAL
+spring.datasource.druid.validation-query-timeout=30000
+spring.datasource.druid.test-on-borrow=false
+spring.datasource.druid.test-on-return=false
+spring.datasource.druid.test-while-idle=true
+#spring.datasource.druid.time-between-eviction-runs-millis=
+#spring.datasource.druid.min-evictable-idle-time-millis=
+#spring.datasource.druid.max-evictable-idle-time-millis=10000
+
+# Druid stat filter config
+spring.datasource.druid.filters=stat,wall,log4j
+spring.datasource.druid.web-stat-filter.enabled=true
+spring.datasource.druid.web-stat-filter.url-pattern=/*
+spring.datasource.druid.web-stat-filter.exclusions=*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*
+spring.datasource.druid.web-stat-filter.session-stat-enable=true
+spring.datasource.druid.web-stat-filter.session-stat-max-count=10
+spring.datasource.druid.web-stat-filter.principal-session-name=user
+#spring.datasource.druid.web-stat-filter.principal-cookie-name=
+spring.datasource.druid.web-stat-filter.profile-enable=true
+spring.datasource.druid.filter.stat.db-type=oracle
+spring.datasource.druid.filter.stat.log-slow-sql=true
+spring.datasource.druid.filter.stat.slow-sql-millis=1000
+spring.datasource.druid.filter.stat.merge-sql=true
+spring.datasource.druid.filter.wall.enabled=true
+spring.datasource.druid.filter.wall.config.delete-allow=true
+spring.datasource.druid.filter.wall.config.drop-table-allow=false
+spring.datasource.druid.filter.slf4j.enabled=true
+# Druid manage page config
+spring.datasource.druid.stat-view-servlet.enabled=true
+spring.datasource.druid.stat-view-servlet.url-pattern=/druid/*
+spring.datasource.druid.stat-view-servlet.reset-enable=true
+spring.datasource.druid.stat-view-servlet.login-username=admin
+spring.datasource.druid.stat-view-servlet.login-password=admin
+#spring.datasource.druid.stat-view-servlet.allow=
+#spring.datasource.druid.stat-view-servlet.deny=
+spring.datasource.druid.use-global-data-source-stat=true
+# Druid AOP config
+spring.datasource.druid.aop-patterns=io.jeasyframework.service.impl.*
+spring.aop.proxy-target-class=true
+
+# MyBatis config
+mybatis.mapper-locations=classpath:mapper/master/*.xml
+mybatis.type-aliases-package=io.jeasyframework.dao.master
+
+

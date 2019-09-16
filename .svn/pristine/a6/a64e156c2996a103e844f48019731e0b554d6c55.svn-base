@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>组织机构管理</title>
+    <link rel="stylesheet" href="${siteurl}/templates/skin2/template/plugins/layui/css/layui.css" media="all">
+    <!--<script src="../../../default/media/js/layer/layer.js"></script>-->
+    <style type="text/css">
+        div#rMenu {
+            position: absolute;
+            visibility: hidden;
+            top: 0;
+            background-color: #555;
+            text-align: left;
+            padding: 2px;
+        }
+
+        div#rMenu ul li {
+            margin: 1px 0;
+            padding: 0 5px;
+            cursor: pointer;
+            list-style: none outside none;
+            background-color: #DFDFDF;
+        }
+
+        html, body {
+            height: 100%;
+            width: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        a {
+            cursor: pointer;
+        }
+
+        #list {
+            height: 30px;
+            line-height: 30px;
+            margin:15px 0 10px;
+            border: 1px solid #dcdcdc;
+            border-radius: 5px;
+        }
+
+        #list a{
+            color: #1a92ea;
+            font-size:16px;
+            margin-right: 5px;
+        }
+        #tree{
+            height: 700px;
+            overflow:auto;
+            margin-top: 15px;
+            background-color: #eee;
+            border: 1px solid #dcdcdc;
+            border-radius: 5px;
+
+        }
+        .external-events {
+            height: 650px;
+            overflow-y:auto;
+            margin-bottom: 20px;
+            /* float: left;*/
+            padding: 0 10px;
+            border: 1px solid #dcdcdc;
+            background: #eee;
+            /*text-align: left;*/
+            border-radius: 5px;
+        }
+
+    </style>
+</head>
+<body>
+<div class="layui-fluid" id="main">
+    <div class="layui-row layui-col-space30">
+        <div class="layui-col-xs3">
+            <div class="layui-field-box" id="tree">
+                <div id="treeDemo" class="ztree"></div>
+            </div>
+            <div id="rMenu">
+                <ul>
+                    <li id="m_refresh" onclick="refreshTreeNode();">刷新</li>
+                    <li id="m_rename" onclick="renameTreeNode();">重命名</li>
+                    <li id="m_remove" onclick="removeTreeNode();">删除部门</li>
+                    <li id="m_add" onclick="addTreeNode();">增加部门</li>
+                    <li id="m_del" onclick="delTreeNode();">删除人员</li>
+                    <li id="m_edit" onclick="editTreeNode();">编辑人员</li>
+                    <li id="m_details" onclick="treeNodeDetails();">查看详情</li>
+                </ul>
+            </div>
+        </div>
+        <div class="layui-col-xs9">
+            <div  class="layui-form layui-form-pane" id="tt">
+                <div class="layui-row">
+                    <!--<div style="height: 96%;overflow:auto">-->
+                    <div class="layui-elem-quote" id="list">
+                        <div class="layui-inline">
+                            <span class="layui-form-label">登录名</span>
+                            <div class="layui-input-inline">
+                                <input type="text"  id="username" v-model="user.username" class="layui-input" placeholder="请输入登录名">
+                            </div>
+                        </div>
+                        <div class="layui-inline">
+                            <button class="layui-btn"  onclick="searchByName()">查询</button>
+                        </div>
+                    </div>
+                    <div id='events' class="external-events">
+                        <h4 style="font-size: 16px;padding-top: 1em;">用户列表</h4>
+                        <table  id="table" lay-filter="demo"></table>
+                    </div>
+                </div>
+            </div>
+            <!--</div>-->
+        </div>
+    </div>
+</div>
+
+<!--<table class="layui-hide" id="test" lay-filter="demo"></table>-->
+<script type="text/html" id="switchTpl">
+    <input type="checkbox" name="sex" value="{{d.sex}}" lay-skin="switch" lay-text="女|男" lay-filter="sexDemo" {{ d.sex == 0 ? 'checked' : '' }}>
+</script>
+
+<script type="text/html" id="checkboxTpl">
+    <input type="checkbox" name="lock" value="{{d.status}}" title="锁定" lay-filter="lockDemo" {{ d.status == 0 ? 'checked' : '' }}>
+</script>
+
+<script type="text/html" id="barDemo">
+    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
+
+<div id="pagination"></div>
+<script type="text/javascript" src="${siteurl}/templates/default/media/js/jquery1.9.1.js"></script>
+<script src="${siteurl}/templates/skin2/template/plugins/layui/layui.js"></script>
+<script type="text/javascript" src="${siteurl}/public/libs/vue.min.js"></script>
+<!--ztree开始-->
+<link rel="stylesheet" type="text/css" href="${siteurl}/templates/skin2/media/js/plugins/zTree_v3/css/zTreeStyle/zTreeStyle.css" />
+<script type="text/javascript" src="${siteurl}/templates/skin2/media/js/plugins/zTree_v3/js/jquery.ztree.core.js"></script>
+<script type="text/javascript" src="${siteurl}/templates/skin2/media/js/plugins/zTree_v3/js/jquery.ztree.excheck.js"></script>
+<script type="text/javascript" src="${siteurl}/templates/skin2/media/js/plugins/zTree_v3/js/jquery.ztree.exedit.js"></script>
+<!--ztree结束-->
+<!--业务逻辑JS-->
+<script type="text/javascript" src="${siteurl}/templates/skin2/media/js/biz/SysLevelmark/levelmark.js"></script>
+</body>
+<script type="text/javascript">
+    var siteurl='${siteurl}';
+</script>
+</html>

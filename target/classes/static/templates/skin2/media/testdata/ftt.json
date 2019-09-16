@@ -1,0 +1,33 @@
+{
+  "code": 0
+  ,"msg": ""
+  ,"count": 3
+  ,"data": [{
+    "username": "FTT%"
+    ,"amount": 1818
+    ,"province": "122234"
+    ,"city": "2017"
+    ,"zone": "西湖区"
+    ,"street": "西溪街道"
+    ,"address": "西溪花园"
+    ,"house": "30栋1单元"
+  }, {
+    "username": "一次合格数"
+    ,"amount": 39
+    ,"province": "4321"
+    ,"city": "2017"
+    ,"zone": "姑苏区"
+    ,"street": "丝绸路"
+    ,"address": "天墅之城"
+    ,"house": "9幢2单元"
+  }, {
+    "username": "样本值"
+    ,"amount": 8888
+    ,"province": "5678"
+    ,"city": "2017"
+    ,"zone": "青山湖区"
+    ,"street": "艾溪湖办事处"
+    ,"address": "中兴和园"
+    ,"house": "1幢3单元"
+  }]
+}  

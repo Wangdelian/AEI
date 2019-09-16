@@ -1,0 +1,89 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>欢迎使用《机务闸楼AEI设备联网系统》</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <script src="${siteurl}/templates/skin2/plugins/login4Ex.css"></script>
+    <script type="text/javascript" src="${siteurl}/templates/skin2/plugins/login4Ex.js"></script>
+    <script type="text/javascript" src="${siteurl}/templates/default/media/js/jquery1.9.1.js"></script>
+
+
+
+    <script type="text/javascript">
+        var _systype = '4';//系统类型
+        var _sysname = '机务闸楼AEI设备联网系统';//系统名称
+    </script>
+    <link rel="stylesheet" href="../plugins/login4Ex.css">
+</head>
+<body onload="loginLoad()">
+<!-- 页面头部 -->
+<div id="header">
+    <div class="headerLeft">
+        <div id="videoplugin" style="height:1px;width:1px;"></div>
+        <div class="headerText">${webtitle}</div>
+    </div>
+    <!-- 头部右上角按钮 -->
+    <div class="headerRight">
+        <!-- 支持按钮 -->
+        <div class="headerSupportBtn" title="点击获取系统所需安装的插件" onmousemove="this.className='headerSupportBtn_mov'" onmouseout="this.className='headerSupportBtn'" onclick="showSupport();"></div>
+        <!-- 中间的竖分割线 -->
+        <div class="headerBtnCutting"></div>
+        <!-- 关于按钮 -->
+        <div class="headerAboutBtn" title="点击查看系统关于信息" onmousemove="this.className='headerAboutBtn_mov'" onmouseout="this.className='headerAboutBtn'" onclick="about()"></div>
+    </div>
+</div>
+
+<!-- 页面中间（主内容区域） -->
+<div id="content" align="center">
+    <form id="loginForm" name="loginForm" method="post" action="">
+        <!-- 隐藏域 -->
+        <input type="hidden" id="appId" name="appId" value="login" />
+        <div class="loginDiv">
+            <!-- 登录表单 -->
+            <div class="fromDiv">
+                <div class="loginInputDiv">
+                    <input type="text" id="userIdInput" name="userId" class="textInput" title="请输入您的用户名" tabindex="1" onfocus="this.className='textInput_ov';" onblur="this.className='textInput';" onmousemove="this.className='textInput_ov'" onmouseout="this.className='textInput'" tabindex="1" />
+                </div>
+                <div class="loginInputDiv">
+                    <input type="password" id="passWordInput" name="passWord" class="textInput" onfocus="this.className='textInput_ov';" onblur="this.className='textInput';" onmousemove="this.className='textInput_ov'" onmouseout="this.className='textInput'" title="请填写您的密码" tabindex="2" />
+                    <input type="hidden" id="netWorkCardInfo" name="nwci" />
+                </div>
+                <!-- 提交和重置按钮 -->
+                <div class="loginBtnDiv">
+                    <!-- 提交按钮 -->
+                    <div id="subBtn" class="subBtn" onclick="loginSubmit();" onMouseOut="btnShow('subBtn','subBtn')" onMouseOver="btnShow('subBtn','subBtn_mov');" title="请点击登录系统"></div>
+
+                    <!-- 重置按钮 -->
+                    <div id="resetBtn" class="resetBtn" onclick="loginReset();" onMouseOut="btnShow('resetBtn','resetBtn')" onMouseOver="btnShow('resetBtn','resetBtn_mov');" title="点击清空用户名、密码"></div>
+                </div>
+            </div>
+
+
+        </div>
+    </form>
+</div>
+
+<!-- 页面底部 -->
+<div id="footer" align="center">
+    推荐使用1024×768以上分辨率，Google Chrome浏览器访问 &nbsp;&nbsp;&nbsp;&nbsp;中国铁道科学研究院电子所&nbsp;&nbsp;&nbsp;&nbsp;重庆微标科技股份有限公司
+</div>
+<script type="text/javascript">
+    document.getElementById('userIdInput').focus();
+</script>
+</body>
+</html>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head><meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>
+
+</title></head>
+<body>
+<form method="post" action="" id="form1">
+    <div class="aspNetHidden">
+        <input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="/wEPDwUKLTEzNDM3NzkxOWRkkPjIy9ZyE+9lbCORvJg0f0IBcXD1Q+CPmFJQsDJVuxI=" />
+    </div>
+
+</form>
+</body>
+</html>

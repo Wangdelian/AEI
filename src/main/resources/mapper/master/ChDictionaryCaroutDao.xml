@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="io.jeasyframework.dao.master.ChDictionaryCaroutDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="io.jeasyframework.entity.ChDictionaryCaroutEntity" id="chDictionaryCaroutMap">
+        <result property="fId" column="F_ID"/>
+        <result property="fOrgid" column="F_OrgID"/>
+        <result property="fBsinfo" column="F_BSInfo"/>
+        <result property="fAttendant" column="F_Attendant"/>
+        <result property="fTraintype" column="F_TrainType"/>
+        <result property="fTrainnumber" column="F_TrainNumber"/>
+        <result property="fTrainorder" column="F_TrainOrder"/>
+        <result property="fDriver1" column="F_Driver1"/>
+        <result property="fDriver2" column="F_Driver2"/>
+        <result property="fAssistantdriver" column="F_AssistantDriver"/>
+        <result property="fStudent" column="F_Student"/>
+        <result property="fPredicttimeout" column="F_PredictTimeOut"/>
+        <result property="fPredicttimedrive" column="F_PredictTimeDrive"/>
+        <result property="fPasssite" column="F_PassSite"/>
+        <result property="fPasstrack" column="F_PassTrack"/>
+        <result property="fDepartsite" column="F_DepartSite"/>
+        <result property="fArrivesite" column="F_ArriveSite"/>
+        <result property="fAheadwarningtime1" column="F_AheadWarningTime1"/>
+        <result property="fBehindwarningtime1" column="F_BehindWarningTime1"/>
+        <result property="fStatus1" column="F_Status1"/>
+        <result property="fAheadwarningtime2" column="F_AheadWarningTime2"/>
+        <result property="fBehindwarningtime2" column="F_BehindWarningTime2"/>
+        <result property="fStatus2" column="F_Status2"/>
+        <result property="fAheadwarningtime3" column="F_AheadWarningTime3"/>
+        <result property="fBehindwarningtime3" column="F_BehindWarningTime3"/>
+        <result property="fStatus3" column="F_Status3"/>
+        <result property="fPracticaltimeout" column="F_PracticalTimeOut"/>
+        <result property="fPracticalpasssite" column="F_PracticalPassSite"/>
+        <result property="fPracticalpasstrack" column="F_PracticalPassTrack"/>
+        <result property="fPracticaltraintype" column="F_PracticalTrainType"/>
+        <result property="fPracticaltrainnumber" column="F_PracticalTrainNumber"/>
+        <result property="fPracticaltrainorder" column="F_PracticalTrainOrder"/>
+        <result property="fRemark" column="F_Remark"/>
+        <result property="fReserve1" column="F_Reserve1"/>
+        <result property="fReserve2" column="F_Reserve2"/>
+        <result property="fReserve3" column="F_Reserve3"/>
+        <result property="fReserve4" column="F_Reserve4"/>
+        <result property="fReserve5" column="F_Reserve5"/>
+		<result property="trainName" column="TRAINNAME"/>
+		<result property="trainNameReal" column="TRAINNAMEREAL"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+F_ID, F_OrgID, F_BSInfo, F_Attendant, F_TrainType, F_TrainNumber, F_TrainOrder, F_Driver1, F_Driver2, F_AssistantDriver, F_Student, F_PredictTimeOut, F_PredictTimeDrive, F_PassSite, F_PassTrack, F_DepartSite, F_ArriveSite, F_AheadWarningTime1, F_BehindWarningTime1, F_Status1, F_AheadWarningTime2, F_BehindWarningTime2, F_Status2, F_AheadWarningTime3, F_BehindWarningTime3, F_Status3, F_PracticalTimeOut, F_PracticalPassSite, F_PracticalPassTrack, F_PracticalTrainType, F_PracticalTrainNumber, F_PracticalTrainOrder, F_Remark, F_Reserve1, F_Reserve2, F_Reserve3, F_Reserve4, F_Reserve5
+	</sql>
+	<select id="queryObject" resultType="io.jeasyframework.entity.ChDictionaryCaroutEntity">
+		select CH_DICTIONARY_CAROUT.*,CONCAT(F_TRAINTYPE, CONCAT('-', F_TRAINNYMBER)) AS TRAINNAME,
+		CONCAT(F_PRACTICALTRAINTYPE, CONCAT('-', F_PRACTICALTRAINNUMBER))  AS TRAINNAMEREAL from "CH_DICTIONARY_CAROUT" where F_ID = #{value}
+	</select>
+
+	<select id="queryList" resultMap="chDictionaryCaroutMap">
+		select CH_DICTIONARY_CAROUT.*,CONCAT(F_TRAINTYPE, CONCAT('-', F_TRAINNYMBER)) AS TRAINNAME,
+		CONCAT(F_PRACTICALTRAINTYPE, CONCAT('-', F_PRACTICALTRAINNUMBER))  AS TRAINNAMEREAL from "CH_DICTIONARY_CAROUT"
+		where 1=1
+		<if test="startTime != null and startTime.trim() != ''">
+            and F_PredictTimeOut >= to_date(#{startTime},'yyyy-mm-dd hh24:mi:ss')
+        </if>
+	<if test="endTime != null and endTime.trim() != ''">
+		and F_PredictTimeOut &lt; to_date(#{endTime},'yyyy-mm-dd hh24:mi:ss')
+	</if>
+	<if test="fBureauname != null and fBureauname.trim() != ''">
+		and F_OrgID like '${fBureauname}%'
+	</if>
+	<if test="fSectionname != null and fSectionname.trim() != ''">
+		and F_OrgID like '${fSectionname}%'
+	</if>
+	<if test="fpasssite != null and fpasssite.trim() != ''">
+		and F_OrgID like '${fpasssite}%'
+	</if>
+        order by F_PredictTimeOut
+	</select>
+	
+ 	<select id="queryTotal" resultType="int">
+		select count(*) from "CH_DICTIONARY_CAROUT"
+		where 1=1
+		<if test="startTime != null and startTime.trim() != ''">
+			and F_PredictTimeOut >= to_date(#{startTime},'yyyy-mm-dd hh24:mi:ss')
+		</if>
+		<if test="endTime != null and endTime.trim() != ''">
+			and F_PredictTimeOut &lt; to_date(#{endTime},'yyyy-mm-dd hh24:mi:ss')
+		</if>
+		<if test="fBureauname != null and fBureauname.trim() != ''">
+			and F_OrgID like '${fBureauname}%'
+		</if>
+		<if test="fSectionname != null and fSectionname.trim() != ''">
+			and F_OrgID like '${fSectionname}%'
+		</if>
+		<if test="fpasssite != null and fpasssite.trim() != ''">
+			and F_OrgID like '${fpasssite}%'
+		</if>
+	</select>
+
+
+	<select id="queryHistoryList" resultMap="chDictionaryCaroutMap">
+		select CH_CAROUT_HISTORY.*,CONCAT(F_TRAINTYPE, CONCAT('-', F_TRAINNYMBER)) AS TRAINNAME,
+		CONCAT(F_PRACTICALTRAINTYPE, CONCAT('-', F_PRACTICALTRAINNUMBER))  AS TRAINNAMEREAL from "CH_CAROUT_HISTORY"
+		where 1=1
+		<if test="startTime != null and startTime.trim() != ''">
+			and F_PredictTimeOut >= to_date(#{startTime},'yyyy-mm-dd hh24:mi:ss')
+		</if>
+		<if test="endTime != null and endTime.trim() != ''">
+			and F_PredictTimeOut &lt; to_date(#{endTime},'yyyy-mm-dd hh24:mi:ss')
+		</if>
+		<if test="fBureauname != null and fBureauname.trim() != ''">
+			and F_OrgID like '${fBureauname}%'
+		</if>
+		<if test="fSectionname != null and fSectionname.trim() != ''">
+			and F_OrgID like '${fSectionname}%'
+		</if>
+		<if test="fpasssite != null and fpasssite.trim() != ''">
+			and F_OrgID like '${fpasssite}%'
+		</if>
+		order by F_PredictTimeOut
+	</select>
+
+	<select id="queryHistoryTotal" resultType="int">
+		select count(*) from "CH_CAROUT_HISTORY"
+		where 1=1
+		<if test="startTime != null and startTime.trim() != ''">
+			and F_PredictTimeOut >= to_date(#{startTime},'yyyy-mm-dd hh24:mi:ss')
+		</if>
+		<if test="endTime != null and endTime.trim() != ''">
+			and F_PredictTimeOut &lt; to_date(#{endTime},'yyyy-mm-dd hh24:mi:ss')
+		</if>
+		<if test="fBureauname != null and fBureauname.trim() != ''">
+			and F_OrgID like '${fBureauname}%'
+		</if>
+		<if test="fSectionname != null and fSectionname.trim() != ''">
+			and F_OrgID like '${fSectionname}%'
+		</if>
+		<if test="fpasssite != null and fpasssite.trim() != ''">
+			and F_OrgID like '${fpasssite}%'
+		</if>
+	</select>
+	 
+	<insert id="save" parameterType="io.jeasyframework.entity.ChDictionaryCaroutEntity">
+		insert into "CH_DICTIONARY_CAROUT"
+		(
+			`F_ID`, 
+			`F_OrgID`, 
+			`F_BSInfo`, 
+			`F_Attendant`, 
+			`F_TrainType`, 
+			`F_TrainNumber`, 
+			`F_TrainOrder`, 
+			`F_Driver1`, 
+			`F_Driver2`, 
+			`F_AssistantDriver`, 
+			`F_Student`, 
+			`F_PredictTimeOut`, 
+			`F_PredictTimeDrive`, 
+			`F_PassSite`, 
+			`F_PassTrack`, 
+			`F_DepartSite`, 
+			`F_ArriveSite`, 
+			`F_AheadWarningTime1`, 
+			`F_BehindWarningTime1`, 
+			`F_Status1`, 
+			`F_AheadWarningTime2`, 
+			`F_BehindWarningTime2`, 
+			`F_Status2`, 
+			`F_AheadWarningTime3`, 
+			`F_BehindWarningTime3`, 
+			`F_Status3`, 
+			`F_PracticalTimeOut`, 
+			`F_PracticalPassSite`, 
+			`F_PracticalPassTrack`, 
+			`F_PracticalTrainType`, 
+			`F_PracticalTrainNumber`, 
+			`F_PracticalTrainOrder`, 
+			`F_Remark`, 
+			`F_Reserve1`, 
+			`F_Reserve2`, 
+			`F_Reserve3`, 
+			`F_Reserve4`, 
+			`F_Reserve5`
+		)
+		values
+		(
+			#{fId}, 
+			#{fOrgid}, 
+			#{fBsinfo}, 
+			#{fAttendant}, 
+			#{fTraintype}, 
+			#{fTrainnumber}, 
+			#{fTrainorder}, 
+			#{fDriver1}, 
+			#{fDriver2}, 
+			#{fAssistantdriver}, 
+			#{fStudent}, 
+			#{fPredicttimeout}, 
+			#{fPredicttimedrive}, 
+			#{fPasssite}, 
+			#{fPasstrack}, 
+			#{fDepartsite}, 
+			#{fArrivesite}, 
+			#{fAheadwarningtime1}, 
+			#{fBehindwarningtime1}, 
+			#{fStatus1}, 
+			#{fAheadwarningtime2}, 
+			#{fBehindwarningtime2}, 
+			#{fStatus2}, 
+			#{fAheadwarningtime3}, 
+			#{fBehindwarningtime3}, 
+			#{fStatus3}, 
+			#{fPracticaltimeout}, 
+			#{fPracticalpasssite}, 
+			#{fPracticalpasstrack}, 
+			#{fPracticaltraintype}, 
+			#{fPracticaltrainnumber}, 
+			#{fPracticaltrainorder}, 
+			#{fRemark}, 
+			#{fReserve1}, 
+			#{fReserve2}, 
+			#{fReserve3}, 
+			#{fReserve4}, 
+			#{fReserve5}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="io.jeasyframework.entity.ChDictionaryCaroutEntity">
+		update "CH_DICTIONARY_CAROUT" 
+		<set>
+			<if test="fOrgid != null">`F_OrgID` = #{fOrgid}, </if>
+			<if test="fBsinfo != null">`F_BSInfo` = #{fBsinfo}, </if>
+			<if test="fAttendant != null">`F_Attendant` = #{fAttendant}, </if>
+			<if test="fTraintype != null">`F_TrainType` = #{fTraintype}, </if>
+			<if test="fTrainnumber != null">`F_TrainNumber` = #{fTrainnumber}, </if>
+			<if test="fTrainorder != null">`F_TrainOrder` = #{fTrainorder}, </if>
+			<if test="fDriver1 != null">`F_Driver1` = #{fDriver1}, </if>
+			<if test="fDriver2 != null">`F_Driver2` = #{fDriver2}, </if>
+			<if test="fAssistantdriver != null">`F_AssistantDriver` = #{fAssistantdriver}, </if>
+			<if test="fStudent != null">`F_Student` = #{fStudent}, </if>
+			<if test="fPredicttimeout != null">`F_PredictTimeOut` = #{fPredicttimeout}, </if>
+			<if test="fPredicttimedrive != null">`F_PredictTimeDrive` = #{fPredicttimedrive}, </if>
+			<if test="fPasssite != null">`F_PassSite` = #{fPasssite}, </if>
+			<if test="fPasstrack != null">`F_PassTrack` = #{fPasstrack}, </if>
+			<if test="fDepartsite != null">`F_DepartSite` = #{fDepartsite}, </if>
+			<if test="fArrivesite != null">`F_ArriveSite` = #{fArrivesite}, </if>
+			<if test="fAheadwarningtime1 != null">`F_AheadWarningTime1` = #{fAheadwarningtime1}, </if>
+			<if test="fBehindwarningtime1 != null">`F_BehindWarningTime1` = #{fBehindwarningtime1}, </if>
+			<if test="fStatus1 != null">`F_Status1` = #{fStatus1}, </if>
+			<if test="fAheadwarningtime2 != null">`F_AheadWarningTime2` = #{fAheadwarningtime2}, </if>
+			<if test="fBehindwarningtime2 != null">`F_BehindWarningTime2` = #{fBehindwarningtime2}, </if>
+			<if test="fStatus2 != null">`F_Status2` = #{fStatus2}, </if>
+			<if test="fAheadwarningtime3 != null">`F_AheadWarningTime3` = #{fAheadwarningtime3}, </if>
+			<if test="fBehindwarningtime3 != null">`F_BehindWarningTime3` = #{fBehindwarningtime3}, </if>
+			<if test="fStatus3 != null">`F_Status3` = #{fStatus3}, </if>
+			<if test="fPracticaltimeout != null">`F_PracticalTimeOut` = #{fPracticaltimeout}, </if>
+			<if test="fPracticalpasssite != null">`F_PracticalPassSite` = #{fPracticalpasssite}, </if>
+			<if test="fPracticalpasstrack != null">`F_PracticalPassTrack` = #{fPracticalpasstrack}, </if>
+			<if test="fPracticaltraintype != null">`F_PracticalTrainType` = #{fPracticaltraintype}, </if>
+			<if test="fPracticaltrainnumber != null">`F_PracticalTrainNumber` = #{fPracticaltrainnumber}, </if>
+			<if test="fPracticaltrainorder != null">`F_PracticalTrainOrder` = #{fPracticaltrainorder}, </if>
+			<if test="fRemark != null">`F_Remark` = #{fRemark}, </if>
+			<if test="fReserve1 != null">`F_Reserve1` = #{fReserve1}, </if>
+			<if test="fReserve2 != null">`F_Reserve2` = #{fReserve2}, </if>
+			<if test="fReserve3 != null">`F_Reserve3` = #{fReserve3}, </if>
+			<if test="fReserve4 != null">`F_Reserve4` = #{fReserve4}, </if>
+			<if test="fReserve5 != null">`F_Reserve5` = #{fReserve5}</if>
+		</set>
+		where F_ID = #{fId}
+	</update>
+	
+	<delete id="delete">
+		delete from "CH_DICTIONARY_CAROUT" where F_ID = #{value}
+	</delete>
+	
+	<delete id="deleteBatch">
+		delete from "CH_DICTIONARY_CAROUT" where F_ID in 
+		<foreach item="fId" collection="array" open="(" separator="," close=")">
+			#{fId}
+		</foreach>
+	</delete>
+
+</mapper>

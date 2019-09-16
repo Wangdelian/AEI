@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="io.jeasyframework.dao.master.SysLogDao">
+
+	<select id="queryObject" resultType="io.jeasyframework.entity.SysLogEntity">
+		select * from sys_log where id = #{value}
+	</select>
+
+	<select id="queryList" resultType="io.jeasyframework.entity.SysLogEntity">
+		select id,username,operation,method,params,ip,create_date as createDate,operationtype,result,chineseName from sys_log
+		<where>
+			<if test="username != null and username.trim() != ''">
+			  username like '%' || #{username} || '%'
+			</if>
+			<if test="chineseName != null and chineseName.trim() != ''">
+				and chineseName like '%' || #{chineseName} || '%'
+			</if>
+		  	<if test="startTime != null and startTime != ''">
+		  	  and create_date    &gt;=  to_date(#{startTime},'yyyy-MM-dd hh24:mi:ss')
+		  	</if>
+	  	  	<if test="endTime != null and endTime != ''">
+  			  and create_date  &lt;=  to_date(#{endTime},'yyyy-MM-dd hh24:mi:ss')
+	  	  	</if>
+			<if test="operation != null and operation != ''">
+				and operation like '%${operation}%'
+			</if>
+			<if test="operationtype != null and operationtype != ''">
+				and operationtype like '%${operationtype}%'
+			</if>
+			<if test="result != null and result != ''">
+				and result like '%${result}%'
+			</if>
+			<if test="createDate != null and createDate != ''">
+				and create_date  =  to_date(#{createDate},'yyyy-MM-dd hh24:mi:ss')
+			</if>
+			<if test="ip != null and ip != ''">
+				and IP like '%${ip}%'
+			</if>
+			<if test="type != null and type == 1">
+				and rownum = 0
+			</if>
+		</where>
+		order by id desc
+	</select>
+
+	<select id="queryTotal" resultType="int">
+		select count(*) from sys_log
+		<where>
+			<if test="username != null and username.trim() != ''">
+				username like '%' || #{username} || '%'
+			</if>
+			<if test="chineseName != null and chineseName.trim() != ''">
+				and chineseName like '%' || #{chineseName} || '%'
+			</if>
+			<if test="startTime != null and startTime != ''">
+				and create_date    &gt;=  to_date(#{startTime},'yyyy-MM-dd hh24:mi:ss')
+			</if>
+			<if test="endTime != null and endTime != ''">
+				and create_date  &lt;=  to_date(#{endTime},'yyyy-MM-dd hh24:mi:ss')
+			</if>
+			<if test="operation != null and operation != ''">
+				and operation like '%${operation}%'
+			</if>
+			<if test="operationtype != null and operationtype != ''">
+				and operationtype like '%${operationtype}%'
+			</if>
+			<if test="result != null and result != ''">
+				and result like '%${result}%'
+			</if>
+			<if test="createDate != null and createDate != ''">
+				and create_date  =  to_date(#{createDate},'yyyy-MM-dd hh24:mi:ss')
+			</if>
+			<if test="ip != null and ip != ''">
+				and IP like '%${ip}%'
+			</if>
+			<if test="type != null and type == 1">
+				and rownum = 0
+			</if>
+		</where>
+	</select>
+
+	<insert id="save" parameterType="io.jeasyframework.entity.SysLogEntity" useGeneratedKeys="true" keyProperty="id">
+		<selectKey resultType="java.lang.Long" keyProperty="id" order="BEFORE">
+			select sys_log_SEQ_ATUOID.nextval as id from dual
+		</selectKey>
+		insert into sys_log
+		(
+		id,
+		username,
+		chineseName,
+		operation,
+		operationtype,
+		result,
+		method,
+		params,
+		ip,
+		create_date
+		)
+		values
+		(
+		#{id},
+		#{username},
+		#{chineseName},
+		#{operation},
+		#{operationtype},
+		#{result},
+		#{method},
+		#{params},
+		#{ip},
+		#{createDate}
+		)
+	</insert>
+
+	<update id="update" parameterType="io.jeasyframework.entity.SysLogEntity">
+		update sys_log
+		<set>
+			<if test="username != null">username = #{username}, </if>
+			<if test="chineseName != null">chineseName = #{chineseName}, </if>
+			<if test="operation != null">operation = #{operation}, </if>
+			<if test="operationtype != null">operationtype = #{operationtype}, </if>
+			<if test="result != null">result = #{result}, </if>
+			<if test="method != null">method = #{method}, </if>
+			<if test="params != null">params = #{params}, </if>
+			<if test="ip != null">ip = #{ip} </if>
+		</set>
+		where id = #{id}
+	</update>
+
+	<delete id="delete">
+		delete from sys_log where id = #{value}
+	</delete>
+
+	<delete id="deleteBatch">
+		delete from sys_log where id in
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+
+
+	<select id="analyzeList" resultType="io.jeasyframework.entity.SysLogAnalyzeEntity">
+SELECT USERNAME,CHINESENAME,sum(case RESULT when '成功' then count else 0 end) as success,
+sum(case RESULT when '失败' then count else 0 end) as fail from
+(SELECT COUNT(*) as count,USERNAME,CHINESENAME,RESULT from SYS_LOG
+where OPERATIONTYPE = '登入'
+		<if test="username != null and username.trim() != ''">
+			and username like '%' || #{username} || '%'
+		</if>
+		<if test="chineseName != null and chineseName.trim() != ''">
+			and chineseName like '%' || #{chineseName} || '%'
+		</if>
+group by USERNAME,CHINESENAME,RESULT)
+group by USERNAME,CHINESENAME
+ORDER BY USERNAME
+	</select>
+
+	<select id="analyzeTotal" resultType="int">
+SELECT COUNT(*) from (SELECT count(*) from SYS_LOG
+where OPERATIONTYPE = '登入'
+		<if test="username != null and username.trim() != ''">
+			and username like '%' || #{username} || '%'
+		</if>
+		<if test="chineseName != null and chineseName.trim() != ''">
+			and chineseName like '%' || #{chineseName} || '%'
+		</if>
+group by USERNAME,CHINESENAME)
+	</select>
+
+</mapper>

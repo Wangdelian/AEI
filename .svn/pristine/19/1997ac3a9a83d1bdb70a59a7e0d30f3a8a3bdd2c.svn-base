@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>编辑角色信息</title>
+    <link rel="stylesheet" href="${siteurl}/templates/skin2/template/plugins/layui/css/layui.css" media="all">
+</head>
+
+<body class="layui-container" style="position: static">
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 50px;">
+    <legend>编辑角色信息</legend>
+</fieldset>
+<form class="layui-form layui-form-pane" action="" id="main">
+
+    <div class="layui-form-item">
+        <!--角色名称-->
+        <div class="layui-inline">
+            <label class="layui-form-label">角色名称</label>
+            <div class="layui-input-block">
+                <input type="text" name="roleName" v-model="role.roleName" autocomplete="off" placeholder="请输入角色名称" lay-verify="required|inputVerify|roleName" class="layui-input">
+            </div>
+        </div>
+        <!--<div class="layui-inline">
+            <label class="layui-form-label">父角色</label>
+            <div class="layui-input-inline">
+                <select id="roleParentId" name="roleParentId" v-model="role.roleParentId" lay-search="" lay-verify="required" lay-filter="condition1">
+                    <option value="">搜索或选择</option>
+                </select>
+            </div>
+        </div>-->
+    </div>
+
+    <!--<div class="layui-form-item">
+        &lt;!&ndash;角色排序&ndash;&gt;
+        <div class="layui-form-item">
+            <label class="layui-form-label">角色排序</label>
+            <div class="layui-input-block">
+                <input type="text" name="roleSeq" v-model="role.roleSeq" autocomplete="off" placeholder="请输入角色名称" lay-verify="required" class="layui-input"
+                       onkeypress = 'return /^\d$/.test(String.fromCharCode(event.keyCode))'
+                       oninput= 'this.value = this.value.replace(/\D+/g, "")'
+                       onpropertychange='if(!/\D+/.test(this.value)){return;};this.value=this.value.replace(/\D+/g, "")'
+                       onblur = 'this.value = this.value.replace(/\D+/g, "")'
+                />
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">角色类型</label>
+            <div class="layui-input-inline">
+                <select id="roleType" name="roleType" v-model="role.roleType" lay-search="" lay-verify="required" lay-filter="condition2">
+                    <option value="">搜索或选择</option>
+                    <option value="1">功能权限</option>
+                    <option value="2">数据权限</option>
+                </select>
+            </div>
+        </div>
+    </div>
+-->
+    <div class="layui-form-item">
+       <!-- <div class="layui-form-item">
+            <label class="layui-form-label">角色图标</label>
+            <div class="layui-input-block">
+                <input type="text" name="roleIcon" v-model="role.roleIcon" autocomplete="off" placeholder="请输入角色名称" lay-verify="required" class="layui-input">
+            </div>
+        </div>-->
+        <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label">备注</label>
+            <div class="layui-input-block">
+                <textarea name="remark" v-model="role.remark" placeholder="请输入内容" class="layui-textarea" lay-verify="inputRemarkVerify"></textarea>
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn" lay-submit="" lay-filter="demo1">保存</button>
+            <button class="layui-btn" onclick="javascript:onReturn()">关闭</button>
+        </div>
+    </div>
+</form>
+
+<div id="menuLayer">
+    <ul id="menuTree" class="ztree"></ul>
+</div>
+
+<script type="text/javascript" src="${siteurl}/templates/default/media/js/jquery1.9.1.js"></script>
+<script src="${siteurl}/templates/skin2/template/plugins/layui/layui.js"></script>
+<script type="text/javascript" src="${siteurl}/public/libs/vue.min.js"></script>
+
+<link rel="stylesheet" type="text/css"
+      href="${siteurl}/templates/skin2/media/js/plugins/jquery-easyui-1.5.3/themes/default/easyui.css">
+<link rel="stylesheet" type="text/css"
+      href="${siteurl}/templates/skin2/media/js/plugins/jquery-easyui-1.5.3/themes/icon.css">
+<script type="text/javascript"
+        src="${siteurl}/templates/skin2/media/js/plugins/jquery-easyui-1.5.3/jquery.easyui.min.js"></script>
+
+<!--ztree开始-->
+<link rel="stylesheet" type="text/css" href="${siteurl}/templates/skin2/media/js/plugins/zTree_v3/css/zTreeStyle/zTreeStyle.css" />
+<script type="text/javascript" src="${siteurl}/templates/skin2/media/js/plugins/zTree_v3/js/jquery.ztree.core.js"></script>
+<script type="text/javascript" src="${siteurl}/templates/skin2/media/js/plugins/zTree_v3/js/jquery.ztree.excheck.js"></script>
+<!--ztree结束-->
+
+<!--业务逻辑JS-->
+<script type="text/javascript" src="${siteurl}/templates/skin2/media/js/biz/SysRole/editsysrole.js"></script>
+
+</body>
+<script type="text/javascript">
+    var siteurl = '${siteurl}';
+    var roleId = '${roleId}';
+    function onReturn()
+    {
+        //parent.app.addTab('2');
+        parent.app.closeTab('1002');
+    }
+
+
+</script>
+
+</html>

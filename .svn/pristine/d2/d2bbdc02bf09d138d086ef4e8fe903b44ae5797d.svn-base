@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <style type="text/css">
+        body td .layui-table-cell {
+            font-size: 12px;
+        }
+
+        body .layui-table-view .layui-table th, #main .layui-table-view .layui-table td {
+            padding: 5px 0;
+            font-size: 12px;
+            -webkit-transform-origin-x: 0;
+            -webkit-transform: scale(0.90);
+        }
+    </style>
+    <title>AEI监测</title>
+    <link rel="stylesheet" href="${siteurl}/templates/skin2/template/plugins/layui/css/layui.css" media="all">
+    <script src="${siteurl}/public/js/utils.js"></script>
+
+    <script type="text/javascript" src="${siteurl}/public/plugins/operation/mxClient.js"></script>
+    <script type="text/javascript" src="${siteurl}/public/plugins/operation/jquery.js"></script>
+    <script type="text/javascript" src="${siteurl}/public/plugins/operation/jquery.select.js"></script>
+
+    <!-- <link rel="stylesheet" type="text/css" href="${siteurl}/public/plugins/operation/DeviceCHMonitor.css"/>
+
+     &lt;!&ndash; 引入js 顺序：jquery、jquery-ui、grid.locale-cn、jqGrid &ndash;&gt;
+     <link rel="stylesheet" href="${siteurl}/public/plugins/operation/ui.jqgrid.css"/>
+     <link rel="stylesheet" href="${siteurl}/public/plugins/operation/jquery-ui.css"/>
+     <link rel="stylesheet" href="${siteurl}/public/plugins/operation/theme.css"/>
+     <script type="text/javascript" src="${siteurl}/public/plugins/operation/grid.locale-cn.js"></script>
+     <script type="text/javascript" src="${siteurl}/public/plugins/operation/jquery.jqGrid.min.js"></script>
+     <link rel="stylesheet" type="text/css" href="${siteurl}/public/plugins/operation/magnific-popup.css"/>
+     <script type="text/javascript" src="${siteurl}/public/plugins/operation/jquery.magnific-popup.js"></script>
+     &lt;!&ndash; 弹框 &ndash;&gt;
+     <link rel="stylesheet" type="text/css" href="${siteurl}/public/plugins/operation/jquery.fancybox.css"/>
+     <script type="text/javascript" src="${siteurl}/public/plugins/operation/jquery.fancybox.js"></script>-->
+
+</head>
+<!--<body onload="main();">-->
+<body >
+<br>
+
+<!-- 设备列表 -->
+<fieldset class="layui-elem-field layui-field-title" style="margin-top:0px; height:10px;font-size: 20px;">
+    <legend>设备列表</legend>
+    <div  class="layui-form layui-form-pane" style="position: relative;top: -33px;left: 70px; transform: scale(0.90);">
+        <div class="layui-row" style="margin-left: 50px">
+            <div class="layui-col-xs4">
+                <input type="checkbox" name="lock" value="" title="只显示异常" lay-filter="lockDemo">
+            </div>
+        </div>
+    </div>
+</fieldset>
+
+<div style="height:160px;width:100%;" id="table1">
+
+    <table class="layui-hide" id="test1" lay-filter="demo1"></table>
+</div>
+
+<!-- 车号识别错误列表 -->
+<div id="main">
+    <br>
+    <div style="background-color: #293C55; margin-bottom: -10px" >
+        <button class="layui-btn" id="all" lay-submit="" lay-filter="all" style="height: 25px; line-height: 25px; font-size: 20px; background-color: LightBLue">车号识别列表</button>
+        <button class="layui-btn" id="error" lay-submit="" lay-filter="error" style="height: 25px;line-height: 25px; font-size: 20px; background-color: LightBLue; margin-left: -14px">车号识别错误列表</button>
+    </div>
+
+    <table class="layui-hide" id="test" lay-filter="demo"></table>
+    <div id="pagination"></div>
+
+    <!--修改界面-->
+    <div class="layui-container" id="editerrorinfo" style="display: none; width: 480px;">
+        <form class="layui-form layui-form-pane" action="" style="text-align:center">
+            <div class="layui-form-item" style="margin-top: 30px">
+                <div class="layui-inline">
+                    <label class="layui-form-label">确认车型</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="fTraintypeverdict" id="fTraintypeverdict" value="" autocomplete="off"
+                               placeholder="" class="layui-input" >
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">确认车号</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="fTrainnumberverdict" id="fTrainnumberverdict" value="" autocomplete="off"
+                               placeholder="" class="layui-input" >
+
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">配属局</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="fBureauname" id="fBureauname" value="" autocomplete="off"
+                               placeholder="" class="layui-input" >
+
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">配属段</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="fSectionname" id="fSectionname" value="" autocomplete="off"
+                               placeholder="" class="layui-input" >
+
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">通过时间</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="ftimethrough" id="ftimethrough" value="" autocomplete="off"
+                               placeholder="" class="layui-input" lay-verify="required" readonly="readonly">
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <button class="layui-btn" lay-submit="" lay-filter="cancel">取消</button>
+                    <button class="layui-btn" lay-submit="" lay-filter="demo1">保存</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<script type="text/html" id="titleTpl1">
+    {{#  if(d.fTraintypeverdict == null){ }}
+    <i class="layui-icon layui-icon-close-fill" style="color: red"><span></span></i>
+    {{#  } else if(d.fTraintypeverdict.indexOf("*") != -1||/^[0-9]+$/.test(d.fTraintypeverdict)||d.fTraintypeverdict=="ND"||d.fTraintypeverdict=="DJ"||d.fTraintypeverdict=="KD"||d.fTraintypeverdict=="6K"||d.fTraintypeverdict=="6G"||d.fTraintypeverdict=="8K"||d.fTraintypeverdict=="8G"){ }}
+    <div style="color: red"><i class="layui-icon layui-icon-close-fill"></i><span>{{d.fTraintypeverdict}}</span></div>
+    {{#  }else {  }}
+    <span>{{d.fTraintypeverdict}}</span>
+    {{#  }  }}
+</script>
+<script type="text/html" id="titleTpl2">
+    {{#  if(d.fTrainnumberverdict == null){ }}
+    <i class="layui-icon layui-icon-close-fill" style="color: red"><span></span></i>
+    {{#  } else if(d.fTrainnumberverdict.indexOf("*") != -1||!/^[0-9]+$/.test(d.fTrainnumberverdict)||d.fTrainnumberverdict.length<4){ }}
+    <div style="color: red"><i class="layui-icon layui-icon-close-fill"></i><span>{{d.fTrainnumberverdict}}</span></div>
+    {{#  }else {  }}
+    <span>{{d.fTrainnumberverdict}}</span>
+    {{#  }  }}
+</script>
+<script type="text/javascript" src="${siteurl}/templates/default/media/js/jquery1.9.1.js"></script>
+<script src="${siteurl}/templates/skin2/template/plugins/layui/layui.js"></script>
+<script type="text/javascript" src="${siteurl}/public/libs/vue.min.js"></script>
+<!--业务逻辑JS-->
+
+<script src="${siteurl}/templates/skin2/media/js/biz/operation/operaitonerrorlist.js"></script>
+
+<script>
+    var siteurl = '${siteurl}';
+    var fid = '';
+</script>
+</body>
+</html>

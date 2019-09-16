@@ -1,0 +1,38 @@
+//用户列表
+var USER_LIST_INDEX = 20;
+var ROLE_LIST_INDEX = 21;
+var LEVELMARK_LIST_INDEX = 22;
+//编辑用户
+var USER_EDITUSER_INDEX = 55;
+//新增用户
+var USER_NEWUSER_INDEX = 56;
+//编辑定时任务
+var SCHEDULE_EDITSCHEDULE_INDEX = 57;
+//新增定时任务
+var SCHEDULE_ADD_INDEX = 58;
+//编辑日志
+var LOG_EDITLOG_INDEX = 59;
+//新增日志
+var LOG_NEWLOG_INDEX = 60;
+//编辑用户皮肤
+var SKIN_EDITSKIN_INDEX = 61;
+//新增用户皮肤
+var SKIN_NEWSKIN_INDEX = 62;
+//新增角色
+var ROLE_NEWROLE_INDEX = 63;
+//编辑角色
+var ROLE_EDITROLE_INDEX = 64;
+//编辑班次
+var MES_EDITSCHEDULE_INDEX = 65;
+//新增班次
+var MES_ADDSCHEDLE_INDEX = 66;
+//编辑生产线
+var EDITPRODUCTLINE_INDEX = 67;
+//新增生产线
+var ADDLINME_INDEX = 68;
+//新增组织机构
+var ADDLEVELMARK_INDEX = 69;
+//新增字典
+var DICTIONARY_NEWDICTIONARY_INDEX = 70;
+//编辑字典
+var DICTIONARY_EDITDICTIONARY_INDEX = 71;

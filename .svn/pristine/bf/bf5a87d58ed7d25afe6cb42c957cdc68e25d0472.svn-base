@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>单一问题查询</title>
+    <link rel="stylesheet" href="${siteurl}/templates/skin2/template/plugins/layui/css/layui.css" media="all">
+</head>
+
+<body>
+<br>
+<div class="layui-form layui-form-pane" id="main">
+    <div class="layui-row">
+        <div class="layui-col-xs12">
+            <div class="layui-form-item">
+                <!--查询部分-->
+                <div class="layui-form-item">
+
+                    <div class="layui-inline">
+                        <!--ICC-->
+                        <label class="layui-form-label">ICC</label>
+                        <div class="layui-inline">
+                            <div class="layui-input-inline">
+                                <input type="text" name="icc" id="icc" autocomplete="off" class="layui-input"
+                                       v-model="logSearch.icc"
+                                       placeholder="请输入要搜索的ICC"
+                                       lay-verify="required">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="layui-inline">
+                        <!--ISSUE-->
+                        <label class="layui-form-label">发动机号码</label>
+                        <div class="layui-inline">
+                            <div class="layui-input-inline">
+                                <input type="text" name="engineno" id="engineno" autocomplete="off" class="layui-input"
+                                       v-model="logSearch.engineno"
+                                       placeholder="请输入要搜索的发动机号码"
+                                       lay-verify="required">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <!--开始日期-->
+                        <div class="layui-inline">
+                            <label class="layui-form-label">开始时间</label>
+                            <div class="layui-input-inline">
+                                <input type="text" class="layui-input" name="datecreated" id="datecreated"
+                                       placeholder="请输入开始日期">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <!--结束日期-->
+                        <div class="layui-inline">
+                            <label class="layui-form-label">结束时间</label>
+                            <div class="layui-input-inline">
+                                <input type="text" class="layui-input" name="dateclose" id="dateclose"
+                                       placeholder="请输入结束日期">
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+				<div class="layui-form-item">
+
+                    <div class="layui-inline">
+						<label class="layui-form-label">采集点</label>
+						<div class="layui-input-inline">
+							<select name="pstation" lay-search="" lay-verify="required" lay-filter="select1" id="pstation" >
+								<option value="">请选择采集点</option>
+							</select>
+						</div>
+					</div>
+					<div class="layui-inline" style="position:relative; left:10px">
+						<label class="layui-form-label">班组</label>
+						<div class="layui-input-inline">
+							<select name="mqsproductionteam" lay-search="" lay-verify="required" lay-filter="select1" id="mqsproductionteam">
+								<option value="">请查询班组</option>
+
+							</select>
+						</div>
+					</div>&nbsp;&nbsp;
+					<div class="layui-inline" style="position:relative; left:12px">
+						<label class="layui-form-label">记录人</label>
+						<div class="layui-input-inline">
+							<select name="createdbyname" lay-search="" lay-verify="required" lay-filter="select1" id="createdbyname">
+								<option value="">请选择记录人</option>
+								<option value="自动采集">自动采集</option> 
+								<option value="非自动采集" >非自动采集</option> 
+							</select>
+						</div>
+					</div>&nbsp;&nbsp;
+                    <div class="layui-inline" style="position:relative; left:14px">
+						<label class="layui-form-label">问题状态</label>
+						<div class="layui-input-inline">
+							<select name="issuestatus" lay-search="" lay-verify="required" lay-filter="select1" id="issuestatus">
+								<option value="">请选择问题状态</option>
+								<option value="未关闭">未关闭</option> 
+								<option value="关闭" >关闭</option> 
+							</select>
+						</div>
+					</div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-inline" style="position:relative; left:14px">
+                        <label class="layui-form-label">机型</label>
+                        <div class="layui-input-inline">
+                            <select name="enginetype" lay-search="" lay-verify="required" lay-filter="select1" id="enginetype">
+                                <option value="">请选择机型</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <div class="layui-inline">
+                            <button class="layui-btn" onclick="javascript:vm.query(1,1)">查询</button>
+                            <button class="layui-btn" onclick="javascript:vm.export()">导出</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<!--生成数据列表-->
+<table class="layui-hide" id="test" lay-filter="demo"></table>
+
+<div id="pagination"></div>
+
+<script type="text/javascript" src="${siteurl}/templates/default/media/js/jquery1.9.1.js"></script>
+<script src="${siteurl}/templates/skin2/template/plugins/layui/layui.js"></script>
+<script type="text/javascript" src="${siteurl}/public/libs/vue.min.js"></script>
+<script type="text/javascript" src="${siteurl}/public/js/utils.js"></script>
+<!--业务逻辑JS-->
+<script type="text/javascript" src="${siteurl}/templates/skin2/media/js/biz/MqsReport/issue.js"></script>
+</div>
+</body>
+<script type="text/javascript">
+    var siteurl = '${siteurl}';
+</script>
+
+</html>

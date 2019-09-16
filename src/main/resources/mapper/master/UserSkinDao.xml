@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="io.jeasyframework.dao.master.UserSkinDao">
+
+   <select id="queryObject" resultType="io.jeasyframework.entity.UserSkinEntity">
+        select * from sys_userskin where userskinid = #{value}
+    </select>
+
+    <select id="queryList" resultType="io.jeasyframework.entity.UserSkinEntity">
+        select userskinid,userskinname,
+        (case when  sys_userskin.isdefault='1' then '默认皮肤'
+        else '非默认皮肤' end) isdefault,
+        templatepath,seq from sys_userskin
+      <where>
+        <if test="keyWords != null and keyWords != ''">
+            userskinname like '%'||#{keyWords}||'%'
+        </if>
+      </where>
+        order by seq
+        <!--<if test="offset != null and limit != null">
+            limit #{offset}, #{limit}
+        </if>-->
+    </select>
+
+    <select id="queryTotal" resultType="int">
+        select count(*) from sys_userskin
+      <where>
+        <if test="keyWords != null and keyWords != ''">
+            userskinname like '%'||#{keyWords}||'%'
+        </if>
+      </where>
+    </select>
+
+    <insert id="save" parameterType="io.jeasyframework.entity.UserSkinEntity" useGeneratedKeys="true" keyProperty="userskinid">
+        <selectKey resultType="java.lang.Long" keyProperty="userskinid" order="BEFORE">
+            select SYS_USERSKIN_SEQ_ATUOID.nextval as userskinid from dual
+        </selectKey>
+        insert into sys_userskin
+        (
+        userskinid,
+        userskinname,
+        isdefault,
+        templatepath,
+        seq
+        )
+        values
+        (
+        #{userskinid},
+        #{userskinname},
+        #{isdefault},
+        #{templatepath},
+        #{seq}
+        )
+    </insert>
+
+    <update id="update" parameterType="io.jeasyframework.entity.UserSkinEntity">
+        update sys_userskin
+        <set>
+            <if test="userskinname != null">userskinname = #{userskinname}, </if>
+            <if test="isdefault != null">isdefault = #{isdefault}, </if>
+            <if test="templatepath != null">templatepath = #{templatepath}, </if>
+            <if test="seq != null">seq = #{seq}, </if>
+        </set>
+        where userskinid = #{userskinid}
+    </update>
+
+    <delete id="delete">
+        delete from sys_userskin where userskinid = #{value}
+    </delete>
+
+    <delete id="deleteBatch">
+        delete from sys_userskin where userskinid in
+        <foreach item="userskinid" collection="array" open="(" separator="," close=")">
+            #{userskinid}
+        </foreach>
+    </delete>
+
+</mapper>

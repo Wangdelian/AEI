@@ -1,0 +1,345 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="io.jeasyframework.dao.master.DocFolderDao">
+    <resultMap id="BaseResultMap" type="io.jeasyframework.entity.DocFolder">
+        <id column="FOLDER_ID" jdbcType="DECIMAL" property="folderId"/>
+        <result column="FOLDER_NAME" jdbcType="OTHER" property="folderName"/>
+        <result column="FOLDER_VERSION" jdbcType="DECIMAL" property="folderVersion"/>
+        <result column="FOLDER_SIZE" jdbcType="DECIMAL" property="folderSize"/>
+        <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="CREATOR_ID" jdbcType="DECIMAL" property="creatorId"/>
+        <result column="CREATOR_NAME" jdbcType="OTHER" property="creatorName"/>
+        <result column="MEND_TIME" jdbcType="TIMESTAMP" property="mendTime"/>
+        <result column="MENDER_ID" jdbcType="DECIMAL" property="menderId"/>
+        <result column="MENDER_NAME" jdbcType="OTHER" property="menderName"/>
+        <result column="ISENABLE" jdbcType="DECIMAL" property="isenable"/>
+        <result column="PARENT_ID" jdbcType="DECIMAL" property="parentId"/>
+        <result column="ISPARENT" jdbcType="DECIMAL" property="isParent"/>
+        <result column="STANDBY2" jdbcType="OTHER" property="standby2"/>
+        <result column="STANDBY3" jdbcType="OTHER" property="standby3"/>
+        <result column="STANDBY4" jdbcType="OTHER" property="standby4"/>
+        <result column="STANDBY5" jdbcType="OTHER" property="standby5"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    FOLDER_ID, FOLDER_NAME, FOLDER_VERSION, FOLDER_SIZE, CREATE_TIME, CREATOR_ID, CREATOR_NAME, 
+    MEND_TIME, MENDER_ID, MENDER_NAME, ISENABLE, PARENT_ID, ISPARENT, STANDBY2, STANDBY3,
+    STANDBY4, STANDBY5
+  </sql>
+    <select id="selectByPrimaryKey" parameterType="java.lang.Object" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from DOC_FOLDER
+        where FOLDER_ID = #{folderId,jdbcType=DECIMAL}
+    </select>
+
+    <select id="selectByParentId" parameterType="java.lang.Object" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from DOC_FOLDER
+        where PARENT_ID = #{parentId,jdbcType=DECIMAL} AND ISENABLE = 1
+    </select>
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Object">
+    delete from DOC_FOLDER
+    where FOLDER_ID = #{folderId,jdbcType=DECIMAL}
+  </delete>
+    <insert id="insertSelective" parameterType="io.jeasyframework.entity.DocFolder">
+        insert into DOC_FOLDER
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="folderId != null">
+                FOLDER_ID,
+            </if>
+            <if test="folderName != null">
+                FOLDER_NAME,
+            </if>
+            <if test="folderVersion != null">
+                FOLDER_VERSION,
+            </if>
+            <if test="folderSize != null">
+                FOLDER_SIZE,
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME,
+            </if>
+            <if test="creatorId != null">
+                CREATOR_ID,
+            </if>
+            <if test="creatorName != null">
+                CREATOR_NAME,
+            </if>
+            <if test="mendTime != null">
+                MEND_TIME,
+            </if>
+            <if test="menderId != null">
+                MENDER_ID,
+            </if>
+            <if test="menderName != null">
+                MENDER_NAME,
+            </if>
+            <if test="isenable != null">
+                ISENABLE,
+            </if>
+            <if test="parentId != null">
+                PARENT_ID,
+            </if>
+            <if test="isParent != null">
+                ISPARENT,
+            </if>
+            <if test="standby2 != null">
+                STANDBY2,
+            </if>
+            <if test="standby3 != null">
+                STANDBY3,
+            </if>
+            <if test="standby4 != null">
+                STANDBY4,
+            </if>
+            <if test="standby5 != null">
+                STANDBY5,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="folderId != null">
+                #{folderId,jdbcType=DECIMAL},
+            </if>
+            <if test="folderName != null">
+                #{folderName,jdbcType=OTHER},
+            </if>
+            <if test="folderVersion != null">
+                #{folderVersion,jdbcType=DECIMAL},
+            </if>
+            <if test="folderSize != null">
+                #{folderSize,jdbcType=DECIMAL},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="creatorId != null">
+                #{creatorId,jdbcType=DECIMAL},
+            </if>
+            <if test="creatorName != null">
+                #{creatorName,jdbcType=OTHER},
+            </if>
+            <if test="mendTime != null">
+                #{mendTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="menderId != null">
+                #{menderId,jdbcType=DECIMAL},
+            </if>
+            <if test="menderName != null">
+                #{menderName,jdbcType=OTHER},
+            </if>
+            <if test="isenable != null">
+                #{isenable,jdbcType=DECIMAL},
+            </if>
+            <if test="parentId != null">
+                #{parentId,jdbcType=DECIMAL},
+            </if>
+            <if test="isParent != null">
+                #{isParent,jdbcType=DECIMAL},
+            </if>
+            <if test="standby2 != null">
+                #{standby2,jdbcType=OTHER},
+            </if>
+            <if test="standby3 != null">
+                #{standby3,jdbcType=OTHER},
+            </if>
+            <if test="standby4 != null">
+                #{standby4,jdbcType=OTHER},
+            </if>
+            <if test="standby5 != null">
+                #{standby5,jdbcType=OTHER},
+            </if>
+        </trim>
+  </insert>
+    <insert id="insert" parameterType="io.jeasyframework.entity.DocFolder" useGeneratedKeys="true"
+            keyProperty="folderId">
+        <selectKey resultType="java.lang.Long" keyProperty="folderId" order="BEFORE">
+            select SEQ_FOLDER_ID.nextval as folderId from dual
+        </selectKey>
+
+        insert into DOC_FOLDER
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="folderId != null">
+                FOLDER_ID,
+            </if>
+            <if test="folderName != null">
+                FOLDER_NAME,
+            </if>
+            <if test="folderVersion != null">
+                FOLDER_VERSION,
+            </if>
+            <if test="folderSize != null">
+                FOLDER_SIZE,
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME,
+            </if>
+            <if test="creatorId != null">
+                CREATOR_ID,
+            </if>
+            <if test="creatorName != null">
+                CREATOR_NAME,
+            </if>
+            <if test="mendTime != null">
+                MEND_TIME,
+            </if>
+            <if test="menderId != null">
+                MENDER_ID,
+            </if>
+            <if test="menderName != null">
+                MENDER_NAME,
+            </if>
+            <if test="isenable != null">
+                ISENABLE,
+            </if>
+            <if test="parentId != null">
+                PARENT_ID,
+            </if>
+            <if test="isParent != null">
+                ISPARENT,
+            </if>
+            <if test="standby2 != null">
+                STANDBY2,
+            </if>
+            <if test="standby3 != null">
+                STANDBY3,
+            </if>
+            <if test="standby4 != null">
+                STANDBY4,
+            </if>
+            <if test="standby5 != null">
+                STANDBY5,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="folderId != null">
+                #{folderId,jdbcType=DECIMAL},
+            </if>
+            <if test="folderName != null">
+                #{folderName,jdbcType=OTHER},
+            </if>
+            <if test="folderVersion != null">
+                #{folderVersion,jdbcType=DECIMAL},
+            </if>
+            <if test="folderSize != null">
+                #{folderSize,jdbcType=DECIMAL},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="creatorId != null">
+                #{creatorId,jdbcType=DECIMAL},
+            </if>
+            <if test="creatorName != null">
+                #{creatorName,jdbcType=OTHER},
+            </if>
+            <if test="mendTime != null">
+                #{mendTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="menderId != null">
+                #{menderId,jdbcType=DECIMAL},
+            </if>
+            <if test="menderName != null">
+                #{menderName,jdbcType=OTHER},
+            </if>
+            <if test="isenable != null">
+                #{isenable,jdbcType=DECIMAL},
+            </if>
+            <if test="parentId != null">
+                #{parentId,jdbcType=DECIMAL},
+            </if>
+            <if test="isParent != null">
+                #{isParent,jdbcType=DECIMAL},
+            </if>
+            <if test="standby2 != null">
+                #{standby2,jdbcType=OTHER},
+            </if>
+            <if test="standby3 != null">
+                #{standby3,jdbcType=OTHER},
+            </if>
+            <if test="standby4 != null">
+                #{standby4,jdbcType=OTHER},
+            </if>
+            <if test="standby5 != null">
+                #{standby5,jdbcType=OTHER},
+            </if>
+        </trim>
+    </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="io.jeasyframework.entity.DocFolder">
+        update DOC_FOLDER
+        <set>
+            <if test="folderName != null">
+                FOLDER_NAME = #{folderName,jdbcType=OTHER},
+            </if>
+            <if test="folderVersion != null">
+                FOLDER_VERSION = #{folderVersion,jdbcType=DECIMAL},
+            </if>
+            <if test="folderSize != null">
+                FOLDER_SIZE = #{folderSize,jdbcType=DECIMAL},
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="creatorId != null">
+                CREATOR_ID = #{creatorId,jdbcType=DECIMAL},
+            </if>
+            <if test="creatorName != null">
+                CREATOR_NAME = #{creatorName,jdbcType=OTHER},
+            </if>
+            <if test="mendTime != null">
+                MEND_TIME = #{mendTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="menderId != null">
+                MENDER_ID = #{menderId,jdbcType=DECIMAL},
+            </if>
+            <if test="menderName != null">
+                MENDER_NAME = #{menderName,jdbcType=OTHER},
+            </if>
+            <if test="isenable != null">
+                ISENABLE = #{isenable,jdbcType=DECIMAL},
+            </if>
+            <if test="parentId != null">
+                PARENT_ID = #{parentId,jdbcType=DECIMAL},
+            </if>
+            <if test="isParent != null">
+                ISPARENT = #{isParent,jdbcType=DECIMAL},
+            </if>
+            <if test="standby2 != null">
+                STANDBY2 = #{standby2,jdbcType=OTHER},
+            </if>
+            <if test="standby3 != null">
+                STANDBY3 = #{standby3,jdbcType=OTHER},
+            </if>
+            <if test="standby4 != null">
+                STANDBY4 = #{standby4,jdbcType=OTHER},
+            </if>
+            <if test="standby5 != null">
+                STANDBY5 = #{standby5,jdbcType=OTHER},
+            </if>
+        </set>
+        where FOLDER_ID = #{folderId,jdbcType=DECIMAL}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="io.jeasyframework.entity.DocFolder">
+        update DOC_FOLDER
+        <set>
+            <if test="folderName != null">FOLDER_NAME = #{folderName},</if>
+            <if test="folderVersion != null">FOLDER_VERSION = #{folderVersion},</if>
+            <if test="folderSize != null">FOLDER_SIZE = #{folderSize},</if>
+            <if test="createTime != null">CREATE_TIME = #{createTime},</if>
+            <if test="creatorId != null">CREATOR_ID = #{creatorId},</if>
+            <if test="creatorName != null">CREATOR_NAME = #{creatorName},</if>
+            <if test="mendTime != null">MEND_TIME = #{mendTime},</if>
+            <if test="menderId != null">MENDER_ID = #{menderId},</if>
+            <if test="menderName != null">MENDER_NAME = #{menderName},</if>
+            <if test="isenable != null">ISENABLE = #{isenable},</if>
+            <if test="parentId != null">PARENT_ID = #{parentId},</if>
+            <if test="isParent != null">ISPARENT = #{isParent},</if>
+            <if test="standby2 != null">STANDBY2 = #{standby2},</if>
+            <if test="standby3 != null">STANDBY3 = #{standby3},</if>
+            <if test="standby4 != null">STANDBY4 = #{standby4},</if>
+            <if test="standby5 != null">STANDBY5 = #{standby5}</if>
+        </set>
+        where FOLDER_ID = #{folderId,jdbcType=DECIMAL}
+    </update>
+</mapper>

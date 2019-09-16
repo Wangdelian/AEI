@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>table模块快速使用</title>
+    <link rel="stylesheet" href="${siteurl}/templates/skin2/template/plugins/layui/css/layui.css" media="all">
+</head>
+
+<body >
+<br>
+<div  class="layui-form layui-form-pane" id="main">
+  <div class="layui-row">
+    <div class="layui-col-xs12">
+      <div class="layui-inline ">
+			<div class="layui-inline">
+				<span class="layui-form-label">关键字</span>
+				<div class="layui-input-inline">
+					<input type="text"  id="tableName" v-model="logSearch.tableName" class="layui-input">
+				</div>
+			</div>
+			
+			<button class="layui-btn"  onclick="javascript:vm.query(1,1)">查询</button>
+	        <button class="layui-btn"  data-type="getCheckData">生成代码</button>
+	  </div>
+    </div>
+  </div>
+</div>
+
+<table class="layui-hide" id="test" lay-filter="demo"></table>
+
+
+<script type="text/html" id="barDemo">
+<a class="layui-btn layui-btn-xs" lay-event="build">生成</a>
+</script>
+
+<div id="pagination"></div>
+<script type="text/javascript" src="${siteurl}/templates/default/media/js/jquery1.9.1.js"></script>
+<script src="${siteurl}/templates/skin2/template/plugins/layui/layui.js"></script>
+<script type="text/javascript" src="${siteurl}/public/libs/vue.min.js"></script>
+<!--业务逻辑JS-->
+<script type="text/javascript" src="${siteurl}/public/js/plugins/codegen/tablelist.js"></script>
+
+</body>
+<script type="text/javascript">
+var siteurl='${siteurl}';
+</script>
+
+</html>

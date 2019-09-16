@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="io.jeasyframework.dao.master.ChDeviceDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="io.jeasyframework.entity.ChDeviceEntity" id="chDeviceMap">
+        <result property="fId" column="F_ID"/>
+        <result property="fOrgid" column="F_ORGID"/>
+        <result property="fDeviceid" column="F_DEVICEID"/>
+        <result property="fPid" column="F_PID"/>
+        <result property="fIsenable" column="F_ISENABLE"/>
+        <result property="fDeviceserialnumber" column="F_DEVICESERIALNUMBER"/>
+        <result property="fDeviceattribute" column="F_DEVICEATTRIBUTE"/>
+        <result property="fDevicename" column="F_DEVICENAME"/>
+        <result property="fDevicedescription" column="F_DEVICEDESCRIPTION"/>
+        <result property="fDeviceip" column="F_DEVICEIP"/>
+        <result property="fDeviceport" column="F_DEVICEPORT"/>
+        <result property="fReserve1" column="F_RESERVE1"/>
+        <result property="fReserve2" column="F_RESERVE2"/>
+        <result property="fReserve3" column="F_RESERVE3"/>
+        <result property="fReserve4" column="F_RESERVE4"/>
+        <result property="fReserve5" column="F_RESERVE5"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+F_ID, F_ORGID, F_DEVICEID, F_PID, F_ISENABLE, F_DEVICESERIALNUMBER, F_DEVICEATTRIBUTE, F_DEVICENAME, F_DEVICEDESCRIPTION, F_DEVICEIP, F_DEVICEPORT, F_RESERVE1, F_RESERVE2, F_RESERVE3, F_RESERVE4, F_RESERVE5
+	</sql>
+
+	<select id="queryByDeviceid" resultMap="chDeviceMap" parameterType="io.jeasyframework.entity.ChDeviceEntity">
+		select
+		F_ID, nvl(F_ORGID,'""') as F_ORGID, nvl(F_DEVICEID,'""') as F_DEVICEID, nvl(F_PID,'""') as F_PID, nvl(TO_CHAR(F_ISENABLE),'""') as F_ISENABLE,
+		nvl(F_DEVICESERIALNUMBER,'""') as F_DEVICESERIALNUMBER, nvl(F_DEVICEATTRIBUTE,'""') as F_DEVICEATTRIBUTE, nvl(F_DEVICENAME,'""') as F_DEVICENAME,
+		nvl(F_DEVICEDESCRIPTION,'""') as F_DEVICEDESCRIPTION,nvl(F_DEVICEIP,'""') as F_DEVICEIP, nvl(TO_CHAR(F_DEVICEPORT),'""') as F_DEVICEPORT,
+		nvl(F_RESERVE1,'""') as F_RESERVE1, nvl(F_RESERVE2,'""') as F_RESERVE2,nvl(F_RESERVE3,'""') as F_RESERVE3, nvl(F_RESERVE4,'""') as F_RESERVE4,
+		nvl(F_RESERVE5,'""') as F_RESERVE5
+		from CH_DEVICE
+		where 1=1
+		<if test="fDeviceid != null and fDeviceid.trim() != '' ">
+			and F_DEVICEID like '%${fDeviceid}%'
+		</if>
+		order by f_pid
+	</select>
+
+	<select id="queryObject" resultType="io.jeasyframework.entity.ChDeviceEntity">
+		select * from CH_DEVICE where F_ID = #{value}
+	</select>
+
+	<select id="queryjson" resultType="io.jeasyframework.entity.ChJsondataEntity">
+		select t.f_orgid F_LevelMarkID,t.f_devicename F_ABName  ,t.f_devicedescription F_DEVICEDESCRIPTION,t.F_RESERVE1 F_StateTime
+		 from CH_DEVICE t
+		where t.F_DEVICENAME = 'AEI'
+		and t.f_pid = #{pid}
+	</select>
+
+	<select id="queryList" resultType="io.jeasyframework.entity.ChDeviceEntity">
+		select F_ID, F_ORGID from CH_DEVICE  where t.f_deviceattribute = '1000-2000-3000-4002'
+		and t.f_pid = #{pid}
+
+	</select>
+
+	<select id="queryByLevelmarkid" resultType="io.jeasyframework.entity.LevelMarkEntity">
+		 select t.f_deviceid as fDeviceid,t.f_devicename as fDevicename,t.f_pid as pid,t.f_devicename as abname
+		 from CH_DEVICE t
+		 where 1=1 and t.f_pid in
+		 <foreach collection="levelidlist" open="(" separator="," close=")" index="index" item="item">
+			 #{item}
+		 </foreach>
+
+	</select>
+	
+ 	<select id="queryTotal" resultType="int">
+		select count(*) from CH_DEVICE 
+	</select>
+	 
+	<insert id="save" parameterType="io.jeasyframework.entity.ChDeviceEntity">
+		insert into CH_DEVICE
+		(
+			`F_ID`, 
+			`F_ORGID`, 
+			`F_DEVICEID`, 
+			`F_PID`, 
+			`F_ISENABLE`, 
+			`F_DEVICESERIALNUMBER`, 
+			`F_DEVICEATTRIBUTE`, 
+			`F_DEVICENAME`, 
+			`F_DEVICEDESCRIPTION`, 
+			`F_DEVICEIP`, 
+			`F_DEVICEPORT`, 
+			`F_RESERVE1`, 
+			`F_RESERVE2`, 
+			`F_RESERVE3`, 
+			`F_RESERVE4`, 
+			`F_RESERVE5`
+		)
+		values
+		(
+			#{fId}, 
+			#{fOrgid}, 
+			#{fDeviceid}, 
+			#{fPid}, 
+			#{fIsenable}, 
+			#{fDeviceserialnumber}, 
+			#{fDeviceattribute}, 
+			#{fDevicename}, 
+			#{fDevicedescription}, 
+			#{fDeviceip}, 
+			#{fDeviceport}, 
+			#{fReserve1}, 
+			#{fReserve2}, 
+			#{fReserve3}, 
+			#{fReserve4}, 
+			#{fReserve5}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="io.jeasyframework.entity.ChDeviceEntity">
+		update CH_DEVICE 
+		<set>
+			<if test="fOrgid != null">`F_ORGID` = #{fOrgid}, </if>
+			<if test="fDeviceid != null">`F_DEVICEID` = #{fDeviceid}, </if>
+			<if test="fPid != null">`F_PID` = #{fPid}, </if>
+			<if test="fIsenable != null">`F_ISENABLE` = #{fIsenable}, </if>
+			<if test="fDeviceserialnumber != null">`F_DEVICESERIALNUMBER` = #{fDeviceserialnumber}, </if>
+			<if test="fDeviceattribute != null">`F_DEVICEATTRIBUTE` = #{fDeviceattribute}, </if>
+			<if test="fDevicename != null">`F_DEVICENAME` = #{fDevicename}, </if>
+			<if test="fDevicedescription != null">`F_DEVICEDESCRIPTION` = #{fDevicedescription}, </if>
+			<if test="fDeviceip != null">`F_DEVICEIP` = #{fDeviceip}, </if>
+			<if test="fDeviceport != null">`F_DEVICEPORT` = #{fDeviceport}, </if>
+			<if test="fReserve1 != null">`F_RESERVE1` = #{fReserve1}, </if>
+			<if test="fReserve2 != null">`F_RESERVE2` = #{fReserve2}, </if>
+			<if test="fReserve3 != null">`F_RESERVE3` = #{fReserve3}, </if>
+			<if test="fReserve4 != null">`F_RESERVE4` = #{fReserve4}, </if>
+			<if test="fReserve5 != null">`F_RESERVE5` = #{fReserve5}</if>
+		</set>
+		where F_ID = #{fId}
+	</update>
+	
+	<delete id="delete">
+		delete from CH_DEVICE where F_ID = #{value}
+	</delete>
+	
+	<delete id="deleteBatch">
+		delete from CH_DEVICE where F_ID in 
+		<foreach item="fId" collection="array" open="(" separator="," close=")">
+			#{fId}
+		</foreach>
+	</delete>
+
+</mapper>

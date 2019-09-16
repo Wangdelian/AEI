@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>web用户管理</title>
+    <link rel="stylesheet" href="${siteurl}/templates/skin2/template/plugins/layui/css/layui.css" media="all">
+    <script type="text/javascript" src="${siteurl}/public/js/utils.js"></script>
+
+    <style>
+        .ztree-nodes {
+            width: 100%;
+            height: 220px;
+            overflow: auto;
+        }
+
+        .user-list {
+            width: 287px;
+            padding: 5px;
+            border-radius: 2px;
+            background-color: #fff;
+            border: 1px #d2d2d2 solid;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, .12);
+            position: absolute;
+            margin-top: 100px;
+            z-index: -1000;
+            opacity: 0;
+        }
+
+        input[readonly] {
+            cursor: pointer;
+        }
+
+        .levelmark-header {
+            margin-top: 4px;
+            color: #666;
+        }
+
+        .levelmark-header div {
+            width: 100%;
+            text-align: center;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+    </style>
+</head>
+
+<body >
+<br>
+<div  class="layui-form layui-form-pane" id="main">
+    <div class="layui-row">
+        <div class="layui-col-xs12">
+            <div class="layui-inline ">
+                <div class="layui-inline">
+                    <span class="layui-form-label">登录名</span>
+                    <div class="layui-input-inline">
+                        <input type="text"  id="username" v-model="user.username" class="layui-input" placeholder="请输入登录名">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <span class="layui-form-label">姓名</span>
+                    <div class="layui-input-inline">
+                        <input type="text"  id="chineseName" name="chineseName" v-model="user.chineseName" class="layui-input" placeholder="请输入姓名">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <span class="layui-form-label">开始时间</span>
+                    <div class="layui-input-inline">
+                        <input type="text" class="layui-input" id="start" name="start"
+                               placeholder="yyyy-MM-dd HH:mm:ss" readonly="readonly">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <span class="layui-form-label">结束时间</span>
+                    <div class="layui-input-inline">
+                        <input type="text" class="layui-input" id="end" name="end"
+                               placeholder="yyyy-MM-dd HH:mm:ss" readonly="readonly">
+                    </div>
+                </div>
+            </div>
+            <br>
+            <br>
+            <div class="layui-inline">
+                <label class="layui-form-label">角色名称</label>
+                <div class="layui-input-block">
+                </div>
+            </div>
+            <br>
+            <br>
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label" for="levelname">所属机构</label>
+                    <div class="layui-input-inline" style="width:190px;">
+                        <input type="text" name="levelname" id="levelname" placeholder="请选择" lay-verify="select" class="layui-input" readonly>
+                    </div>
+                    <div id="projectDept-options" class="user-list" >
+                        <div class="levelmark-header">
+                            <div>
+                                <span>部门列表-所属部门选择</span>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="ztree-nodes">
+                            <ul id="menuTree" class="ztree"></ul>
+                        </div>
+                        <hr>
+                        <div class="layui-btn-group" style="text-align: right;display: block">
+                            <button type="button" class="layui-btn layui-btn-primary layui-btn-sm">完成</button>
+                            <button type="button" class="layui-btn layui-btn-primary layui-btn-sm">清空</button>
+                            <button type="button" class="layui-btn layui-btn-primary layui-btn-sm">返回</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="layui-inline">
+                    <button class="layui-btn"  onclick="javascript:vm.query(1,1)">查询</button>
+                    <button class="layui-btn" data-type="addUser">添加</button>
+                    <button class="layui-btn" type="button" data-type="getCheckData">删除</button>
+                    <button class="layui-btn"  onclick="javascript:vm.export()">导出</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<table class="layui-hide" id="test" lay-filter="demo"></table>
+<script type="text/html" id="switchTpl">
+    <input type="checkbox" name="sex" value="{{d.sex}}" lay-skin="switch" lay-text="女|男" lay-filter="sexDemo" {{ d.sex == 0 ? 'checked' : '' }}>
+</script>
+
+<script type="text/html" id="checkboxTpl">
+    <input type="checkbox" name="lock" value="{{d.status}}" title="锁定" lay-filter="lockDemo" {{ d.status == 0 ? 'checked' : '' }}>
+</script>
+
+<script type="text/html" id="barDemo">
+    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
+
+<div id="pagination"></div>
+<script type="text/javascript" src="${siteurl}/templates/default/media/js/jquery1.9.1.js"></script>
+<script src="${siteurl}/templates/skin2/template/plugins/layui/layui.js"></script>
+<script type="text/javascript" src="${siteurl}/public/libs/vue.min.js"></script>
+
+<!--ztree开始-->
+<link rel="stylesheet" type="text/css" href="${siteurl}/templates/skin2/media/js/plugins/zTree_v3/css/zTreeStyle/zTreeStyle.css" />
+<script type="text/javascript" src="${siteurl}/templates/skin2/media/js/plugins/zTree_v3/js/jquery.ztree.core.js"></script>
+<script type="text/javascript" src="${siteurl}/templates/skin2/media/js/plugins/zTree_v3/js/jquery.ztree.excheck.js"></script>
+<!--业务逻辑JS-->
+<script src="${siteurl}/templates/skin2/media/js/biz/UserMgr/webuserlist.js"></script>
+
+</body>
+<script type="text/javascript">
+    var siteurl='${siteurl}';
+</script>
+
+</html>

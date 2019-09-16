@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>问题柏拉图</title>
+    <link rel="stylesheet" href="${siteurl}/templates/skin2/template/plugins/layui/css/layui.css" media="all">
+    <script src="${siteurl}/public/js/utils.js"></script>
+
+    <style type="text/css">
+        .layui-table tbody tr:hover {
+            background-color: #87CEEB;
+
+        }
+
+        .layui-table-click {
+            background-color: #87CEEB;
+        }
+
+        .pointer tr[data-index="0"] td[lay-event] div {
+            cursor: pointer;
+        }
+
+
+    </style>
+</head>
+
+<body>
+<br>
+<div class="layui-form layui-form-pane" id="main">
+    <div class="layui-row">
+        <div class="layui-col-xs12">
+            <div class="layui-inline ">
+                <div class="layui-inline">
+                    <span class="layui-form-label">TOPN</span>
+                    <div class="layui-input-inline">
+                        <input type="text" id="keywords" name="keywords" class="layui-input" placeholder="请输入">
+                    </div>
+                </div>
+                <!--<div class="layui-inline">
+                    <label class="layui-form-label">创建时间</label>
+                    <div class="layui-input-inline">
+                        <input type="text" class="layui-input" id="datecreated" name="datecreated" placeholder="yyyy-MM-dd HH:mm:ss">
+                    </div>
+                </div>-->
+                <!--开始日期-->
+                <div class="layui-inline">
+                    <label class="layui-form-label">开始日期</label>
+                    <div class="layui-input-inline">
+                        <input type="text" class="layui-input" id="startTime" name="startTime" placeholder="请输入开始日期">
+                    </div>
+                </div>
+                <!--结束日期-->
+                <div class="layui-inline">
+                    <label class="layui-form-label">结束日期</label>
+                    <div class="layui-input-inline">
+                        <input type="text" class="layui-input" id="endTime" name="endTime" placeholder="请输入结束日期">
+                    </div>
+                </div>
+                <%
+                if(has(token_89)){
+                println('<button class="layui-btn" data-type="SearchList" lay-submit="" lay-filter="query">查询</button>');
+                }
+                %>
+
+            </div>
+        </div>
+    </div>
+    <div class="layui-row" style="margin-top: 20px">
+        <div class="layui-col-xs12">
+            <div class="layui-inline ">
+                <div id="main_echart" style="width: 1400px;height:400px;"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="pointer">
+    <table id="test" class="layui-table" lay-filter="issueplato"></table>
+</div>
+
+<script type="text/javascript" src="${siteurl}/templates/default/media/js/jquery1.9.1.js"></script>
+<script src="${siteurl}/templates/skin2/template/plugins/layui/layui.js"></script>
+
+<script src="${siteurl}/public/plugins/echarts/echarts.min.js"></script>
+<!--业务逻辑JS-->
+<script src="${siteurl}/templates/skin2/media/js/biz/MqsReport/issueplato.js"></script>
+
+</body>
+<script type="text/javascript">
+    var siteurl = '${siteurl}';
+</script>
+</html>

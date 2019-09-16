@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="${siteurl}/templates/skin2/template/plugins/layui/css/layui.css" media="all">
+    <style>
+        td[data-field="1"] {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+<br>
+<div class="layui-form layui-form-pane" id="main">
+    <div class="layui-row">
+        <div class="layui-col-xs12">
+            <div class="layui-form-item">
+                <!--查询部分-->
+                <!--选择第一行-->
+                <div class="layui-inline">
+
+                    <!--生产线-->
+                    <div class="layui-inline">
+                        <label class="layui-form-label">生产线</label>
+                        <div class="layui-input-inline">
+                            <select name="productionlinename" lay-filter="condition2"
+                                    id="productionlinename">
+                                <option value="">搜索或选择</option>
+                            </select>
+                        </div>
+                    </div>
+                    <!--系列-->
+                    <div class="layui-inline">
+                        <label class="layui-form-label">系列</label>
+                        <div class="layui-input-inline">
+                            <select name="enginemodel" lay-search="" lay-filter="condition3"
+                                    id="enginemodel">
+                                <option value="">请选择系列</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!--结束日期-->
+                    <div class="layui-inline">
+                        <label class="layui-form-label">结束日期</label>
+                        <div class="layui-input-inline">
+                            <input type="text" class="layui-input" id="endTime2" placeholder="请输入结束日期">
+                        </div>
+                    </div>
+                    <br>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">机型</label>
+                        <div class="layui-input-block" id="enginetypediv">
+                            <input type="checkbox" lay-skin="primary" title="全选" id="enginetype" lay-filter="checkbox2">
+                        </div>
+                    </div>
+                    <br>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">生产单位</label>
+                        <div class="layui-input-block" id="productiondeptnamediv">
+                            <input type="checkbox" lay-skin="primary" title="全选" id="productiondeptname"
+                                   lay-filter="checkbox0">
+                        </div>
+                    </div>
+                    <%
+                    if(has(token_96)){
+                    println('<button class="layui-btn" lay-submit lay-filter="search">查询</button>');
+                    };
+                    if(has(token_97)){
+                    println('<button class="layui-btn" lay-submit lay-filter="export">导出</button>');
+                    };
+                    %>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+
+    <div class="layui-form layui-form-pane">
+        <div class="layui-row">
+            <div class="layui-col-xs6">
+                <div class="layui-inline">
+                    <div id="main_echart1" style="width:1560px;height:400px;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <span style="position:relative;left:40px">
+    <table id="audit-table" class="layui-table"></table>
+    </span>
+    <br>
+    <span style="position:relative;left:40px">
+    <table id="S" class="layui-table"></table>
+    </span>
+        <br><!--, size:'sm', even:true-->
+        <span style="position:relative;left:40px">
+    <table id="A" class="layui-table"></table>
+    </span>
+        <br>
+        <span style="position:relative;left:40px">
+    <table id="B" class="layui-table"></table>
+    </span>
+        <br>
+        <span style="position:relative;left:40px">
+    <table id="C" class="layui-table"></table>
+    </span>
+        <span style="position:relative;left:40px">
+    <table id="near-week" class="layui-table"></table>
+    </span>
+        <span style="position:relative;left:40px">
+    <table id="near-month" class="layui-table"></table>
+    </span>
+        <span style="position:relative;left:40px">
+    <table id="near-year" class="layui-table"></table>
+    </span>
+
+    <script type="text/javascript" src="${siteurl}/public/libs/vue.min.js"></script>
+    <script type="text/javascript" src="${siteurl}/templates/default/media/js/jquery1.9.1.js"></script>
+    <script src="${siteurl}/templates/skin2/template/plugins/layui/layui.js"></script>
+    <script src="${siteurl}/public/plugins/echarts/echarts.min.js"></script>
+    <script src="${siteurl}/templates/skin2/media/js/biz/MqsReport/audittendency.js"></script>
+    <script type="text/javascript" src="${siteurl}/public/js/utils.js"></script>
+
+
+</div>
+</body>
+
+<script type="text/javascript">
+    var siteurl = '${siteurl}';
+
+</script>
+
+
+</html>

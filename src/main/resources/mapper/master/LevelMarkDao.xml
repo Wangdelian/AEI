@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="io.jeasyframework.dao.master.LevelMarkDao">
+
+    <select id="queryList" resultType="io.jeasyframework.entity.LevelMarkEntity">
+        select m.*,(select l.abname from sys_levelmark l where l.levelmarkid = m.pid) as parentName
+        from sys_levelmark m
+    </select>
+
+    <select id="queryByConditions" resultType="io.jeasyframework.entity.LevelMarkEntity" parameterType="io.jeasyframework.entity.LevelMarkEntity">
+        select t.levelmarkid as levelmarkid,t.abname as abname,t.pid  from SYS_LEVELMARK t
+        where 1=1
+        <if test="levelmarkid != null and levelmarkid.trim() != '' ">
+            and t.levelmarkid like '${levelmarkid}%'
+        </if>
+        <if test="abname != null and abname.trim() != '' ">
+            and t.abname like '%${abname}%'
+        </if>
+        <if test="pid != null and pid.trim() != '' ">
+            and t.pid = #{pid}
+        </if>
+    </select>
+
+    <select id="queryListbypid" resultType="io.jeasyframework.entity.ChJsondataEntity">
+         select t.levelmarkid as F_LevelMarkID,t.abname as F_ABName
+         from SYS_LEVELMARK t
+         where 1=1
+        <if test="pid != null and pid.trim() != '' ">
+            and t.pid = #{pid}
+        </if>
+        <if test="levelmarkid != null and levelmarkid.trim() != '' ">
+            and t.levelmarkid = #{levelmarkid}
+        </if>
+    </select>
+
+    <select id="queryObject" resultType="io.jeasyframework.entity.LevelMarkEntity">
+        select * from sys_levelmark where levelmarkid = #{value}
+    </select>
+
+    <select id="getChildNum" resultType="int">
+        select count(*) from sys_levelmark where t.f_pid  = #{pid}
+    </select>
+
+    <select id="queryAbname" resultType="String">
+        select abname from sys_levelmark where levelmarkid = (select levelmarkid from sys_user where user_id= #{value})
+    </select>
+
+    <delete id="delete">
+        delete from sys_levelmark where levelmarkid = #{value}
+    </delete>
+
+    <select id="querySystemList" resultType="io.jeasyframework.entity.LevelMarkEntity">
+        SELECT LE.*
+        FROM SYS_LEVELMARK LE
+        WHERE LE.URL is not null
+        <if test="fBureauname != null and fBureauname.trim() != ''">
+            and LE.LEVELMARKID like '${fBureauname}%'
+        </if>
+        <if test="fSectionname != null and fSectionname.trim() != ''">
+            and LE.LEVELMARKID like '${fSectionname}%'
+        </if>
+        <if test="fpasssite != null and fpasssite.trim() != ''">
+            and LE.LEVELMARKID like '${fpasssite}%'
+        </if>
+        order by LE.LEVELMARKID
+    </select>
+
+    <select id="querySystemTotal" resultType="int">
+        SELECT COUNT(*)
+        FROM SYS_LEVELMARK LE
+        WHERE LE.URL is not null
+        <if test="fBureauname != null and fBureauname.trim() != ''">
+            and LE.LEVELMARKID like '${fBureauname}%'
+        </if>
+        <if test="fSectionname != null and fSectionname.trim() != ''">
+            and LE.LEVELMARKID like '${fSectionname}%'
+        </if>
+        <if test="fpasssite != null and fpasssite.trim() != ''">
+            and LE.LEVELMARKID like '${fpasssite}%'
+        </if>
+    </select>
+
+    <!--<insert id="save" parameterType="io.jeasyframework.entity.LevelMarkEntity" useGeneratedKeys="true"-->
+    <!--keyProperty="levelmarkid">-->
+    <!--<selectKey resultType="java.lang.String" keyProperty="levelmarkid" order="BEFORE">-->
+    <!--select SYS_LEVELMARK_SEQ_ATUOID.nextval as levelmarkid from dual-->
+    <!--</selectKey>-->
+    <!--insert into sys_levelmark-->
+    <!--(-->
+    <!--levelmarkid,-->
+    <!--levelmarkvalue,-->
+    <!--abname,-->
+    <!--description,-->
+    <!--tel,-->
+    <!--email,-->
+    <!--pid-->
+    <!--)-->
+    <!--values-->
+    <!--(-->
+    <!--#{levelmarkid},-->
+    <!--#{levelmarkvalue},-->
+    <!--#{abname},-->
+    <!--#{description},-->
+    <!--#{tel},-->
+    <!--#{email},-->
+    <!--#{pid}-->
+    <!--)-->
+    <!--</insert>-->
+
+    <insert id="save" parameterType="io.jeasyframework.entity.LevelMarkEntity" useGeneratedKeys="true"
+            keyProperty="levelmarkid">
+        <selectKey resultType="java.lang.String" keyProperty="levelmarkid" order="BEFORE">
+            <if test="levelmarkid == null">
+                select SYS_LEVELMARK_SEQ_ATUOID.nextval as levelmarkid from dual
+            </if>
+            <if test="levelmarkid != null">
+                select ${levelmarkid} from dual
+            </if>
+        </selectKey>
+        insert into sys_levelmark
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="levelmarkid != null">
+                levelmarkid,
+            </if>
+            <if test="levelmarkvalue != null">
+                levelmarkvalue,
+            </if>
+            <if test="abname != null">
+                abname,
+            </if>
+            <if test="description != null">
+                description,
+            </if>
+            <if test="tel != null">
+                tel,
+            </if>
+            <if test="email != null">
+                email,
+            </if>
+            <if test="pid != null">
+                pid,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="levelmarkid != null">
+                #{levelmarkid,jdbcType=OTHER},
+            </if>
+            <if test="levelmarkvalue != null">
+                #{levelmarkvalue,jdbcType=OTHER},
+            </if>
+            <if test="abname != null">
+                #{abname,jdbcType=OTHER},
+            </if>
+            <if test="description != null">
+                #{description,jdbcType=DECIMAL},
+            </if>
+            <if test="tel != null">
+                #{tel,jdbcType=OTHER},
+            </if>
+            <if test="email != null">
+                #{email,jdbcType=OTHER},
+            </if>
+            <if test="pid != null">
+                #{pid,jdbcType=OTHER},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="update" parameterType="io.jeasyframework.entity.LevelMarkEntity">
+        update sys_levelmark
+        <set>
+            <if test="abname != null">abname = #{abname},</if>
+            <if test="description != null">description = #{description},</if>
+            <if test="tel != null">tel = #{tel},</if>
+            <if test="email != null">email = #{email},</if>
+        </set>
+        where levelmarkid = #{levelmarkid}
+    </update>
+    <select id="queryAbname2" resultType="io.jeasyframework.entity.LevelMarkEntity">
+      select abname, levelmarkid from sys_levelmark
+      where levelmarkid  in (select levelmarkid from sys_user_levelmark where userid=#{value})
+    </select>
+    <select id="queryLevelMarkUp" resultType="String">
+      SELECT LISTAGG ( to_char( ABNAME ), '/' ) WITHIN GROUP ( ORDER BY LEVELMARKID ) AS ABNAME
+      FROM SYS_LEVELMARK START WITH LEVELMARKID = #{value} CONNECT BY PRIOR PID = LEVELMARKID
+    </select>
+
+    <select id="queryLevelIDMarkUp" resultType="String">
+      SELECT LISTAGG ( to_char( levelmarkid ), '/' ) WITHIN GROUP ( ORDER BY LEVELMARKID ) AS levelmarkid
+      FROM SYS_LEVELMARK START WITH LEVELMARKID = #{value} CONNECT BY PRIOR PID = LEVELMARKID
+    </select>
+
+</mapper>

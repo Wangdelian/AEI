@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="io.jeasyframework.dao.master.MesOeePromoteDao">
+
+    <select id="queryList" resultType="io.jeasyframework.entity.MesOeePromoteEntity">
+      select p.*,totaltime - totalplantime - totalunplanedtime AS validtime,totalunplanedtime,equipfaulttime,replacetime,changknifedix,adjusttesttime, riskassessment,otherstoptime
+          from MES_OEEPROMOTE  p left join  mes_oeedata  d on TO_CHAR(p.dateinfo, 'YYYY-MM-DD') = TO_CHAR(d.dateinfo, 'YYYY-MM-DD') and p.shiftname = d.shiftname and p.workline = d.workline
+    </select>
+
+</mapper>

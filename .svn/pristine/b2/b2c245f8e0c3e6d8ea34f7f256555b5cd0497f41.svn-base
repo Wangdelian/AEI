@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="io.jeasyframework.dao.master.WorkshopInterfaceDao">
+    <resultMap type="io.jeasyframework.entity.IqIccEntity" id="iqIccMap">
+        <result property="iqiId" column="IQI_ID"/>
+        <result property="iqiVrtcode" column="IQI_VRTCODE"/>
+        <result property="iqiVrt" column="IQI_VRT"/>
+        <result property="iqiVfgcode" column="IQI_VFGCODE"/>
+        <result property="iqiVfg" column="IQI_VFG"/>
+        <result property="iqiCcccode" column="IQI_CCCCODE"/>
+        <result property="iqiCcc" column="IQI_CCC"/>
+        <result property="iqiSite" column="IQI_SITE"/>
+        <result property="iqiModel" column="IQI_MODEL"/>
+        <result property="iqiIcccode" column="IQI_ICCCODE"/>
+        <result property="iqiIcc" column="IQI_ICC"/>
+        <result property="iqiSkcode" column="IQI_SKCODE"/>
+        <result property="iqiSkname" column="IQI_SKNAME"/>
+        <result property="iqiRank" column="IQI_RANK"/>
+        <result property="iqiScore" column="IQI_SCORE"/>
+        <result property="iqiDemo" column="IQI_DEMO"/>
+        <result property="sysOpuid" column="SYS_OPUID"/>
+        <result property="sysOpuname" column="SYS_OPUNAME"/>
+        <result property="sysOpdepname" column="SYS_OPDEPNAME"/>
+        <result property="sysOpdepid" column="SYS_OPDEPID"/>
+        <result property="sysOpcdate" column="SYS_OPCDATE"/>
+        <result property="sysOpdate" column="SYS_OPDATE"/>
+        <result property="sysCuname" column="SYS_CUNAME"/>
+        <result property="sysCuid" column="SYS_CUID"/>
+        <result property="iqiEnable" column="IQI_ENABLE"/>
+    </resultMap>
+	<select id="queryStaionList" resultType="io.jeasyframework.entity.MqsStationEntity">
+		select
+		MQS_STATION.STATIONID,
+		MQS_STATION.MES_STATIONID,
+		MQS_STATION.STATIONCODE as stationcode,
+		MQS_STATION.stationname as stationname,
+		MQS_REGION.regionname as regionid,
+		MQS_PRODUCTLINE.productionlinename as productionlineid,
+		MQS_PRODUCTDEPT.productiondeptname as productiondeptname,
+		MQS_STATION.remark as remark,
+		MQS_STATION.MES_STATIONNAME as mesStationname
+		from
+		MQS_STATION left join MQS_REGION on MQS_REGION.REGIONID = MQS_STATION.REGIONID
+		left join MQS_PRODUCTLINE on MQS_PRODUCTLINE.PRODUCTIONLINEID = MQS_STATION.PRODUCTIONLINEID
+		left join MQS_PRODUCTDEPT on MQS_PRODUCTDEPT.PRODUCTIONDEPTID = MQS_PRODUCTLINE.PRODUCTIONDEPTID
+		where 1=1
+		<if test="productionlineid != null  ">
+			AND  ( MQS_STATION.PRODUCTIONLINEID like  '%' || #{productionlineid} || '%' )
+		</if>
+		order by MQS_STATION.STATIONID ASC
+	</select>
+	<select id="queryICCList" resultType="io.jeasyframework.entity.IqIccEntity" resultMap="iqIccMap">
+		select 
+			   * 
+		from IQ_ICC a where a.iqi_vrt=#{iqivrt} and a.iqi_icc LIKE   '%'|| #{keyword} ||'%'
+	</select>
+	<select id="queryTopICCList" resultMap="iqIccMap" resultType = "io.jeasyframework.entity.IqIccEntity">
+		select * from (
+			select b.IQI_ID iqi_id  ,     
+				 b.IQI_VRTCODE iqi_vrtcode    ,   
+				 b.IQI_VRT iqi_vrt     ,  
+				 b.IQI_VFGCODE iqi_vfgcode    ,   
+				 b.IQI_VFG iqi_vfg      , 
+				 b.IQI_CCCCODE iqi_ccccode    ,   
+				 b.IQI_CCC iqi_ccc      , 
+				 b.IQI_SITE iqi_site      , 
+				 b.IQI_MODEL iqi_model       ,
+				 b.IQI_ICCCODE iqi_icccode    ,   
+				 b.IQI_ICC iqi_icc       ,
+				 b.IQI_SKCODE iqi_skcode     ,  
+				 b.IQI_SKNAME iqi_skname    ,   
+				 b.IQI_RANK iqi_rank     ,  
+				 b.IQI_SCORE iqi_score     ,  
+				 b.IQI_DEMO iqi_demo       ,
+				 b.IQI_ENABLE iqi_enable
+			from mqs_issue a
+			inner join iq_icc b on a.ICCCODE=b.iqi_icccode
+			where a.isenable=1
+			group by b.IQI_ID   ,     
+				 b.IQI_VRTCODE     ,   
+				 b.IQI_VRT      ,  
+				 b.IQI_VFGCODE     ,   
+				 b.IQI_VFG       , 
+				 b.IQI_CCCCODE     ,   
+				 b.IQI_CCC       , 
+				 b.IQI_SITE       , 
+				 b.IQI_MODEL        ,
+				 b.IQI_ICCCODE     ,   
+				 b.IQI_ICC        ,
+				 b.IQI_SKCODE      ,  
+				 b.IQI_SKNAME     ,   
+				 b.IQI_RANK      ,  
+				 b.IQI_SCORE      ,  
+				 b.IQI_DEMO        ,
+				 b.IQI_ENABLE 
+				 order by count(a.issueid) desc
+		) where rownum &lt;=20
+	 </select>
+     <select id="queryissuelistforwk"  resultType = "io.jeasyframework.entity.MqsIssueEntity">
+		  select	
+				a.ISSUEID issueid, 
+		       a.PRODUCTIONDEPTNAME productiondeptname,       
+			   a.PRODUCTIONLINENAME productionlinename,       
+			   a.PREGION pregion,       
+			   a.PSTATION pstation,       
+			   a.ENGINEMODEL enginemodel,       
+			   a.ENGINENO engineno,       
+			   a.ICC icc,       
+			   a.ITEMPART itempart,       
+			   a.FAILUREMODEL failuremodel,       
+			   a.ISSUEDESC issuedesc,       
+			   a.REPAIRCONTENT repaircontent,       
+			   a.ISSUESTATUS issuestatus,       
+			   nvl(to_char(a.dateclose,'yyyy-mm-dd HH24:mi:ss'),null) dateclose,    
+			   a.dateclosestring,    
+			   a.CLOSEBYNAME closebyname,       
+			   a.CLOSEBY closeby,       
+			   a.CREATEDBYNAME createdbyname,       
+			   a.CREATEDBYID createdbyid,       
+			   nvl(to_char(a.DATECREATED,'yyyy-mm-dd HH24:mi:ss'),null) datecreated  ,     
+			   a.MODIFIEDBYNAME modifiedbyname,       
+			   a.MODIFIEDBYID modifiedbyid,       
+			   a.DATEMODIFIED datemodified,       
+			   a.ISENABLE isenable,       
+			   a.ISCP iscp,       
+			   a.ICCCODE icccode,
+			   a.issueremark issueremark ,
+			   a.issueattr,
+			   a.partsbarcode      
+		from MQS_ISSUE a 
+		where a.engineno = #{engineno} and a.isenable=1
+	 </select>
+	 <select id="querymesenginebasicinfo"  resultType="io.jeasyframework.entity.MESEngineInfo">
+			select 
+			a.F_ACTUALPRODUCTNO engineno,
+			b.F_ITEM_CODE itemcode,
+			b.F_ITEM_SERIES_CODE  itemseriescode
+			from PF_PROCESSINSTANCE a
+			inner join wp_erppaln_import b on a.f_erp_planid=b.PLAN_ID
+			where  a.F_ACTUALPRODUCTNO=#{engineno}
+	</select>
+	<select id="queryea3mesenginebasicinfo"  resultType="io.jeasyframework.entity.MESEngineInfo">
+			select 
+			a.F_ACTUALPRODUCTNO engineno,
+			b.F_ITEM_CODE itemcode,
+			b.F_ITEM_SERIES_CODE  itemseriescode
+			from PF_PROCESSINSTANCE a
+			inner join wp_erppaln_import b on a.f_erp_planid=b.F_ID
+			where  a.F_ACTUALPRODUCTNO like   '%' || #{engineno} || '%' 
+	</select>
+	<select id="verfiyissueicc"  resultType = "io.jeasyframework.entity.MqsIssueEntity">
+
+		  select	
+				a.ISSUEID issueid, 
+		       a.PRODUCTIONDEPTNAME productiondeptname,       
+			   a.PRODUCTIONLINENAME productionlinename,       
+			   a.PREGION pregion,       
+			   a.PSTATION pstation,       
+			   a.ENGINEMODEL enginemodel,       
+			   a.ENGINENO engineno,       
+			   a.ICC icc,       
+			   a.ITEMPART itempart,       
+			   a.FAILUREMODEL failuremodel,       
+			   a.ISSUEDESC issuedesc,       
+			   a.REPAIRCONTENT repaircontent,       
+			   a.ISSUESTATUS issuestatus,       
+			   nvl(to_char(a.dateclose,'yyyy-mm-dd HH24:mi:ss'),null) dateclose,    
+			   a.dateclosestring,    
+			   a.CLOSEBYNAME closebyname,       
+			   a.CLOSEBY closeby,       
+			   a.CREATEDBYNAME createdbyname,       
+			   a.CREATEDBYID createdbyid,       
+			   nvl(to_char(a.DATECREATED,'yyyy-mm-dd HH24:mi:ss'),null) datecreated  ,     
+			   a.MODIFIEDBYNAME modifiedbyname,       
+			   a.MODIFIEDBYID modifiedbyid,       
+			   a.DATEMODIFIED datemodified,       
+			   a.ISENABLE isenable,       
+			   a.ISCP iscp,       
+			   a.ICCCODE icccode,
+			   a.issueremark issueremark ,
+			   a.issueattr,
+			   a.partsbarcode      
+		from MQS_ISSUE a 
+		where a.engineno = #{engineno} and a.ICCCODE= #{icccode}
+	 </select>
+	 <select id="queryissueforwk" resultType = "io.jeasyframework.entity.MqsIssueEntity">
+		  select	a.issueid  issueid,
+				a.PRODUCTIONDEPTNAME productiondeptname,       
+			   a.PRODUCTIONLINENAME productionlinename,       
+			   a.PREGION pregion,       
+			   a.PSTATION pstation,       
+			   a.ENGINEMODEL enginemodel,       
+			   a.ENGINENO engineno,       
+			   a.ICC icc,       
+			   a.ITEMPART itempart,       
+			   a.FAILUREMODEL failuremodel,       
+			   a.ISSUEDESC issuedesc,       
+			   a.REPAIRCONTENT repaircontent,       
+			   a.ISSUESTATUS issuestatus,       
+			   nvl(to_char(a.dateclose,'yyyy-mm-dd HH24:mi:ss'),null) dateclose,   
+			   a.dateclosestring,    
+			   a.CLOSEBYNAME closebyname,       
+			   a.CLOSEBY closeby,       
+			   a.CREATEDBYNAME createdbyname,       
+			   a.CREATEDBYID createdbyid,       
+			   a.DATECREATED datecreated,       
+			   a.MODIFIEDBYNAME modifiedbyname,       
+			   a.MODIFIEDBYID modifiedbyid,       
+			   a.DATEMODIFIED datemodified,       
+			   a.ISENABLE isenable,       
+			   a.ISCP iscp,       
+			   a.ICCCODE icccode,
+			   a.issueremark issueremark,
+			   a.issueattr,
+			   a.partsbarcode,
+			   a.issuebz
+		from MQS_ISSUE a 
+		where a.issueid = #{issueid}
+	 </select>
+	 <select id="queryissuelistforwklog"  resultType = "io.jeasyframework.entity.MqsIssueEntity">
+		  select	
+				a.ISSUEID issueid, 
+		       a.PRODUCTIONDEPTNAME productiondeptname,       
+			   a.PRODUCTIONLINENAME productionlinename,       
+			   a.PREGION pregion,       
+			   a.PSTATION pstation,       
+			   a.ENGINEMODEL enginemodel,       
+			   a.ENGINENO engineno,       
+			   a.ICC icc,       
+			   a.ITEMPART itempart,       
+			   a.FAILUREMODEL failuremodel,       
+			   a.ISSUEDESC issuedesc,       
+			   a.REPAIRCONTENT repaircontent,       
+			   a.ISSUESTATUS issuestatus,       
+			   nvl(to_char(a.dateclose,'yyyy-mm-dd HH24:mi:ss'),null) dateclose,    
+			   a.dateclosestring,    
+			   a.CLOSEBYNAME closebyname,       
+			   a.CLOSEBY closeby,       
+			   a.CREATEDBYNAME createdbyname,       
+			   a.CREATEDBYID createdbyid,       
+			   nvl(to_char(a.DATECREATED,'yyyy-mm-dd HH24:mi:ss'),null) datecreated  ,     
+			   a.MODIFIEDBYNAME modifiedbyname,       
+			   a.MODIFIEDBYID modifiedbyid,       
+			   a.DATEMODIFIED datemodified,       
+			   a.ISENABLE isenable,       
+			   a.ISCP iscp,       
+			   a.ICCCODE icccode,
+			   a.issueremark issueremark ,
+			   a.issueattr,
+			   a.partsbarcode,
+			   a.issuebz
+		from MQS_ISSUE a 
+		where a.isenable=1
+
+		<if test="engineno != null and engineno.trim() != ''">
+			and a.engineno like '%${engineno}%'
+		</if>
+		<if test="pstation != null and pstation.trim() != ''">
+			and a.PSTATION like '%${pstation}%'
+		</if>
+		<if test="issuebz != null and issuebz.trim() != ''">
+			and a.issuebz like '%${issuebz}%'
+		</if>
+		<if test="datecreated != null and datecreated.trim() != ''">
+			and a.DATECREATED &gt;= to_date('${datecreated}','yyyy-MM-dd HH24:mi:ss')
+		</if>
+		<if test="dateclose != null and dateclose.trim() != ''">
+			and a.DATECREATED &lt;= to_date('${dateclose}','yyyy-MM-dd HH24:mi:ss')
+		</if>
+		<if test="icc != null and icc.trim() != ''">
+                and icc like '%${icc}%'
+        </if>
+		order by ISSUEID desc
+	 </select>
+
+	 <select id="queryissuefornomodel" resultType = "io.jeasyframework.entity.MqsIssueEntity">
+		  select      
+			   a.engineno 
+		from MQS_ISSUE a 
+		where a.enginemodel is null and  instr(a.engineno,':')=0
+		<if test="datecreated != null and datecreated.trim() != ''">
+			and a.DATECREATED &gt;= to_date('${datecreated}','yyyy-MM-dd HH24:mi:ss')
+		</if>
+		<if test="dateclose != null and dateclose.trim() != ''">
+			and a.DATECREATED &lt;= to_date('${dateclose}','yyyy-MM-dd HH24:mi:ss')
+		</if>
+		group by engineno
+	 </select>
+	 <update id="updateissuemodel" parameterType="io.jeasyframework.entity.MqsIssueEntity">
+        update mqs_issue
+			   set 
+				   enginemodel = #{enginemodel,jdbcType=VARCHAR},
+				   enginetype =#{enginetype,jdbcType=VARCHAR}
+			 where engineno = #{engineno,jdbcType=VARCHAR}
+    </update>
+	<select id="querymesenginebasicinfolist"  resultType="io.jeasyframework.entity.MESEngineInfo">
+			select 
+			a.F_ACTUALPRODUCTNO engineno,
+			b.F_ITEM_CODE itemcode,
+			b.F_ITEM_SERIES_CODE  itemseriescode
+			from PF_PROCESSINSTANCE a
+			inner join wp_erppaln_import b on a.f_erp_planid=b.PLAN_ID
+			where  a.F_ACTUALPRODUCTNO=#{engineno}
+	</select>
+</mapper>

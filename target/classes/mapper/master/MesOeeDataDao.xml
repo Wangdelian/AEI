@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="io.jeasyframework.dao.master.MesOeeDataDao">
+	<select id="queryList" resultType="io.jeasyframework.entity.MesOeeDataEntity">
+		select * from MES_OEEDATA order by workline,dateinfo,workstart
+		<if test="condition != null and condition != '' ">
+			WHERE  ( conditon like    '%' || #{condition} || '%' )
+		</if>
+	</select>
+	<select id="queryLine" resultType="io.jeasyframework.entity.MesOeeDataEntity">
+		SELECT  distinct(workline),1 as oeedataid   from MES_OEEDATA
+	</select>
+</mapper>

@@ -1,0 +1,118 @@
+{
+  "hints": [],
+  "groups": [
+    {
+      "sourceType": "io.jeasyframework.config.DataSourceConfigurer",
+      "name": "mybatis",
+      "sourceMethod": "sqlSessionFactoryBean()",
+      "type": "org.mybatis.spring.SqlSessionFactoryBean"
+    },
+    {
+      "sourceType": "io.jeasyframework.config.DataSourceConfigurer",
+      "name": "spring.datasource.druid.master",
+      "sourceMethod": "master()",
+      "type": "javax.sql.DataSource"
+    },
+    {
+      "sourceType": "io.jeasyframework.config.DataSourceConfigurer",
+      "name": "spring.datasource.druid.slave-alpha",
+      "sourceMethod": "slaveAlpha()",
+      "type": "javax.sql.DataSource"
+    },
+    {
+      "sourceType": "io.jeasyframework.config.DataSourceConfigurer",
+      "name": "spring.datasource.druid.slave-beta",
+      "sourceMethod": "slaveBeta()",
+      "type": "javax.sql.DataSource"
+    },
+    {
+      "sourceType": "io.jeasyframework.config.DataSourceConfigurer",
+      "name": "spring.datasource.druid.slave-gamma",
+      "sourceMethod": "slaveGamma()",
+      "type": "javax.sql.DataSource"
+    },
+    {
+      "sourceType": "io.jeasyframework.config.SiteConfig",
+      "name": "web.config",
+      "type": "io.jeasyframework.config.SiteConfig"
+    }
+  ],
+  "properties": [
+    {
+      "sourceType": "org.mybatis.spring.SqlSessionFactoryBean",
+      "name": "mybatis.cache",
+      "type": "org.apache.ibatis.cache.Cache"
+    },
+    {
+      "sourceType": "org.mybatis.spring.SqlSessionFactoryBean",
+      "name": "mybatis.database-id-provider",
+      "type": "org.apache.ibatis.mapping.DatabaseIdProvider"
+    },
+    {
+      "sourceType": "org.mybatis.spring.SqlSessionFactoryBean",
+      "name": "mybatis.vfs",
+      "type": "java.lang.Class<? extends org.apache.ibatis.io.VFS>"
+    },
+    {
+      "sourceType": "io.jeasyframework.config.SiteConfig",
+      "name": "web.config.author-name",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "io.jeasyframework.config.SiteConfig",
+      "name": "web.config.author-url",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "io.jeasyframework.config.SiteConfig",
+      "name": "web.config.config01",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "io.jeasyframework.config.SiteConfig",
+      "name": "web.config.config02",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "io.jeasyframework.config.SiteConfig",
+      "name": "web.config.config03",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "io.jeasyframework.config.SiteConfig",
+      "name": "web.config.lock-time",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "io.jeasyframework.config.SiteConfig",
+      "name": "web.config.max-fail-times",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "io.jeasyframework.config.SiteConfig",
+      "name": "web.config.mileage",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "io.jeasyframework.config.SiteConfig",
+      "defaultValue": 0,
+      "name": "web.config.pagesize",
+      "type": "java.lang.Integer"
+    },
+    {
+      "sourceType": "io.jeasyframework.config.SiteConfig",
+      "name": "web.config.password-expire-time",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "io.jeasyframework.config.SiteConfig",
+      "name": "web.config.version",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "io.jeasyframework.config.SiteConfig",
+      "name": "web.config.web-title",
+      "type": "java.lang.String"
+    }
+  ]
+}

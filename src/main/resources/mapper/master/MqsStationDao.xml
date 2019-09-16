@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="io.jeasyframework.dao.master.MqsStationDao">
+
+    <!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="io.jeasyframework.entity.MqsStationEntity" id="mqsStationMap">
+        <result property="stationid" column="STATIONID"/>
+        <result property="stationname" column="STATIONNAME"/>
+        <result property="remark" column="REMARK"/>
+        <result property="productionlineid" column="PRODUCTIONLINEID"/>
+        <result property="stationcode" column="STATIONCODE"/>
+        <result property="mesStationid" column="MES_STATIONID"/>
+        <result property="regionid" column="REGIONID"/>
+        <result property="mesStationname" column="MES_STATIONNAME"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+		STATIONID, STATIONNAME, REMARK, PRODUCTIONLINEID, STATIONCODE, MES_STATIONID, REGIONID, MES_STATIONNAME
+	</sql>
+
+    <select id="queryBystationids" resultType="io.jeasyframework.entity.MqsStationEntity">
+        select * from MQS_STATION where STATIONID in
+        <foreach item="item" collection="stationids" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+
+    <select id="queryObject" resultType="io.jeasyframework.entity.MqsStationEntity">
+		select
+        MQS_STATION.STATIONID,
+        MQS_STATION.MES_STATIONID,
+        MQS_STATION.STATIONCODE as stationcode,
+        MQS_STATION.stationname as stationname,
+        MQS_STATION.mes_stationid as mesStationid,
+        MQS_REGION.regionname as regionid,
+        MQS_PRODUCTLINE.productionlinename as productionlineid,
+        MQS_PRODUCTDEPT.productiondeptname as productiondeptname,
+        MQS_STATION.remark as remark,
+        MQS_STATION.MES_STATIONNAME as mesStationname
+        from
+        MQS_STATION left join MQS_REGION on MQS_REGION.REGIONID = MQS_STATION.REGIONID
+        left join MQS_PRODUCTLINE on MQS_PRODUCTLINE.PRODUCTIONLINEID = MQS_STATION.PRODUCTIONLINEID
+        left join MQS_PRODUCTDEPT on MQS_PRODUCTDEPT.PRODUCTIONDEPTID = MQS_PRODUCTLINE.PRODUCTIONDEPTID
+		where STATIONID = #{value}
+	</select>
+
+    <select id="queryList" resultType="io.jeasyframework.entity.MqsStationEntity">
+        select
+        MQS_STATION.STATIONID,
+        MQS_STATION.MES_STATIONID,
+        MQS_STATION.STATIONCODE as stationcode,
+        MQS_STATION.stationname as stationname,
+        MQS_STATION.mes_stationid as mesStationid,
+        MQS_REGION.regionname as regionid,
+        MQS_PRODUCTLINE.productionlinename as productionlineid,
+        MQS_PRODUCTDEPT.productiondeptname as productiondeptname,
+        MQS_STATION.remark as remark,
+        MQS_STATION.MES_STATIONNAME as mesStationname
+        from
+        MQS_STATION left join MQS_REGION on MQS_REGION.REGIONID = MQS_STATION.REGIONID
+        left join MQS_PRODUCTLINE on MQS_PRODUCTLINE.PRODUCTIONLINEID = MQS_STATION.PRODUCTIONLINEID
+        left join MQS_PRODUCTDEPT on MQS_PRODUCTDEPT.PRODUCTIONDEPTID = MQS_PRODUCTLINE.PRODUCTIONDEPTID
+        where 1=1
+        <if test="stationcode != null and stationcode != '' ">
+            AND ( MQS_STATION.STATIONCODE like '%' || #{stationcode} || '%' )
+        </if>
+        <if test="pregionId != null">
+            and MQS_STATION.REGIONID = #{pregionId}
+        </if>
+        order by MQS_STATION.STATIONID ASC
+    </select>
+
+    <select id="queryPstationlist" resultType="io.jeasyframework.entity.MqsStationEntity">
+		select * from MQS_STATION
+	</select>
+
+    <select id="queryTotal" resultType="int">
+        select count(*) from MQS_STATION
+        WHERE 1=1
+        <if test="stationcode != null and stationcode != '' ">
+            AND ( MQS_STATION.STATIONCODE like '%' || #{stationcode} || '%' )
+        </if>
+    </select>
+
+    <insert id="saveee" parameterType="io.jeasyframework.entity.MqsStationEntity" useGeneratedKeys="true"
+            keyProperty="stationid">
+        <selectKey resultType="java.lang.Long" keyProperty="stationid" order="BEFORE">
+            select seq_station_id.nextval as stationid from dual
+        </selectKey>
+        insert into MQS_STATION
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="stationid != null">
+                STATIONID,
+            </if>
+            <if test="stationname != null">
+                STATIONNAME,
+            </if>
+            <if test="remark != null">
+                REMARK,
+            </if>
+            <if test="productionlineid != null">
+                PRODUCTIONLINEID,
+            </if>
+            <if test="stationcode != null">
+                STATIONCODE,
+            </if>
+            <if test="mesStationid != null">
+                MES_STATIONID,
+            </if>
+            <if test="regionid != null">
+                REGIONID,
+            </if>
+            <if test="mesStationname != null">
+                MES_STATIONNAME,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="stationid != null">
+                #{stationid,jdbcType=DECIMAL},
+            </if>
+            <if test="stationname != null">
+                #{stationname,jdbcType=OTHER},
+            </if>
+            <if test="remark != null">
+                #{remark,jdbcType=OTHER},
+            </if>
+            <if test="productionlineid != null">
+                #{productionlineid,jdbcType=DECIMAL},
+            </if>
+            <if test="stationcode != null">
+                #{stationcode,jdbcType=OTHER},
+            </if>
+            <if test="mesStationid != null">
+                #{mesStationid,jdbcType=OTHER},
+            </if>
+            <if test="regionid != null">
+                #{regionid,jdbcType=OTHER},
+            </if>
+            <if test="mesStationname != null">
+                #{mesStationname,jdbcType=OTHER},
+            </if>
+        </trim>
+    </insert>
+
+    <insert id="save" parameterType="io.jeasyframework.entity.MqsStationEntity" useGeneratedKeys="true"
+            keyProperty="stationid">
+        <selectKey resultType="java.lang.Long" keyProperty="stationid" order="BEFORE">
+            select seq_station_id.nextval as stationid from dual
+        </selectKey>
+        insert into MQS_STATION
+        (
+        STATIONID,
+        STATIONNAME,
+        REMARK,
+        PRODUCTIONLINEID,
+        STATIONCODE,
+        REGIONID
+        )
+        values
+        (
+        #{stationid},
+        #{stationname},
+        #{remark},
+        #{productionlineid},
+        #{stationcode},
+        #{regionid}
+        )
+    </insert>
+
+    <update id="update" parameterType="io.jeasyframework.entity.MqsStationEntity">
+		update MQS_STATION
+		set STATIONNAME = #{stationname,jdbcType=OTHER},
+		REMARK = #{remark},
+		PRODUCTIONLINEID = #{productionlineid,jdbcType=OTHER},
+		STATIONCODE = #{stationcode,jdbcType=OTHER},
+		REGIONID = #{regionid,jdbcType=OTHER}
+		where STATIONID = #{stationid,jdbcType=DECIMAL}
+	</update>
+
+    <delete id="delete">
+		delete from MQS_STATION where STATIONID = #{value}
+	</delete>
+
+    <delete id="deleteBatch">
+        delete from MQS_STATION where STATIONID in
+        <foreach item="stationid" collection="array" open="(" separator="," close=")">
+            #{stationid}
+        </foreach>
+    </delete>
+
+</mapper>

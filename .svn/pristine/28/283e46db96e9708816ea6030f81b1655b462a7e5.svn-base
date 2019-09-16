@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="io.jeasyframework.dao.master.ODTightenDao">
+  <resultMap id="BaseResultMap" type="io.jeasyframework.entity.ODTightenEntity">
+    <id column="F_ID" jdbcType="DECIMAL" property="fId" />
+    <result column="F_STATIONNAME" jdbcType="OTHER" property="fStationname" />
+    <result column="F_PARTCODE" jdbcType="OTHER" property="fPartcode" />
+    <result column="F_TIME" jdbcType="TIMESTAMP" property="fTime" />
+    <result column="F_OBJECTIVECYCLE" jdbcType="OTHER" property="fObjectivecycle" />
+    <result column="F_REALITYCYCLE" jdbcType="OTHER" property="fRealitycycle" />
+    <result column="F_OKNG" jdbcType="OTHER" property="fOkng" />
+    <result column="F_TIGHTENVALUE1" jdbcType="OTHER" property="fTightenvalue1" />
+    <result column="F_TIGHTENVALUE2" jdbcType="OTHER" property="fTightenvalue2" />
+    <result column="F_TIGHTENVALUE3" jdbcType="OTHER" property="fTightenvalue3" />
+    <result column="F_TIGHTENVALUE4" jdbcType="OTHER" property="fTightenvalue4" />
+    <result column="F_TIGHTENVALUE5" jdbcType="OTHER" property="fTightenvalue5" />
+    <result column="F_TIGHTENVALUE6" jdbcType="OTHER" property="fTightenvalue6" />
+    <result column="F_TIGHTENVALUE7" jdbcType="OTHER" property="fTightenvalue7" />
+    <result column="F_TIGHTENVALUE8" jdbcType="OTHER" property="fTightenvalue8" />
+    <result column="F_TIGHTENVALUE9" jdbcType="OTHER" property="fTightenvalue9" />
+    <result column="F_TIGHTENVALUE10" jdbcType="OTHER" property="fTightenvalue10" />
+    <result column="F_TIGHTENVALUE11" jdbcType="OTHER" property="fTightenvalue11" />
+    <result column="F_TIGHTENVALUE12" jdbcType="OTHER" property="fTightenvalue12" />
+    <result column="F_TIGHTENVALUE13" jdbcType="OTHER" property="fTightenvalue13" />
+    <result column="F_TIGHTENVALUE14" jdbcType="OTHER" property="fTightenvalue14" />
+    <result column="F_TIGHTENVALUE15" jdbcType="OTHER" property="fTightenvalue15" />
+    <result column="F_TIGHTENVALUE16" jdbcType="OTHER" property="fTightenvalue16" />
+    <result column="F_TIGHTENVALUE17" jdbcType="OTHER" property="fTightenvalue17" />
+    <result column="F_TIGHTENVALUE18" jdbcType="OTHER" property="fTightenvalue18" />
+    <result column="F_TIGHTENVALUE19" jdbcType="OTHER" property="fTightenvalue19" />
+    <result column="F_TIGHTENVALUE20" jdbcType="OTHER" property="fTightenvalue20" />
+    <result column="F_TIGHTENVALUE21" jdbcType="OTHER" property="fTightenvalue21" />
+    <result column="F_TIGHTENVALUE22" jdbcType="OTHER" property="fTightenvalue22" />
+    <result column="F_TIGHTENVALUE23" jdbcType="OTHER" property="fTightenvalue23" />
+    <result column="F_TIGHTENVALUE24" jdbcType="OTHER" property="fTightenvalue24" />
+    <result column="F_TIGHTENVALUE25" jdbcType="OTHER" property="fTightenvalue25" />
+    <result column="F_TIGHTENVALUE26" jdbcType="OTHER" property="fTightenvalue26" />
+    <result column="F_TIGHTENVALUE27" jdbcType="OTHER" property="fTightenvalue27" />
+    <result column="F_TIGHTENVALUE28" jdbcType="OTHER" property="fTightenvalue28" />
+    <result column="F_TIGHTENVALUE29" jdbcType="OTHER" property="fTightenvalue29" />
+    <result column="F_TIGHTENVALUE30" jdbcType="OTHER" property="fTightenvalue30" />
+    <result column="F_TIGHTENVALUE31" jdbcType="OTHER" property="fTightenvalue31" />
+    <result column="F_TIGHTENVALUE32" jdbcType="OTHER" property="fTightenvalue32" />
+    <result column="F_TIGHTENVALUE33" jdbcType="OTHER" property="fTightenvalue33" />
+    <result column="F_TIGHTENVALUE34" jdbcType="OTHER" property="fTightenvalue34" />
+    <result column="F_TIGHTENVALUE35" jdbcType="OTHER" property="fTightenvalue35" />
+    <result column="F_TIGHTENVALUE36" jdbcType="OTHER" property="fTightenvalue36" />
+    <result column="F_TIGHTENVALUE37" jdbcType="OTHER" property="fTightenvalue37" />
+    <result column="F_TIGHTENVALUE38" jdbcType="OTHER" property="fTightenvalue38" />
+    <result column="F_TIGHTENVALUE39" jdbcType="OTHER" property="fTightenvalue39" />
+    <result column="F_TIGHTENVALUE40" jdbcType="OTHER" property="fTightenvalue40" />
+    <result column="F_TIGHTENVALUE41" jdbcType="OTHER" property="fTightenvalue41" />
+    <result column="F_TIGHTENVALUE42" jdbcType="OTHER" property="fTightenvalue42" />
+    <result column="F_TIGHTENVALUE43" jdbcType="OTHER" property="fTightenvalue43" />
+    <result column="F_TIGHTENVALUE44" jdbcType="OTHER" property="fTightenvalue44" />
+    <result column="F_TIGHTENVALUE45" jdbcType="OTHER" property="fTightenvalue45" />
+    <result column="F_TIGHTENVALUE46" jdbcType="OTHER" property="fTightenvalue46" />
+    <result column="F_TIGHTENVALUE47" jdbcType="OTHER" property="fTightenvalue47" />
+    <result column="F_TIGHTENVALUE48" jdbcType="OTHER" property="fTightenvalue48" />
+    <result column="F_TIGHTENVALUE49" jdbcType="OTHER" property="fTightenvalue49" />
+    <result column="F_TIGHTENVALUE50" jdbcType="OTHER" property="fTightenvalue50" />
+    <result column="F_TIGHTENVALUE51" jdbcType="OTHER" property="fTightenvalue51" />
+    <result column="F_TIGHTENVALUE52" jdbcType="OTHER" property="fTightenvalue52" />
+    <result column="F_TIGHTENVALUE53" jdbcType="OTHER" property="fTightenvalue53" />
+    <result column="F_TIGHTENVALUE54" jdbcType="OTHER" property="fTightenvalue54" />
+    <result column="F_TIGHTENVALUE55" jdbcType="OTHER" property="fTightenvalue55" />
+    <result column="F_TIGHTENVALUE56" jdbcType="OTHER" property="fTightenvalue56" />
+    <result column="F_TIGHTENVALUE57" jdbcType="OTHER" property="fTightenvalue57" />
+    <result column="F_TIGHTENVALUE60" jdbcType="OTHER" property="fTightenvalue60" />
+    <result column="F_TIGHTENVALUE61" jdbcType="OTHER" property="fTightenvalue61" />
+    <result column="F_TIGHTENVALUE62" jdbcType="OTHER" property="fTightenvalue62" />
+    <result column="F_TIGHTENVALUE63" jdbcType="OTHER" property="fTightenvalue63" />
+    <result column="F_TIGHTENVALUE64" jdbcType="OTHER" property="fTightenvalue64" />
+    <result column="F_LINEID" jdbcType="OTHER" property="fLineid" />
+    <result column="F_TIGHTENVALUE58" jdbcType="OTHER" property="fTightenvalue58" />
+    <result column="F_TIGHTENVALUE59" jdbcType="OTHER" property="fTightenvalue59" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    F_ID, F_STATIONNAME, F_PARTCODE, F_TIME, F_OBJECTIVECYCLE, F_REALITYCYCLE, F_OKNG, 
+    F_TIGHTENVALUE1, F_TIGHTENVALUE2, F_TIGHTENVALUE3, F_TIGHTENVALUE4, F_TIGHTENVALUE5, 
+    F_TIGHTENVALUE6, F_TIGHTENVALUE7, F_TIGHTENVALUE8, F_TIGHTENVALUE9, F_TIGHTENVALUE10, 
+    F_TIGHTENVALUE11, F_TIGHTENVALUE12, F_TIGHTENVALUE13, F_TIGHTENVALUE14, F_TIGHTENVALUE15, 
+    F_TIGHTENVALUE16, F_TIGHTENVALUE17, F_TIGHTENVALUE18, F_TIGHTENVALUE19, F_TIGHTENVALUE20, 
+    F_TIGHTENVALUE21, F_TIGHTENVALUE22, F_TIGHTENVALUE23, F_TIGHTENVALUE24, F_TIGHTENVALUE25, 
+    F_TIGHTENVALUE26, F_TIGHTENVALUE27, F_TIGHTENVALUE28, F_TIGHTENVALUE29, F_TIGHTENVALUE30, 
+    F_TIGHTENVALUE31, F_TIGHTENVALUE32, F_TIGHTENVALUE33, F_TIGHTENVALUE34, F_TIGHTENVALUE35, 
+    F_TIGHTENVALUE36, F_TIGHTENVALUE37, F_TIGHTENVALUE38, F_TIGHTENVALUE39, F_TIGHTENVALUE40, 
+    F_TIGHTENVALUE41, F_TIGHTENVALUE42, F_TIGHTENVALUE43, F_TIGHTENVALUE44, F_TIGHTENVALUE45, 
+    F_TIGHTENVALUE46, F_TIGHTENVALUE47, F_TIGHTENVALUE48, F_TIGHTENVALUE49, F_TIGHTENVALUE50, 
+    F_TIGHTENVALUE51, F_TIGHTENVALUE52, F_TIGHTENVALUE53, F_TIGHTENVALUE54, F_TIGHTENVALUE55, 
+    F_TIGHTENVALUE56, F_TIGHTENVALUE57, F_TIGHTENVALUE60, F_TIGHTENVALUE61, F_TIGHTENVALUE62, 
+    F_TIGHTENVALUE63, F_TIGHTENVALUE64, F_LINEID, F_TIGHTENVALUE58, F_TIGHTENVALUE59
+  </sql>
+  <select id="queryList" parameterType="java.lang.Object" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from OD_TIGHTEN 
+		<where>
+			<if  test="keyWords != null and keyWords.trim()!=''">
+				 and  F_STATIONNAME like '%'||#{keyWords,jdbcType=VARCHAR}||'%' 
+			</if>
+			<if test="startTime!=null  and startTime.trim()!=''">
+				and F_TIME &gt;= to_date(#{startTime,jdbcType=VARCHAR},'yyyy-MM-dd HH24:mi:ss')
+			</if>
+			<if test="endTime!=null  and endTime.trim()!=''">
+				and F_TIME &lt; to_date(#{endTime,jdbcType=VARCHAR},'yyyy-MM-dd HH24:mi:ss')
+			</if>
+		</where>
+           
+  </select>
+  <select id="queryTotal" resultType="int">
+        select
+        count(*)
+        from OD_TIGHTEN 
+        <where>
+			<if  test="keyWords != null and keyWords.trim()!=''">
+				 and  F_STATIONNAME like '%'||#{keyWords,jdbcType=VARCHAR}||'%' 
+			</if>
+			<if test="startTime!=null  and startTime.trim()!=''">
+				and F_TIME &gt;= to_date(#{startTime,jdbcType=VARCHAR},'yyyy-MM-dd HH24:mi:ss')
+			</if>
+			<if test="endTime!=null  and endTime.trim()!=''">
+				and F_TIME &lt; to_date(#{endTime,jdbcType=VARCHAR},'yyyy-MM-dd HH24:mi:ss')
+			</if>
+		</where>
+        
+  </select>
+  
+</mapper>

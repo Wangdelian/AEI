@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="io.jeasyframework.dao.master.UmLevelmarkDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="io.jeasyframework.entity.UmLevelmarkEntity" id="umLevelmarkMap">
+        <result property="levelmarkid" column="LEVELMARKID"/>
+        <result property="levelmarkvalue" column="LEVELMARKVALUE"/>
+        <result property="abname" column="ABNAME"/>
+        <result property="description" column="DESCRIPTION"/>
+        <result property="tel" column="TEL"/>
+        <result property="email" column="EMAIL"/>
+        <result property="url" column="URL"/>
+        <result property="isenable" column="ISENABLE"/>
+        <result property="datecreated" column="DATECREATED"/>
+        <result property="code" column="CODE"/>
+        <result property="seq" column="SEQ"/>
+        <result property="pid" column="PID"/>
+        <result property="createdby" column="CREATEDBY"/>
+        <result property="createdbyname" column="CREATEDBYNAME"/>
+        <result property="datemodified" column="DATEMODIFIED"/>
+        <result property="modifiedby" column="MODIFIEDBY"/>
+        <result property="modifiedbyname" column="MODIFIEDBYNAME"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+LEVELMARKID, LEVELMARKVALUE, ABNAME, DESCRIPTION, TEL, EMAIL, URL, ISENABLE, DATECREATED, CODE, SEQ, PID, CREATEDBY, CREATEDBYNAME, DATEMODIFIED, MODIFIEDBY, MODIFIEDBYNAME
+	</sql>
+	<select id="queryObject" resultType="io.jeasyframework.entity.UmLevelmarkEntity">
+		select * from UM_LEVELMARK where LEVELMARKID = #{value}
+	</select>
+
+	<select id="queryList" resultType="io.jeasyframework.entity.UmLevelmarkEntity">
+		select * from UM_LEVELMARK
+        <choose>
+            <when test="sidx != null and sidx.trim() != ''">
+                order by ${sidx} ${order}
+            </when>
+			<otherwise>
+                order by LEVELMARKID desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="queryTotal" resultType="int">
+		select count(*) from UM_LEVELMARK 
+	</select>
+	 
+	<insert id="save" parameterType="io.jeasyframework.entity.UmLevelmarkEntity">
+		insert into UM_LEVELMARK
+		(
+			`LEVELMARKID`, 
+			`LEVELMARKVALUE`, 
+			`ABNAME`, 
+			`DESCRIPTION`, 
+			`TEL`, 
+			`EMAIL`, 
+			`URL`, 
+			`ISENABLE`, 
+			`DATECREATED`, 
+			`CODE`, 
+			`SEQ`, 
+			`PID`, 
+			`CREATEDBY`, 
+			`CREATEDBYNAME`, 
+			`DATEMODIFIED`, 
+			`MODIFIEDBY`, 
+			`MODIFIEDBYNAME`
+		)
+		values
+		(
+			#{levelmarkid}, 
+			#{levelmarkvalue}, 
+			#{abname}, 
+			#{description}, 
+			#{tel}, 
+			#{email}, 
+			#{url}, 
+			#{isenable}, 
+			#{datecreated}, 
+			#{code}, 
+			#{seq}, 
+			#{pid}, 
+			#{createdby}, 
+			#{createdbyname}, 
+			#{datemodified}, 
+			#{modifiedby}, 
+			#{modifiedbyname}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="io.jeasyframework.entity.UmLevelmarkEntity">
+		update UM_LEVELMARK 
+		<set>
+			<if test="levelmarkvalue != null">`LEVELMARKVALUE` = #{levelmarkvalue}, </if>
+			<if test="abname != null">`ABNAME` = #{abname}, </if>
+			<if test="description != null">`DESCRIPTION` = #{description}, </if>
+			<if test="tel != null">`TEL` = #{tel}, </if>
+			<if test="email != null">`EMAIL` = #{email}, </if>
+			<if test="url != null">`URL` = #{url}, </if>
+			<if test="isenable != null">`ISENABLE` = #{isenable}, </if>
+			<if test="datecreated != null">`DATECREATED` = #{datecreated}, </if>
+			<if test="code != null">`CODE` = #{code}, </if>
+			<if test="seq != null">`SEQ` = #{seq}, </if>
+			<if test="pid != null">`PID` = #{pid}, </if>
+			<if test="createdby != null">`CREATEDBY` = #{createdby}, </if>
+			<if test="createdbyname != null">`CREATEDBYNAME` = #{createdbyname}, </if>
+			<if test="datemodified != null">`DATEMODIFIED` = #{datemodified}, </if>
+			<if test="modifiedby != null">`MODIFIEDBY` = #{modifiedby}, </if>
+			<if test="modifiedbyname != null">`MODIFIEDBYNAME` = #{modifiedbyname}</if>
+		</set>
+		where LEVELMARKID = #{levelmarkid}
+	</update>
+	
+	<delete id="delete">
+		delete from UM_LEVELMARK where LEVELMARKID = #{value}
+	</delete>
+	
+	<delete id="deleteBatch">
+		delete from UM_LEVELMARK where LEVELMARKID in 
+		<foreach item="levelmarkid" collection="array" open="(" separator="," close=")">
+			#{levelmarkid}
+		</foreach>
+	</delete>
+
+</mapper>

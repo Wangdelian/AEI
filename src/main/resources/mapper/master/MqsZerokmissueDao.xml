@@ -1,0 +1,1051 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="io.jeasyframework.dao.master.MqsZerokmissueDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="io.jeasyframework.entity.MqsZerokmissueEntity" id="mqsZerokmissueMap">
+        <result property="zerokmissueid" column="ZEROKMISSUEID"/>
+        <result property="productionbase" column="PRODUCTIONBASE"/>
+        <result property="dateoccur" column="DATEOCCUR"/>
+        <result property="productiondeptname" column="PRODUCTIONDEPTNAME"/>
+        <result property="productionlinename" column="PRODUCTIONLINENAME"/>
+        <result property="enginemodel" column="ENGINEMODEL"/>
+        <result property="engineno" column="ENGINENO"/>
+        <result property="vrt" column="VRT"/>
+        <result property="vfg" column="VFG"/>
+        <result property="ccc" column="CCC"/>
+        <result property="icc" column="ICC"/>
+        <result property="itempart" column="ITEMPART"/>
+        <result property="failuremodel" column="FAILUREMODEL"/>
+        <result property="issuedesc" column="ISSUEDESC"/>
+        <result property="issueseverity" column="ISSUESEVERITY"/>
+        <result property="repaircontent" column="REPAIRCONTENT"/>
+        <result property="dutydept" column="DUTYDEPT"/>
+        <result property="issueattr" column="ISSUEATTR"/>
+        <result property="pstation" column="PSTATION"/>
+        <result property="createdbyname" column="CREATEDBYNAME"/>
+        <result property="createdbyid" column="CREATEDBYID"/>
+        <result property="datecreated" column="DATECREATED"/>
+        <result property="modifiedbyname" column="MODIFIEDBYNAME"/>
+        <result property="modifiedbyid" column="MODIFIEDBYID"/>
+        <result property="datemodified" column="DATEMODIFIED"/>
+        <result property="isenable" column="ISENABLE"/>
+        <result property="iscp" column="ISCP"/>
+        <result property="icccode" column="ICCCODE"/>
+        <result property="ccccode" column="CCCCODE"/>
+        <result property="vfgcode" column="VFGCODE"/>
+        <result property="vrtcode" column="VRTCODE"/>
+        <result property="zkissuestatus" column="ZKISSUESTATUS"/>
+        <result property="ppmremark" column="PPMREMARK"/>
+        <result property="enginetype" column="ENGINETYPE"/>
+        <result property="dutyteam" column="DUTYTEAM"/>
+		<result property="zkweek" column="ZKWEEK"/>
+		<result property="iswritetarget" column="ISWRITETARGET"/>
+		<result property="erameasures" column="ERAMEASURES"/>
+		<result property="dateeraexecuted" column="DATEERAEXECUTED"/>
+		<result property="icameatures" column="ICAMEATURES"/>
+		<result property="dateicaexecuted" column="DATEICAEXECUTED"/>
+		<result property="finishedstatus" column="FINISHEDSTATUS"/>
+		<result property="reasonanalysis" column="REASONANALYSIS"/>
+		<result property="pcameasures" column="PCAMEASURES"/>
+		<result property="datepcaexecuted" column="DATEPCAEXECUTED"/>
+		<result property="remark" column="REMARK"/>
+		<result property="count" column="count"/>
+		<result property="month" column="month"/>
+    </resultMap>
+
+
+	<resultMap type="io.jeasyframework.entity.MqsZerokmHealthEntity" id="MqsZerokmHealthMap">
+		<result property="productiondeptname" column="productiondeptname" />
+		<result property="productionlinename" column="productionlinename"/>
+		<result property="enginemodel" column="enginemodel"/>
+		<result property="unit" column="unit"/>
+		<result property="targetvalue" column="targetvalue"/>
+
+		<result property="year1" column="year1" />
+		<result property="year2" column="year2"/>
+		<result property="month1" column="month1"/>
+		<result property="month2" column="month2"/>
+		<result property="month3" column="month3"/>
+		<result property="month4" column="month4"/>
+		<result property="month1sum" column="month1sum"/>
+		<result property="month2sum" column="month2sum"/>
+		<result property="month3sum" column="month3sum"/>
+		<result property="month4sum" column="month4sum"/>
+		<result property="month5sum" column="month5sum"/>
+		<result property="day1" column="day1"/>
+
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		ZEROKMISSUEID, PRODUCTIONBASE, to_char(DATEOCCUR,'yyyy-MM-dd') as DATEOCCUR, PRODUCTIONDEPTNAME, PRODUCTIONLINENAME, ENGINEMODEL, ENGINENO, VRT, VFG, CCC, ICC, ITEMPART, FAILUREMODEL, ISSUEDESC, ISSUESEVERITY, REPAIRCONTENT, DUTYDEPT, ISSUEATTR, PSTATION, CREATEDBYNAME, CREATEDBYID, DATECREATED, MODIFIEDBYNAME, MODIFIEDBYID, DATEMODIFIED, ISENABLE, ISCP, ICCCODE, CCCCODE, VFGCODE, VRTCODE, ZKISSUESTATUS, PPMREMARK, ENGINETYPE, DUTYTEAM
+		, ZKWEEK, ISWRITETARGET, ERAMEASURES, to_char(DATEERAEXECUTED,'yyyy-MM-dd') as DATEERAEXECUTED, ICAMEATURES, to_char(DATEICAEXECUTED,'yyyy-MM-dd') as DATEICAEXECUTED, FINISHEDSTATUS, REASONANALYSIS,  PCAMEASURES, to_char(DATEPCAEXECUTED,'yyyy-MM-dd') as DATEPCAEXECUTED,  REMARK
+
+	</sql>
+
+	<select id="queryByEngineno" resultType="io.jeasyframework.entity.MqsQualityresumereportEntity">
+		select dateoccur as dateoccur,icccode as icccode,icc as icc, itempart as itempart,failuremodel as failuremodel,issuedesc as issuedesc,
+		CREATEDBYNAME as createdbyname,issueattr as issueattr, issueseverity as issueseverity,zkissuestatus as zkissuestatus,remark as remark
+		 from MQS_ZEROKMISSUE where engineno like '%${engineno}%'
+	</select>
+
+	<select id="querytableLeftTitleList" resultMap="mqsZerokmissueMap">
+		select icc,  count from (select  icc ,  count(*) as count  from MQS_ZEROKMISSUE t  where 1=1
+		and iswritetarget = '是'
+		and productiondeptname IN
+		<foreach item="item" collection="productiondeptname" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+		<if test="startTime!=null and startTime.trim()!='' ">
+			and dateoccur >= to_date( #{startTime},'yyyy-MM-dd')
+		</if>
+		<if test="endTime!=null and endTime.trim()!='' ">
+			and dateoccur &lt;= to_date(#{endTime},'yyyy-MM-dd')
+		</if>
+		<if test="issueseverity!=null and issueseverity.trim()!='' ">
+			and issueseverity = #{issueseverity}
+		</if>
+		<if test="productionlinename != null and productionlinename.trim() !='' ">
+			and productionlinename = #{productionlinename}
+		</if>
+		<if test="enginemodel != null and enginemodel.trim() !='' ">
+			and enginemodel = #{enginemodel}
+		</if>
+		group by icc order by count desc)
+		where rownum &lt; 6
+
+	</select>
+
+	<select id="queryPPMTableList" resultMap="MqsZerokmHealthMap">
+		select
+		year1.c as year1, year2.c as year2, month1.c as month1,month2.c as month2,month3.c as month3,month4.c as month4,month1sum.c as month1sum,month2sum.c as month2sum,month3sum.c as month3sum,month4sum.c as month4sum,month5sum.c as month5sum from
+		(select count(*) as c from MQS_ZEROKMISSUE where 1=1
+		and iswritetarget = '是'
+		and productiondeptname IN
+		<foreach item="item" collection="productiondeptname" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+		<if test="startTime!=null and startTime.trim()!='' ">
+			and dateoccur >= to_date( #{startTime},'yyyy-MM-dd')
+		</if>
+		<if test="endTime!=null and endTime.trim()!='' ">
+			and dateoccur &lt;= to_date(#{endTime},'yyyy-MM-dd')
+		</if>
+		<if test="issueseverity!=null and issueseverity.trim()!='' ">
+			and issueseverity = #{issueseverity}
+		</if>
+		<if test="productionlinename != null and productionlinename.trim() !='' ">
+			and productionlinename = #{productionlinename}
+		</if>
+		<if test="enginemodel != null and enginemodel.trim() !='' ">
+			and enginemodel = #{enginemodel}
+		</if>
+		and DATEOCCUR>=to_date(#{year1start},'yyyy-MM-dd') and DATEOCCUR &lt;=to_date(#{year1end},'yyyy-MM-dd')) year1,
+		(select count(*) as c from MQS_ZEROKMISSUE where 1=1
+		and iswritetarget = '是'
+		and productiondeptname IN
+		<foreach item="item" collection="productiondeptname" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+		<if test="issueseverity != null and issueseverity.trim() !='' ">
+			and issueseverity = #{issueseverity}
+		</if>
+		<if test="icc != null and icc.trim() !='' ">
+			and icc = #{icc}
+		</if>
+		<if test="productionlinename != null and productionlinename.trim() !='' ">
+			and productionlinename = #{productionlinename}
+		</if>
+		<if test="enginemodel != null and enginemodel.trim() !='' ">
+			and enginemodel = #{enginemodel}
+		</if>
+		and DATEOCCUR>=to_date(#{year2start},'yyyy-MM-dd') and DATEOCCUR &lt;=to_date(#{year2end},'yyyy-MM-dd')) year2,
+		(select count(*) as c from MQS_ZEROKMISSUE where 1=1
+		and iswritetarget = '是'
+		and productiondeptname IN
+		<foreach item="item" collection="productiondeptname" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+		<if test="issueseverity != null and issueseverity.trim() !='' ">
+			and issueseverity = #{issueseverity}
+		</if>
+		<if test="icc != null and icc.trim() !='' ">
+			and icc = #{icc}
+		</if>
+		<if test="productionlinename != null and productionlinename.trim() !='' ">
+			and productionlinename = #{productionlinename}
+		</if>
+		<if test="enginemodel != null and enginemodel.trim() !='' ">
+			and enginemodel = #{enginemodel}
+		</if>
+		and DATEOCCUR>=to_date(#{month1start},'yyyy-MM-dd') and DATEOCCUR &lt;=to_date(#{month1end},'yyyy-MM-dd')) month1,
+		(select count(*) as c from MQS_ZEROKMISSUE where 1=1
+		and iswritetarget = '是'
+		and productiondeptname IN
+		<foreach item="item" collection="productiondeptname" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+		<if test="issueseverity != null and issueseverity.trim() !='' ">
+			and issueseverity = #{issueseverity}
+		</if>
+		<if test="icc != null and icc.trim() !='' ">
+			and icc = #{icc}
+		</if>
+		<if test="productionlinename != null and productionlinename.trim() !='' ">
+			and productionlinename = #{productionlinename}
+		</if>
+		<if test="enginemodel != null and enginemodel.trim() !='' ">
+			and enginemodel = #{enginemodel}
+		</if>
+		and DATEOCCUR>=to_date(#{month2start},'yyyy-MM-dd') and DATEOCCUR &lt;=to_date(#{month2end},'yyyy-MM-dd')) month2,
+		(select count(*) as c from MQS_ZEROKMISSUE where 1=1
+		and iswritetarget = '是'
+		and productiondeptname IN
+		<foreach item="item" collection="productiondeptname" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+		<if test="issueseverity != null and issueseverity.trim() !='' ">
+			and issueseverity = #{issueseverity}
+		</if>
+		<if test="icc != null and icc.trim() !='' ">
+			and icc = #{icc}
+		</if>
+		<if test="productionlinename != null and productionlinename.trim() !='' ">
+			and productionlinename = #{productionlinename}
+		</if>
+		<if test="enginemodel != null and enginemodel.trim() !='' ">
+			and enginemodel = #{enginemodel}
+		</if>
+		and DATEOCCUR>=to_date(#{month3start},'yyyy-MM-dd') and DATEOCCUR &lt;=to_date(#{month3end},'yyyy-MM-dd')) month3,
+		(select count(*) as c from MQS_ZEROKMISSUE where 1=1
+		and iswritetarget = '是'
+		and productiondeptname IN
+		<foreach item="item" collection="productiondeptname" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+		<if test="issueseverity != null and issueseverity.trim() !='' ">
+			and issueseverity = #{issueseverity}
+		</if>
+		<if test="icc != null and icc.trim() !='' ">
+			and icc = #{icc}
+		</if>
+		<if test="productionlinename != null and productionlinename.trim() !='' ">
+			and productionlinename = #{productionlinename}
+		</if>
+		<if test="enginemodel != null and enginemodel.trim() !='' ">
+			and enginemodel = #{enginemodel}
+		</if>
+		and DATEOCCUR>=to_date(#{month4start},'yyyy-MM-dd') and DATEOCCUR &lt;=to_date(#{month4end},'yyyy-MM-dd')) month4,
+		(select count(*) as c from MQS_ZEROKMISSUE where 1=1
+		and iswritetarget = '是'
+		and productiondeptname IN
+		<foreach item="item" collection="productiondeptname" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+		<if test="issueseverity != null and issueseverity.trim() !='' ">
+			and issueseverity = #{issueseverity}
+		</if>
+		<if test="icc != null and icc.trim() !='' ">
+			and icc = #{icc}
+		</if>
+		<if test="productionlinename != null and productionlinename.trim() !='' ">
+			and productionlinename = #{productionlinename}
+		</if>
+		<if test="enginemodel != null and enginemodel.trim() !='' ">
+			and enginemodel = #{enginemodel}
+		</if>
+		and DATEOCCUR>=to_date(#{month1sumstart},'yyyy-MM-dd') and DATEOCCUR &lt;=to_date(#{month1sumend},'yyyy-MM-dd')) month1sum,
+		(select count(*) as c from MQS_ZEROKMISSUE where 1=1
+		and iswritetarget = '是'
+		and productiondeptname IN
+		<foreach item="item" collection="productiondeptname" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+		<if test="issueseverity != null and issueseverity.trim() !='' ">
+			and issueseverity = #{issueseverity}
+		</if>
+		<if test="icc != null and icc.trim() !='' ">
+			and icc = #{icc}
+		</if>
+		<if test="productionlinename != null and productionlinename.trim() !='' ">
+			and productionlinename = #{productionlinename}
+		</if>
+		<if test="enginemodel != null and enginemodel.trim() !='' ">
+			and enginemodel = #{enginemodel}
+		</if>
+		and DATEOCCUR>=to_date(#{month2sumstart},'yyyy-MM-dd') and DATEOCCUR &lt;=to_date(#{month2sumend},'yyyy-MM-dd')) month2sum,
+		(select count(*) as c from MQS_ZEROKMISSUE where 1=1
+		and iswritetarget = '是'
+		and productiondeptname IN
+		<foreach item="item" collection="productiondeptname" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+		<if test="issueseverity != null and issueseverity.trim() !='' ">
+			and issueseverity = #{issueseverity}
+		</if>
+		<if test="icc != null and icc.trim() !='' ">
+			and icc = #{icc}
+		</if>
+		<if test="productionlinename != null and productionlinename.trim() !='' ">
+			and productionlinename = #{productionlinename}
+		</if>
+		<if test="enginemodel != null and enginemodel.trim() !='' ">
+			and enginemodel = #{enginemodel}
+		</if>
+		and DATEOCCUR>=to_date(#{month3sumstart},'yyyy-MM-dd') and DATEOCCUR &lt;=to_date(#{month3sumend},'yyyy-MM-dd')) month3sum,
+		(select count(*) as c from MQS_ZEROKMISSUE where 1=1
+		and iswritetarget = '是'
+		and productiondeptname IN
+		<foreach item="item" collection="productiondeptname" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+		<if test="issueseverity != null and issueseverity.trim() !='' ">
+			and issueseverity = #{issueseverity}
+		</if>
+		<if test="icc != null and icc.trim() !='' ">
+			and icc = #{icc}
+		</if>
+		<if test="productionlinename != null and productionlinename.trim() !='' ">
+			and productionlinename = #{productionlinename}
+		</if>
+		<if test="enginemodel != null and enginemodel.trim() !='' ">
+			and enginemodel = #{enginemodel}
+		</if>
+		and DATEOCCUR>=to_date(#{month4sumstart},'yyyy-MM-dd') and DATEOCCUR &lt;=to_date(#{month4sumend},'yyyy-MM-dd')) month4sum,
+		(select count(*) as c from MQS_ZEROKMISSUE where 1=1
+		and iswritetarget = '是'
+		and productiondeptname IN
+		<foreach item="item" collection="productiondeptname" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+		<if test="issueseverity != null and issueseverity.trim() !='' ">
+			and issueseverity = #{issueseverity}
+		</if>
+		<if test="icc != null and icc.trim() !='' ">
+			and icc = #{icc}
+		</if>
+		<if test="productionlinename != null and productionlinename.trim() !='' ">
+			and productionlinename = #{productionlinename}
+		</if>
+		<if test="enginemodel != null and enginemodel.trim() !='' ">
+			and enginemodel = #{enginemodel}
+		</if>
+		and DATEOCCUR>=to_date(#{month5sumstart},'yyyy-MM-dd') and DATEOCCUR &lt;=to_date(#{month5sumend},'yyyy-MM-dd')) month5sum
+	</select>
+
+	<select  id="queryIsList" resultMap="MqsZerokmHealthMap">
+		select
+		 year1.c as year1, year2.c as year2, month1.c as month1,month2.c as month2,month3.c as month3,month4.c as month4,month1sum.c as month1sum,month2sum.c as month2sum,month3sum.c as month3sum,month4sum.c as month4sum,month5sum.c as month5sum ,day1.c as day1 from
+		(select  count(*) as c from MQS_ZEROKMISSUE where 1=1
+		and productiondeptname IN
+		<foreach item="item" collection="productiondeptname" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+		<if test="productionlinename != null and productionlinename.trim() !='' ">
+			and productionlinename = #{productionlinename}
+		</if>
+		<if test="enginemodel != null and enginemodel.trim() !='' ">
+			and enginemodel = #{enginemodel}
+		</if>
+		and DATEOCCUR>=to_date(#{year1start},'yyyy-MM-dd') and DATEOCCUR &lt;=to_date(#{year1end},'yyyy-MM-dd')) year1,
+		(select  count(*) as c from MQS_ZEROKMISSUE where 1=1
+		and productiondeptname IN
+		<foreach item="item" collection="productiondeptname" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+		<if test="productionlinename != null and productionlinename.trim() !='' ">
+			and productionlinename = #{productionlinename}
+		</if>
+		<if test="enginemodel != null and enginemodel.trim() !='' ">
+			and enginemodel = #{enginemodel}
+		</if>
+		and DATEOCCUR>=to_date(#{year2start},'yyyy-MM-dd') and DATEOCCUR &lt;= to_date(#{year2end},'yyyy-MM-dd')) year2,
+		(select  count(*) as c from MQS_ZEROKMISSUE where 1=1
+		and productiondeptname IN
+		<foreach item="item" collection="productiondeptname" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+		<if test="productionlinename != null and productionlinename.trim() !='' ">
+			and productionlinename = #{productionlinename}
+		</if>
+		<if test="enginemodel != null and enginemodel.trim() !='' ">
+			and enginemodel = #{enginemodel}
+		</if>
+		and DATEOCCUR>=to_date(#{month1start},'yyyy-MM-dd') and DATEOCCUR &lt;= to_date(#{month1end},'yyyy-MM-dd')) month1,
+		(select  count(*) as c from MQS_ZEROKMISSUE where 1=1
+		and productiondeptname IN
+		<foreach item="item" collection="productiondeptname" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+		<if test="productionlinename != null and productionlinename.trim() !='' ">
+			and productionlinename = #{productionlinename}
+		</if>
+		<if test="enginemodel != null and enginemodel.trim() !='' ">
+			and enginemodel = #{enginemodel}
+		</if>
+		and DATEOCCUR>=to_date(#{month2start},'yyyy-MM-dd') and DATEOCCUR &lt;= to_date(#{month2end},'yyyy-MM-dd')) month2,
+		(select  count(*) as c from MQS_ZEROKMISSUE where 1=1
+		and productiondeptname IN
+		<foreach item="item" collection="productiondeptname" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+		<if test="productionlinename != null and productionlinename.trim() !='' ">
+			and productionlinename = #{productionlinename}
+		</if>
+		<if test="enginemodel != null and enginemodel.trim() !='' ">
+			and enginemodel = #{enginemodel}
+		</if>
+		and DATEOCCUR>=to_date(#{month3start},'yyyy-MM-dd') and DATEOCCUR &lt;= to_date(#{month3end},'yyyy-MM-dd')) month3,
+		(select  count(*) as c from MQS_ZEROKMISSUE where 1=1
+		and productiondeptname IN
+		<foreach item="item" collection="productiondeptname" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+		<if test="productionlinename != null and productionlinename.trim() !='' ">
+			and productionlinename = #{productionlinename}
+		</if>
+		<if test="enginemodel != null and enginemodel.trim() !='' ">
+			and enginemodel = #{enginemodel}
+		</if>
+		and DATEOCCUR>=to_date(#{month4start},'yyyy-MM-dd') and DATEOCCUR &lt;= to_date(#{month4end},'yyyy-MM-dd')) month4,
+		(select  count(*) as c from MQS_ZEROKMISSUE where 1=1
+		and productiondeptname IN
+		<foreach item="item" collection="productiondeptname" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+		<if test="productionlinename != null and productionlinename.trim() !='' ">
+			and productionlinename = #{productionlinename}
+		</if>
+		<if test="enginemodel != null and enginemodel.trim() !='' ">
+			and enginemodel = #{enginemodel}
+		</if>
+		and DATEOCCUR>=to_date(#{month1sumstart},'yyyy-MM-dd') and DATEOCCUR &lt;= to_date(#{month1sumend},'yyyy-MM-dd')) month1sum,
+		(select  count(*) as c from MQS_ZEROKMISSUE where 1=1
+		and productiondeptname IN
+		<foreach item="item" collection="productiondeptname" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+		<if test="productionlinename != null and productionlinename.trim() !='' ">
+			and productionlinename = #{productionlinename}
+		</if>
+		<if test="enginemodel != null and enginemodel.trim() !='' ">
+			and enginemodel = #{enginemodel}
+		</if>
+		and DATEOCCUR>=to_date(#{month2sumstart},'yyyy-MM-dd') and DATEOCCUR &lt;= to_date(#{month2sumend},'yyyy-MM-dd')) month2sum,
+		(select  count(*) as c from MQS_ZEROKMISSUE where 1=1
+		and productiondeptname IN
+		<foreach item="item" collection="productiondeptname" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+		<if test="productionlinename != null and productionlinename.trim() !='' ">
+			and productionlinename = #{productionlinename}
+		</if>
+		<if test="enginemodel != null and enginemodel.trim() !='' ">
+			and enginemodel = #{enginemodel}
+		</if>
+		and DATEOCCUR>=to_date(#{month3sumstart},'yyyy-MM-dd') and DATEOCCUR &lt;= to_date(#{month3sumend},'yyyy-MM-dd')) month3sum,
+		(select  count(*) as c from MQS_ZEROKMISSUE where 1=1
+		and productiondeptname IN
+		<foreach item="item" collection="productiondeptname" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+		<if test="productionlinename != null and productionlinename.trim() !='' ">
+			and productionlinename = #{productionlinename}
+		</if>
+		<if test="enginemodel != null and enginemodel.trim() !='' ">
+			and enginemodel = #{enginemodel}
+		</if>
+		and DATEOCCUR>=to_date(#{month4sumstart},'yyyy-MM-dd') and DATEOCCUR &lt;= to_date(#{month4sumend},'yyyy-MM-dd')) month4sum,
+		(select  count(*) as c from MQS_ZEROKMISSUE where 1=1
+		and productiondeptname IN
+		<foreach item="item" collection="productiondeptname" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+		<if test="productionlinename != null and productionlinename.trim() !='' ">
+			and productionlinename = #{productionlinename}
+		</if>
+		<if test="enginemodel != null and enginemodel.trim() !='' ">
+			and enginemodel = #{enginemodel}
+		</if>
+		and DATEOCCUR>=to_date(#{month5sumstart},'yyyy-MM-dd') and DATEOCCUR &lt;= to_date(#{month5sumend},'yyyy-MM-dd')) month5sum,
+		(select  count(*) as c from MQS_ZEROKMISSUE where 1=1
+		and productiondeptname IN
+		<foreach item="item" collection="productiondeptname" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+		<if test="productionlinename != null and productionlinename.trim() !='' ">
+			and productionlinename = #{productionlinename}
+		</if>
+		<if test="enginemodel != null and enginemodel.trim() !='' ">
+			and enginemodel = #{enginemodel}
+		</if>
+		and DATEOCCUR>=to_date(#{day1start},'yyyy-MM-dd HH24:mi:ss') and DATEOCCUR &lt;= to_date(#{day1end},'yyyy-MM-dd HH24:mi:ss')) day1
+
+	</select>
+
+
+	<select  id="queryZeroHealthIsList" resultMap="MqsZerokmHealthMap">
+		select
+		year1.c as year1, year2.c as year2, month1.c as month1,month2.c as month2,month3.c as month3,month4.c as month4,month1sum.c as month1sum,month2sum.c as month2sum,month3sum.c as month3sum,month4sum.c as month4sum  from
+		(select  count(*) as c from MQS_ZEROKMISSUE where 1=1
+		<if test="productiondeptname != null and productiondeptname.trim() !='' ">
+			and productiondeptname = #{productiondeptname}
+		</if>
+		<if test="productionlinename != null and productionlinename.trim() !='' ">
+			and productionlinename = #{productionlinename}
+		</if>
+		<if test="enginemodel != null and enginemodel.trim() !='' ">
+			and enginemodel = #{enginemodel}
+		</if>
+		and DATEOCCUR>=to_date(#{year1start},'yyyy-MM-dd') and DATEOCCUR &lt;=to_date(#{year1end},'yyyy-MM-dd')) year1,
+		(select  count(*) as c from MQS_ZEROKMISSUE where 1=1
+		<if test="productiondeptname != null and productiondeptname.trim() !='' ">
+			and productiondeptname = #{productiondeptname}
+		</if>
+		<if test="productionlinename != null and productionlinename.trim() !='' ">
+			and productionlinename = #{productionlinename}
+		</if>
+		<if test="enginemodel != null and enginemodel.trim() !='' ">
+			and enginemodel = #{enginemodel}
+		</if>
+		and DATEOCCUR>=to_date(#{year2start},'yyyy-MM-dd') and DATEOCCUR &lt;= to_date(#{year2end},'yyyy-MM-dd')) year2,
+		(select  count(*) as c from MQS_ZEROKMISSUE where 1=1
+		<if test="productiondeptname != null and productiondeptname.trim() !='' ">
+			and productiondeptname = #{productiondeptname}
+		</if>
+		<if test="productionlinename != null and productionlinename.trim() !='' ">
+			and productionlinename = #{productionlinename}
+		</if>
+		<if test="enginemodel != null and enginemodel.trim() !='' ">
+			and enginemodel = #{enginemodel}
+		</if>
+		and DATEOCCUR>=to_date(#{month1start},'yyyy-MM-dd') and DATEOCCUR &lt;= to_date(#{month1end},'yyyy-MM-dd')) month1,
+		(select  count(*) as c from MQS_ZEROKMISSUE where 1=1
+		<if test="productiondeptname != null and productiondeptname.trim() !='' ">
+			and productiondeptname = #{productiondeptname}
+		</if>
+		<if test="productionlinename != null and productionlinename.trim() !='' ">
+			and productionlinename = #{productionlinename}
+		</if>
+		<if test="enginemodel != null and enginemodel.trim() !='' ">
+			and enginemodel = #{enginemodel}
+		</if>
+		and DATEOCCUR>=to_date(#{month2start},'yyyy-MM-dd') and DATEOCCUR &lt;= to_date(#{month2end},'yyyy-MM-dd')) month2,
+		(select  count(*) as c from MQS_ZEROKMISSUE where 1=1
+		<if test="productiondeptname != null and productiondeptname.trim() !='' ">
+			and productiondeptname = #{productiondeptname}
+		</if>
+		<if test="productionlinename != null and productionlinename.trim() !='' ">
+			and productionlinename = #{productionlinename}
+		</if>
+		<if test="enginemodel != null and enginemodel.trim() !='' ">
+			and enginemodel = #{enginemodel}
+		</if>
+		and DATEOCCUR>=to_date(#{month3start},'yyyy-MM-dd') and DATEOCCUR &lt;= to_date(#{month3end},'yyyy-MM-dd')) month3,
+		(select  count(*) as c from MQS_ZEROKMISSUE where 1=1
+		<if test="productiondeptname != null and productiondeptname.trim() !='' ">
+			and productiondeptname = #{productiondeptname}
+		</if>
+		<if test="productionlinename != null and productionlinename.trim() !='' ">
+			and productionlinename = #{productionlinename}
+		</if>
+		<if test="enginemodel != null and enginemodel.trim() !='' ">
+			and enginemodel = #{enginemodel}
+		</if>
+		and DATEOCCUR>=to_date(#{month4start},'yyyy-MM-dd') and DATEOCCUR &lt;= to_date(#{month4end},'yyyy-MM-dd')) month4,
+		(select  count(*) as c from MQS_ZEROKMISSUE where 1=1
+		<if test="productiondeptname != null and productiondeptname.trim() !='' ">
+			and productiondeptname = #{productiondeptname}
+		</if>
+		<if test="productionlinename != null and productionlinename.trim() !='' ">
+			and productionlinename = #{productionlinename}
+		</if>
+		<if test="enginemodel != null and enginemodel.trim() !='' ">
+			and enginemodel = #{enginemodel}
+		</if>
+		and DATEOCCUR>=to_date(#{month1sumstart},'yyyy-MM-dd') and DATEOCCUR &lt;= to_date(#{month1sumend},'yyyy-MM-dd')) month1sum,
+		(select  count(*) as c from MQS_ZEROKMISSUE where 1=1
+		<if test="productiondeptname != null and productiondeptname.trim() !='' ">
+			and productiondeptname = #{productiondeptname}
+		</if>
+		<if test="productionlinename != null and productionlinename.trim() !='' ">
+			and productionlinename = #{productionlinename}
+		</if>
+		<if test="enginemodel != null and enginemodel.trim() !='' ">
+			and enginemodel = #{enginemodel}
+		</if>
+		and DATEOCCUR>=to_date(#{month2sumstart},'yyyy-MM-dd') and DATEOCCUR &lt;= to_date(#{month2sumend},'yyyy-MM-dd')) month2sum,
+		(select  count(*) as c from MQS_ZEROKMISSUE where 1=1
+		<if test="productiondeptname != null and productiondeptname.trim() !='' ">
+			and productiondeptname = #{productiondeptname}
+		</if>
+		<if test="productionlinename != null and productionlinename.trim() !='' ">
+			and productionlinename = #{productionlinename}
+		</if>
+		<if test="enginemodel != null and enginemodel.trim() !='' ">
+			and enginemodel = #{enginemodel}
+		</if>
+		and DATEOCCUR>=to_date(#{month3sumstart},'yyyy-MM-dd') and DATEOCCUR &lt;= to_date(#{month3sumend},'yyyy-MM-dd')) month3sum,
+		(select  count(*) as c from MQS_ZEROKMISSUE where 1=1
+		<if test="productiondeptname != null and productiondeptname.trim() !='' ">
+			and productiondeptname = #{productiondeptname}
+		</if>
+		<if test="productionlinename != null and productionlinename.trim() !='' ">
+			and productionlinename = #{productionlinename}
+		</if>
+		<if test="enginemodel != null and enginemodel.trim() !='' ">
+			and enginemodel = #{enginemodel}
+		</if>
+		and DATEOCCUR>=to_date(#{month4sumstart},'yyyy-MM-dd') and DATEOCCUR &lt;= to_date(#{month4sumend},'yyyy-MM-dd')) month4sum
+
+	</select>
+
+
+	<select id="queryProductiondeptname" resultType="io.jeasyframework.entity.MqsZerokmissueEntity">
+		select productiondeptname from MQS_ZEROKMISSUE t
+		where 1=1
+		<if test="productiondeptname != null and productiondeptname.trim() !='' ">
+			and productiondeptname = #{productiondeptname}
+		</if>
+		<if test="productionlinename != null and productionlinename.trim() !='' ">
+			and productionlinename = #{productionlinename}
+		</if>
+		<if test="startTime != null and startTime.trim() !='' ">
+			and dateoccur >= to_date(#{startTime,jdbcType=VARCHAR},'yyyy-MM-dd')
+		</if>
+		<if test="endTime != null and endTime.trim() !='' ">
+			and dateoccur &lt;= to_date(#{endTime,jdbcType=VARCHAR},'yyyy-MM-dd')
+		</if>
+		group by productiondeptname
+	</select>
+
+	<select id="queryProductionlinename" resultType="io.jeasyframework.entity.MqsZerokmissueEntity">
+		select productionlinename,productiondeptname from MQS_ZEROKMISSUE t
+		where 1=1
+		<if test="productiondeptname != null and productiondeptname.trim() !='' ">
+			and productiondeptname = #{productiondeptname}
+		</if>
+		<if test="productionlinename != null and productionlinename.trim() !='' ">
+			and productionlinename = #{productionlinename}
+		</if>
+		<if test="endTime != null and endTime.trim() !='' ">
+			and dateoccur &lt;= to_date(#{endTime,jdbcType=VARCHAR},'yyyy-MM-dd')
+		</if>
+		group by productionlinename,productiondeptname
+	</select>
+
+
+	<select id="queryIssueAttrBingSeries"  resultType="io.jeasyframework.entity.MqsZerokmissueEntity">
+		select issueattr,count(*) as count from MQS_ZEROKMISSUE
+		where 1=1
+		<if test="startTime != null and startTime.trim() !='' ">
+			and dateoccur >= to_date(#{startTime,jdbcType=VARCHAR},'yyyy-MM-dd')
+		</if>
+
+		<if test="endTime !=null and endTime.trim() !='' ">
+			and dateoccur &lt;= to_date(#{endTime,jdbcType=VARCHAR} ,'yyyy-MM-dd')
+		</if>
+		group by issueattr
+
+	</select>
+
+
+	<select id="queryPlatoSeries"  resultType="io.jeasyframework.entity.MqsZerokmissueEntity">
+		select ccc, count(*) as count from MQS_ZEROKMISSUE
+        where 1=1
+		<if test="startTime != null and startTime.trim() !='' ">
+			and dateoccur >= to_date(#{startTime,jdbcType=VARCHAR},'yyyy-MM-dd')
+		</if>
+
+		<if test="endTime !=null and endTime.trim() !='' ">
+			and dateoccur &lt;= to_date(#{endTime,jdbcType=VARCHAR} ,'yyyy-MM-dd')
+		</if>
+
+		<if test="cccName !=null and cccName.trim() !='' ">
+			and ccc = #{cccName}
+		</if>
+		group by ccc
+
+	</select>
+
+	<select id="queryPlatoxAxisLengent" resultType="io.jeasyframework.entity.MqsZerokmissueEntity">
+		select CCC from MQS_ZEROKMISSUE
+		where 1=1
+		<if test="startTime!=null and startTime.trim() !='' ">
+			and dateoccur >= to_date(#{startTime,jdbcType=VARCHAR},'yyyy-MM-dd')
+		</if>
+
+		<if test="endTime !=null and endTime.trim() !=''">
+			and dateoccur &lt;= to_date(#{endTime,jdbcType=VARCHAR},'yyyy-MM-dd')
+		</if>
+		group by CCC
+
+	</select>
+
+	<select id="queryItemPartSeriesList" resultType="io.jeasyframework.entity.MqsZerokmissueEntity">
+		select count(*) as count ,ITEMPART from MQS_ZEROKMISSUE
+		where 1=1
+		<if test="startTime != null and startTime.trim() !='' ">
+			and dateoccur >= to_date(#{startTime,jdbcType=VARCHAR},'yyyy-MM-dd')
+		</if>
+
+		<if test="endTime !=null and endTime.trim() !='' ">
+			and dateoccur &lt;= to_date(#{endTime,jdbcType=VARCHAR} ,'yyyy-MM-dd')
+		</if>
+		group by ITEMPART
+
+	</select>
+
+
+
+	<select id="querydutydeptlengentlist" resultType="io.jeasyframework.entity.MqsZerokmissueEntity">
+		select dutydept from MQS_ZEROKMISSUE
+		where 1=1
+		<if test="startTime != null and startTime.trim() !=''">
+			and dateoccur &gt;= to_date(#{startTime,jdbcType=VARCHAR},'yyyy-MM-dd')
+		</if>
+
+		<if test="endTime !=null and endTime.trim() !=''">
+			and dateoccur &lt;= to_date(#{endTime,jdbcType=VARCHAR},'yyyy-MM-dd')
+		</if>
+		group by dutydept
+	</select>
+
+	<select id="queryDutyDeptList" resultType="io.jeasyframework.entity.MqsZerokmissueEntity">
+		select  ltrim(to_char(dateoccur,'yyyy-MM'),'0')  month, count(*) as count from MQS_ZEROKMISSUE t
+		where 1=1
+		<if test="lengentName != null and lengentName.trim() != ''">
+			and t.dutydept = #{lengentName}
+		</if>
+		<if test="productionlinename != null and productionlinename.trim() !='' ">
+			and productionlinename = #{productionlinename}
+		</if>
+		<if test="enginemodel != null and enginemodel.trim() !='' ">
+			and enginemodel = #{enginemodel}
+		</if>
+
+		<if test="productiondeptname != null ">
+			and productiondeptname IN
+			<foreach item="productiondeptname" collection="productiondeptname" open="(" separator="," close=")">
+				#{productiondeptname}
+			</foreach>
+		</if>
+
+
+		<if test="monthnum != null and monthnum.trim() != ''">
+			and ltrim(to_char(dateoccur,'yyyy-MM'),'0') = #{monthnum}
+		</if>
+		<if test="startTime != null and startTime.trim() !=''">
+			and dateoccur &gt;= to_date(#{startTime,jdbcType=VARCHAR},'yyyy-MM-dd')
+		</if>
+
+		<if test="endTime !=null and endTime.trim() !=''">
+			and dateoccur &lt;= to_date(#{endTime,jdbcType=VARCHAR},'yyyy-MM-dd')
+		</if>
+
+		group by ltrim(to_char(dateoccur,'yyyy-MM'),'0')
+
+	</select>
+
+
+
+	<select id="queryIssueAttrList" resultType="io.jeasyframework.entity.MqsZerokmissueEntity">
+		select issueattr, ltrim(to_char(dateoccur,'yyyy-MM'),'0')  month, count(*) as count from MQS_ZEROKMISSUE t
+		where 1=1
+		<if test="lengentName != null and lengentName.trim() != ''">
+			and t.issueattr like '%${lengentName}%'
+		</if>
+
+		<if test="monthnum != null and monthnum.trim() != ''">
+			and ltrim(to_char(dateoccur,'yyyy-MM'),'0') = #{monthnum}
+		</if>
+		<if test="startTime != null and startTime.trim() !=''">
+			and dateoccur &gt;= to_date(#{startTime,jdbcType=VARCHAR},'yyyy-MM-dd')
+		</if>
+
+		<if test="endTime !=null and endTime.trim() !=''">
+			and dateoccur &lt;= to_date(#{endTime,jdbcType=VARCHAR},'yyyy-MM-dd')
+		</if>
+
+		group by ltrim(to_char(dateoccur,'yyyy-MM'),'0'),issueattr
+
+	</select>
+
+	<select id="queryissueattrlengentlist" resultType="io.jeasyframework.entity.MqsZerokmissueEntity">
+		select issueattr from MQS_ZEROKMISSUE
+		where 1=1
+		<if test="startTime != null and startTime.trim() !=''">
+			and dateoccur &gt;= to_date(#{startTime,jdbcType=VARCHAR},'yyyy-MM-dd')
+		</if>
+
+		<if test="endTime !=null and endTime.trim() !=''">
+			and dateoccur &lt;= to_date(#{endTime,jdbcType=VARCHAR},'yyyy-MM-dd')
+		</if>
+
+		group by issueattr
+	</select>
+
+
+	<select id="queryObject" resultType="io.jeasyframework.entity.MqsZerokmissueEntity">
+		select
+		<include refid="Base_Column_List"/>
+		  from MQS_ZEROKMISSUE where ZEROKMISSUEID = #{value}
+	</select>
+
+	<select id="queryList" resultType="io.jeasyframework.entity.MqsZerokmissueEntity">
+		select
+		<include refid="Base_Column_List"/>
+		from MQS_ZEROKMISSUE
+		where 1=1
+		<if test="productiondeptname != null and productiondeptname.trim() != ''">
+			and PRODUCTIONDEPTNAME like '${productiondeptname}'
+		</if>
+		<if test="productionlinename != null and productionlinename.trim() != ''">
+			and PRODUCTIONLINENAME like '${productionlinename}'
+		</if>
+		<if test="productionbase != null and productionbase.trim() != ''">
+			and PRODUCTIONBASE like '${productionbase}'
+		</if>
+		<if test="enginemodel != null and enginemodel.trim() != ''">
+			and ENGINEMODEL like '${enginemodel}'
+		</if>
+		<if test="engineno != null and engineno.trim() != ''">
+			and ENGINENO like '${engineno}'
+		</if>
+		<if test="icc != null and icc.trim() != ''">
+			and ICC like '${icc}'
+		</if>
+		<if test="ccc != null and ccc.trim() != ''">
+			and CCC like '${ccc}'
+		</if>
+		<if test="dutydept != null and dutydept.trim() != ''">
+			and DUTYDEPT like '${dutydept}'
+		</if>
+		<if test="issueattr != null and issueattr.trim() != ''">
+			and ISSUEATTR like '${issueattr}'
+		</if>
+		<if test="zkissuestatus != null and zkissuestatus.trim() != ''">
+			and ZKISSUESTATUS like '${zkissuestatus}'
+		</if>
+		<if test="startTime!=null and startTime.trim() != ''">
+			and  DATEOCCUR &gt;= to_date(#{startTime,jdbcType=VARCHAR},'yyyy-MM-dd')
+		</if>
+		<if test="endTime!=null and endTime.trim() != ''">
+			and DATEOCCUR &lt;= to_date(#{endTime,jdbcType=VARCHAR},'yyyy-MM-dd')
+		</if>
+
+		order by dateoccur desc
+
+	</select>
+	
+ 	<select id="queryTotal" resultType="int">
+		select count(*) from MQS_ZEROKMISSUE
+		<where>
+			<if test="productiondeptname != null and productiondeptname.trim() != ''">
+				and PRODUCTIONDEPTNAME like '${productiondeptname}'
+			</if>
+			<if test="productionlinename != null and productionlinename.trim() != ''">
+				and PRODUCTIONLINENAME like '${productionlinename}'
+			</if>
+			<if test="productionbase != null and productionbase.trim() != ''">
+				and PRODUCTIONBASE like '${productionbase}'
+			</if>
+			<if test="enginemodel != null and enginemodel.trim() != ''">
+				and ENGINEMODEL like '${enginemodel}'
+			</if>
+			<if test="engineno != null and engineno.trim() != ''">
+				and ENGINENO like '${engineno}'
+			</if>
+			<if test="icc != null and icc.trim() != ''">
+				and ICC like '${icc}'
+			</if>
+			<if test="ccc != null and ccc.trim() != ''">
+				and CCC like '${ccc}'
+			</if>
+			<if test="dutydept != null and dutydept.trim() != ''">
+				and DUTYDEPT like '${dutydept}'
+			</if>
+			<if test="issueattr != null and issueattr.trim() != ''">
+				and ISSUEATTR like '${issueattr}'
+			</if>
+			<if test="zkissuestatus != null and zkissuestatus.trim() != ''">
+				and ZKISSUESTATUS like '${zkissuestatus}'
+			</if>
+			<if test="startTime!=null and startTime.trim() != ''">
+				and  DATEOCCUR &gt;= to_date(#{startTime,jdbcType=VARCHAR},'yyyy-MM-dd')
+			</if>
+			<if test="endTime!=null and endTime.trim() != ''">
+				and DATEOCCUR &lt;= to_date(#{endTime,jdbcType=VARCHAR},'yyyy-MM-dd')
+			</if>
+		</where>
+	</select>
+	 
+	<insert id="save" parameterType="io.jeasyframework.entity.MqsZerokmissueEntity" useGeneratedKeys="true"
+			keyProperty="ZEROKMISSUEID">
+		<selectKey resultType="java.lang.Long" keyProperty="zerokmissueid" order="BEFORE">
+			select seq_mqs_zerokmissue_id.nextval as zerokmissueid from dual
+		</selectKey>
+		insert into MQS_ZEROKMISSUE
+		(
+			ZEROKMISSUEID,
+		    PRODUCTIONBASE,
+			DATEOCCUR,
+			PRODUCTIONDEPTNAME,
+			PRODUCTIONLINENAME,
+			ENGINEMODEL,
+			ENGINENO,
+			VRT,
+			VFG,
+			CCC,
+			ICC,
+			ITEMPART,
+			FAILUREMODEL,
+			ISSUEDESC,
+			ISSUESEVERITY,
+			REPAIRCONTENT,
+			DUTYDEPT,
+			ISSUEATTR,
+			PSTATION,
+			CREATEDBYNAME,
+			CREATEDBYID,
+			DATECREATED,
+			MODIFIEDBYNAME,
+			MODIFIEDBYID,
+			DATEMODIFIED,
+			ISENABLE,
+			ISCP,
+			ICCCODE,
+			CCCCODE,
+			VFGCODE,
+			VRTCODE,
+			ZKISSUESTATUS,
+			PPMREMARK,
+			ENGINETYPE,
+			ZKWEEK,
+			ISWRITETARGET,
+			ERAMEASURES,
+			DATEERAEXECUTED,
+			ICAMEATURES,
+			DATEICAEXECUTED,
+			FINISHEDSTATUS,
+			REASONANALYSIS,
+			PCAMEASURES,
+			DATEPCAEXECUTED,
+			REMARK
+
+		)
+		values
+		(
+			#{zerokmissueid,jdbcType=NUMERIC},
+			#{productionbase,jdbcType=VARCHAR},
+			to_date(#{dateoccur},'yyyy-MM-dd'),
+			#{productiondeptname,jdbcType=VARCHAR},
+			#{productionlinename,jdbcType=VARCHAR},
+			#{enginemodel,jdbcType=VARCHAR},
+			#{engineno,jdbcType=VARCHAR},
+			#{vrt,jdbcType=VARCHAR},
+			#{vfg,jdbcType=VARCHAR},
+			#{ccc,jdbcType=VARCHAR},
+			#{icc,jdbcType=VARCHAR},
+			#{itempart,jdbcType=VARCHAR},
+			#{failuremodel,jdbcType=VARCHAR},
+			#{issuedesc,jdbcType=VARCHAR},
+			#{issueseverity,jdbcType=VARCHAR},
+			#{repaircontent,jdbcType=VARCHAR},
+			#{dutydept,jdbcType=VARCHAR},
+			#{issueattr,jdbcType=VARCHAR},
+			#{pstation,jdbcType=VARCHAR},
+			#{createdbyname,jdbcType=VARCHAR},
+			#{createdbyid,jdbcType=VARCHAR},
+			sysdate,
+			#{modifiedbyname,jdbcType=VARCHAR},
+			#{modifiedbyid,jdbcType=VARCHAR},
+			#{datemodified,jdbcType=TIMESTAMP},
+			#{isenable,jdbcType=NUMERIC},
+			#{iscp,jdbcType=NUMERIC},
+			#{icccode,jdbcType=VARCHAR},
+			#{ccccode,jdbcType=VARCHAR},
+			#{vfgcode,jdbcType=VARCHAR},
+			#{vrtcode,jdbcType=VARCHAR},
+			#{zkissuestatus,jdbcType=VARCHAR},
+			#{ppmremark,jdbcType=VARCHAR},
+			#{enginetype,jdbcType=VARCHAR},
+			#{zkweek,jdbcType=VARCHAR},
+			#{iswritetarget,jdbcType=VARCHAR},
+			#{erameasures,jdbcType=VARCHAR},
+			to_date(#{dateeraexecuted},'yyyy-MM-dd'),
+			#{icameatures,jdbcType=VARCHAR},
+			to_date(#{dateicaexecuted},'yyyy-MM-dd'),
+			#{finishedstatus,jdbcType=VARCHAR},
+			#{reasonanalysis,jdbcType=VARCHAR},
+			#{pcameasures,jdbcType=VARCHAR},
+			to_date(#{datepcaexecuted},'yyyy-MM-dd'),
+			#{remark,jdbcType=VARCHAR}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="io.jeasyframework.entity.MqsZerokmissueEntity">
+		update MQS_ZEROKMISSUE 
+		<set>
+			DATEMODIFIED  = sysdate,
+			<if test="productionbase != null"> PRODUCTIONBASE  = #{productionbase}, </if>
+			<if test="dateoccur != null"> DATEOCCUR  = to_date(#{dateoccur},'yyyy-MM-dd') , </if>
+			<if test="productiondeptname != null"> PRODUCTIONDEPTNAME  = #{productiondeptname}, </if>
+			<if test="productionlinename != null"> PRODUCTIONLINENAME  = #{productionlinename}, </if>
+			<if test="enginemodel != null"> ENGINEMODEL  = #{enginemodel}, </if>
+			<if test="engineno != null"> ENGINENO  = #{engineno}, </if>
+			<if test="vrt != null"> VRT  = #{vrt}, </if>
+			<if test="vfg != null"> VFG  = #{vfg}, </if>
+			<if test="ccc != null"> CCC  = #{ccc}, </if>
+			<if test="icc != null"> ICC  = #{icc}, </if>
+			<if test="itempart != null"> ITEMPART  = #{itempart}, </if>
+			<if test="failuremodel != null"> FAILUREMODEL  = #{failuremodel}, </if>
+			<if test="issuedesc != null"> ISSUEDESC  = #{issuedesc}, </if>
+			<if test="issueseverity != null"> ISSUESEVERITY  = #{issueseverity}, </if>
+			<if test="repaircontent != null"> REPAIRCONTENT  = #{repaircontent}, </if>
+			<if test="dutydept != null"> DUTYDEPT  = #{dutydept}, </if>
+			<if test="issueattr != null"> ISSUEATTR  = #{issueattr}, </if>
+			<if test="pstation != null"> PSTATION  = #{pstation}, </if>
+			<if test="createdbyname != null"> CREATEDBYNAME  = #{createdbyname}, </if>
+			<if test="createdbyid != null"> CREATEDBYID  = #{createdbyid}, </if>
+			<if test="datecreated != null"> DATECREATED  =  to_date(#{datecreated},'yyyy-MM-dd'), </if>
+			<if test="modifiedbyname != null"> MODIFIEDBYNAME  = #{modifiedbyname}, </if>
+			<if test="modifiedbyid != null"> MODIFIEDBYID  = #{modifiedbyid}, </if>
+			<if test="isenable != null"> ISENABLE  = #{isenable}, </if>
+			<if test="iscp != null"> ISCP  = #{iscp}, </if>
+			<if test="icccode != null"> ICCCODE  = #{icccode}, </if>
+			<if test="ccccode != null"> CCCCODE  = #{ccccode}, </if>
+			<if test="vfgcode != null"> VFGCODE  = #{vfgcode}, </if>
+			<if test="vrtcode != null"> VRTCODE  = #{vrtcode}, </if>
+			<if test="zkissuestatus != null"> ZKISSUESTATUS  = #{zkissuestatus}, </if>
+			<if test="ppmremark != null"> PPMREMARK  = #{ppmremark}, </if>
+			<if test="enginetype != null"> ENGINETYPE  = #{enginetype}, </if>
+			<if test="zkweek != null">ZKWEEK = #{zkweek}, </if>
+			<if test="iswritetarget != null">ISWRITETARGET = #{iswritetarget}, </if>
+			<if test="erameasures != null">ERAMEASURES = #{erameasures}, </if>
+			<if test="dateeraexecuted != null">DATEERAEXECUTED = to_date(#{dateeraexecuted},'yyyy-MM-dd'), </if>
+			<if test="icameatures != null"> ICAMEATURES  = #{icameatures}, </if>
+			<if test="dateicaexecuted != null">DATEICAEXECUTED = to_date(#{dateicaexecuted},'yyyy-MM-dd'), </if>
+			<if test="finishedstatus != null">FINISHEDSTATUS = #{finishedstatus}, </if>
+			<if test="reasonanalysis != null">REASONANALYSIS = #{reasonanalysis}, </if>
+			<if test="pcameasures != null">PCAMEASURES = #{pcameasures}, </if>
+			<if test="datepcaexecuted != null">DATEPCAEXECUTED = to_date(#{datepcaexecuted},'yyyy-MM-dd'), </if>
+			<if test="remark != null">REMARK = #{remark}</if>
+
+		</set>
+		where ZEROKMISSUEID = #{zerokmissueid}
+	</update>
+	
+	<delete id="delete">
+		delete from MQS_ZEROKMISSUE where ZEROKMISSUEID = #{value}
+	</delete>
+	
+	<delete id="deleteBatch">
+		delete from MQS_ZEROKMISSUE where ZEROKMISSUEID in 
+		<foreach item="zerokmissueid" collection="array" open="(" separator="," close=")">
+			#{zerokmissueid}
+		</foreach>
+	</delete>
+
+</mapper>

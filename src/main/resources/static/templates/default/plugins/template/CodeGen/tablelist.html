@@ -1,0 +1,131 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=emulateIE7" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" type="text/css" href="${siteurl}/templates/default/media/css/style.css" />
+    <link rel="stylesheet" type="text/css" href="${siteurl}/templates/default/media/css/WdatePicker.css" />
+    <link rel="stylesheet" type="text/css" href="${siteurl}/templates/default/media/css/skin_/table.css" />
+    <link rel="stylesheet" type="text/css" href="${siteurl}/templates/default/media/css/jquery.grid.css" />
+    <!--jquery.bsgrid开始-->
+    <link rel="stylesheet" href="${siteurl}/templates/default/media/plugins/jquery.bsgrid_v1.38/builds/merged/bsgrid.all.min.css"/>
+    <!--jquery.bsgrid结束-->
+    <script type="text/javascript" src="${siteurl}/templates/default/media/js/jquery.js"></script>
+    <!--时间控件-->
+    <script src="${siteurl}/templates/default/media/js/laydate/laydate.js"></script>
+    <!--vue开始-->
+    <script type="text/javascript" src="${siteurl}/public/js/const.js"></script>
+    <script type="text/javascript" src="${siteurl}/public/libs/vue.min.js"></script>
+    <!--vue结束-->
+    <title>表格</title>
+</head>
+
+<body>
+<div id="container">
+    <div id="hd"></div>
+    <div id="bd">
+        <div id="main">
+            <div class="search-box ue-clear">
+                <div class="search-area" style="width:100%">
+                    <div class="kv-item ue-clear">
+                        <label>表名称:</label>
+                        <div class="kv-item-content"> &nbsp;
+                            <input type="text"  id="tableName" v-model="logSearch.tableName" style="width: 120px;" />
+                        </div>
+                        <div class="search-button" style="float:right">
+                            <input class="button" type="button" @click="query(1)" value="搜索一下" />
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="table">
+                <div class="opt ue-clear">
+                	<span class="sortarea">
+                    	<span class="sort">
+                        	<label>排序：</label>
+                            <span class="name">
+                            	<i class="icon"></i>
+                                <span class="text">名称</span>
+                            </span>
+                        </span>
+                    </span>
+                    <span class="optarea">
+                        <a href="javascript:vm.codegen()" class="config">
+                            <i class="icon"></i>
+                            <span class="text">生成代码</span>
+                        </a>
+                    </span>
+                </div>
+
+                <div class="grid">
+                    <table id="searchTable">
+                        <tr>
+                            <th w_check="true" w_index="tableName" width="3%;"></th>
+                            <!--<th w_index="id" w_align="left" width="5%;">编号</th>-->
+                            <th w_index="tableName" w_align="left" width="15%;">表名称</th>
+                            <th w_index="comments" w_align="left" width="72%;">备注</th>
+                          
+                            
+                           <!-- <th w_render="vm.op1" width="5%;">编辑</th>
+                            <th w_render="vm.op2" width="5%;">删除</th>-->
+                        </tr>
+                    </table>
+                </div>
+                <div id="pagination" class="pagination"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+
+<script type="text/javascript" src="${siteurl}/templates/default/media/js/global.js"></script>
+<script type="text/javascript" src="${siteurl}/templates/default/media/js/jquery.select.js"></script>
+<script type="text/javascript" src="${siteurl}/templates/default/media/js/core.js"></script>
+<script type="text/javascript" src="${siteurl}/templates/default/media/js/jquery.pagination.js"></script>
+<script type="text/javascript" src="${siteurl}/templates/default/media/js/jquery.grid.js"></script>
+<script type="text/javascript" src="${siteurl}/templates/default/media/js/WdatePicker.js"></script>
+<script type="text/javascript" src="${siteurl}/templates/default/media/js/const.js"></script>
+<!--jquery.bsgrid开始-->
+<script type="text/javascript" src="${siteurl}/templates/default/media/plugins/jquery.bsgrid_v1.38/builds/js/lang/grid.zh-CN.min.js"></script>
+<script type="text/javascript" src="${siteurl}/templates/default/media/plugins/jquery.bsgrid_v1.38/builds/merged/bsgrid.all.min.js"></script>
+<!--jquery.bsgrid结束-->
+<script type="text/javascript">
+    $('select').select();
+    var siteurl='${siteurl}';
+    var totalCount=0;
+
+    $(function () {
+        /*var start = {
+            elem: '#start',
+            format: 'YYYY/MM/DD hh:mm:ss',
+            max: laydate.now(), //最大日期
+            istime: true,
+            istoday: false,
+            choose: function(datas){
+                end.min = datas; //开始日选好后，重置结束日的最小日期
+                end.start = datas //将结束日的初始值设定为开始日
+            }
+        };
+        var end = {
+            elem: '#end',
+            format: 'YYYY/MM/DD hh:mm:ss',
+            max: laydate.now(),
+            istime: true,
+            istoday: false,
+            choose: function(datas){
+                start.max = datas; //结束日选好后，重置开始日的最大日期
+            }
+        };
+        laydate(start);
+        laydate(end);
+        */
+    })
+</script>
+
+
+<script type="text/javascript" src="${siteurl}/public/js/plugins/codegen/tablelist.js"></script>
+</html>

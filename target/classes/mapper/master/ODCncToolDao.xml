@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="io.jeasyframework.dao.master.ODCncToolDao">
+  <resultMap id="BaseResultMap" type="io.jeasyframework.entity.ODCncToolEntity">
+    <id column="F_ID" jdbcType="DECIMAL" property="fId" />
+    <result column="F_STATIONNAME" jdbcType="OTHER" property="fStationname" />
+    <result column="F_TIME" jdbcType="TIMESTAMP" property="fTime" />
+    <result column="F_LINEID" jdbcType="OTHER" property="fLineid" />
+    <result column="TOOLNAME" jdbcType="OTHER" property="toolname" />
+    <result column="DUPLONUMBER" jdbcType="OTHER" property="duplonumber" />
+    <result column="RESIDUALLIFE1" jdbcType="OTHER" property="residuallife1" />
+    <result column="RESIDUALUNIT1" jdbcType="OTHER" property="residualunit1" />
+    <result column="WARNINGLIMIT1" jdbcType="OTHER" property="warninglimit1" />
+    <result column="TOOLLENGHT1" jdbcType="OTHER" property="toollenght1" />
+    <result column="TOOLRADIUS1" jdbcType="OTHER" property="toolradius1" />
+    <result column="RESIDUALLIFE2" jdbcType="OTHER" property="residuallife2" />
+    <result column="RESIDUALUNIT2" jdbcType="OTHER" property="residualunit2" />
+    <result column="WARNINGLIMIT2" jdbcType="OTHER" property="warninglimit2" />
+    <result column="TOOLLENGHT2" jdbcType="OTHER" property="toollenght2" />
+    <result column="TOOLRADIUS2" jdbcType="OTHER" property="toolradius2" />
+    <result column="RESIDUALLIFE3" jdbcType="OTHER" property="residuallife3" />
+    <result column="RESIDUALUNIT3" jdbcType="OTHER" property="residualunit3" />
+    <result column="WARNINGLIMIT3" jdbcType="OTHER" property="warninglimit3" />
+    <result column="TOOLLENGHT3" jdbcType="OTHER" property="toollenght3" />
+    <result column="TOOLRADIUS3" jdbcType="OTHER" property="toolradius3" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    F_ID, F_STATIONNAME, F_TIME, F_LINEID, TOOLNAME, DUPLONUMBER, RESIDUALLIFE1, RESIDUALUNIT1, 
+    WARNINGLIMIT1, TOOLLENGHT1, TOOLRADIUS1, RESIDUALLIFE2, RESIDUALUNIT2, WARNINGLIMIT2, 
+    TOOLLENGHT2, TOOLRADIUS2, RESIDUALLIFE3, RESIDUALUNIT3, WARNINGLIMIT3, TOOLLENGHT3, 
+    TOOLRADIUS3
+  </sql>
+  <select id="queryList" parameterType="java.lang.Object" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from OD_CNC_TOOL 
+		<where>
+			<if  test="keyWords != null and keyWords.trim()!=''">
+				 and  F_STATIONNAME like '%'||#{keyWords,jdbcType=VARCHAR}||'%' 
+			</if>
+			<if test="startTime!=null  and startTime.trim()!=''">
+				and F_TIME &gt;= to_date(#{startTime,jdbcType=VARCHAR},'yyyy-MM-dd HH24:mi:ss')
+			</if>
+			<if test="endTime!=null  and endTime.trim()!=''">
+				and F_TIME &lt; to_date(#{endTime,jdbcType=VARCHAR},'yyyy-MM-dd HH24:mi:ss')
+			</if>
+		</where>
+           
+  </select>
+  <select id="queryTotal" resultType="int">
+        select
+        count(*)
+        from OD_CNC_TOOL 
+        <where>
+			<if  test="keyWords != null and keyWords.trim()!=''">
+				 and  F_STATIONNAME like '%'||#{keyWords,jdbcType=VARCHAR}||'%' 
+			</if>
+			<if test="startTime!=null  and startTime.trim()!=''">
+				and F_TIME &gt;= to_date(#{startTime,jdbcType=VARCHAR},'yyyy-MM-dd HH24:mi:ss')
+			</if>
+			<if test="endTime!=null  and endTime.trim()!=''">
+				and F_TIME &lt; to_date(#{endTime,jdbcType=VARCHAR},'yyyy-MM-dd HH24:mi:ss')
+			</if>
+		</where>
+        
+  </select>
+  
+</mapper>

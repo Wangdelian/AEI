@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>发动机MQS系统_用户登录</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+<!--CSS引用-->
+<link rel="stylesheet" type="text/css" href="${siteurl}/templates/default/media/css/style.css" />
+<link rel="stylesheet" type="text/css" href="${siteurl}/templates/default/media/css/skin_/login.css" />
+<!--Javascript引用-->
+<script src="${siteurl}/public/libs/vue.js"></script>
+
+<script type="text/javascript" src="${siteurl}/templates/default/media/js/jquery.js"></script>
+<script type="text/javascript" src="${siteurl}/templates/default/media/js/jquery.select.js"></script>
+<!--<script src="${siteurl}/public/js/token.js"></script>-->
+</head>
+<body>
+<div id="container">
+    <div id="bd">
+    	<div id="main">
+        	<div class="login-box" id="rrapp" v-cloak>
+                <div id="logo"></div>
+                <h1></h1>
+                <div class="input username" id="lb_username">
+                    <label for="userName">用户名</label>
+                    <span></span>
+                    <input type="text" v-model="username" />
+                </div>
+                <div class="input psw" id="psw">
+                    <label for="password">密&nbsp;&nbsp;&nbsp;&nbsp;码</label>
+                    <span></span>
+                    <input type="password" v-model="password" />
+                </div>
+                <div class="input validate" id="validate">
+                    <label for="valiDate">验证码</label>
+                    <input type="text" v-model="captcha" />
+                    <div class="value"><img alt="如果看不清楚，请单击图片刷新！" class="pointer" :src="src" @click="refreshCode"></div>
+                </div>
+                <div class="styleArea">
+                    <div class="styleWrap">
+                        <select name="style">
+                            <option value="H系列一期">H系列一期</option>
+                            <option value="H系列二期">H系列二期</option>
+                            <option value="H系列三期">H系列三期</option>
+							<option value="H系列四期">H系列四期</option>
+							<option value="EA系列三期">EA系列三期</option>
+                        </select>
+                    </div>
+                </div>
+                <div id="btn" class="loginButton">
+                    <input type="button" @keyup="keylogin($event)" class="button" @click="login"  value="登录"  />{{errorMsg}}
+                </div>
+            </div>
+        </div>
+        <div id="ft">CopyRight&nbsp;2017&nbsp;&nbsp;版权所有&nbsp;&nbsp;重庆微标科技股份有限公司 &nbsp;&nbsp;</div>
+    </div>
+   
+</div>
+
+</body>
+<!-- /.login-box -->
+<script type="text/javascript">
+var vm = new Vue({
+	el:'#rrapp',
+	data:{
+		username: '',
+		password: '',
+		captcha: '',
+		error: false,
+		errorMsg: '',
+		src: '${siteurl}/captcha.jpg'
+	},
+	beforeCreate: function(){
+		if(self != top){
+			top.location.href = self.location.href;
+		}
+	},
+	methods: {
+		refreshCode: function(){
+			this.src = "captcha.jpg?t=" + $.now();
+		},
+		login: function (event) {
+			
+			var data = "username="+vm.username+"&password="+vm.password+"&captcha="+vm.captcha;
+			$.ajax({
+				type: "POST",
+			    url: "${siteurl}/sys/login",
+			    data: data,
+			    dataType: "json",
+			    success: function(result){
+					
+					
+					if(result.code == 0){//登录成功
+						//parent.location.href ='index.html';
+						localStorage.setItem("token", result.token);
+						parent.location.href='${siteurl}/sys/homepage/main';
+						//parent.location.href='${siteurl}/sys/homepage/main';
+					}else{
+						vm.error = true;
+						vm.errorMsg = result.msg;
+						vm.refreshCode();
+					}
+				}
+			});
+		},
+		keylogin:function (event) {
+			if(event.keyCode == 13){  
+                var data = "username="+vm.username+"&password="+vm.password+"&captcha="+vm.captcha;
+				$.ajax({
+					type: "POST",
+				    url: "${siteurl}/sys/login",
+				    data: data,
+				    dataType: "json",
+				    success: function(result){
+						
+					
+						if(result.code == 0){//登录成功
+							//parent.location.href ='index.html';
+							localStorage.setItem("token", result.token);
+							//parent.location.href='${siteurl}/sys/homepage/main?token='+result.token;
+							parent.location.href='${siteurl}/sys/homepage/main';
+						}else{
+							vm.error = true;
+							vm.errorMsg = result.msg;
+							vm.refreshCode();
+						}
+					}
+				});
+            }  
+		}
+	}
+});
+function goLogin()
+{
+
+}
+</script>
+<script type="text/javascript">
+var height = $(window).height() > 445 ? $(window).height() : 445;
+$("#container").height(height);
+var bdheight = ($(window).height() - $('#bd').height()) / 2 - 20;
+$('#bd').css('padding-top', bdheight);
+$(window).resize(function(e) {
+    var height = $(window).height() > 445 ? $(window).height() : 445;
+	$("#container").height(height);
+	var bdheight = ($(window).height() - $('#bd').height()) / 2 - 20;
+	$('#bd').css('padding-top', bdheight);
+});
+$('select').select();
+document.onkeydown=function(event){
+	var e = event || window.event || arguments.callee.caller.arguments[0];
+	if(e && e.keyCode==27){ // 按 Esc 
+		//要做的事情
+	  }
+	if(e && e.keyCode==113){ // 按 F2 
+		 //要做的事情
+	   }            
+	 if(e && e.keyCode==13){ // enter 键
+		 //要做的事情
+		vm.login();
+	}
+}; 
+</script>
+
+</html>

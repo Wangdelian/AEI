@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>标签监测</title>
+    <style type="text/css">
+        .selectWidth{
+            width: 160px !important;
+        }
+        .labelWidth{
+            width: 90px !important;
+        }
+        #main td .layui-table-cell {
+            height: 15px;
+            line-height: 15px;
+        }
+
+        #main .layui-table-view .layui-table th, #main .layui-table-view .layui-table td {
+            padding: 5px 0;
+            font-size: 12px;
+            -webkit-transform-origin-x: 0;
+            -webkit-transform: scale(0.90);
+        }
+
+        body {
+            overflow-y: scroll;
+        }
+    </style>
+    <link rel="stylesheet" href="${siteurl}/templates/skin2/template/plugins/layui/css/layui.css" media="all">
+    <script src="${siteurl}/public/js/utils.js"></script>
+
+</head>
+<body id="main">
+<br>
+<form class="layui-form layui-form-pane" action="">
+    <div class="layui-form-item">
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label labelWidth">筛选</label>
+                <div class="layui-input-inline selectWidth">
+                    <select name="tagstatus" lay-filter="tagstatus" id="tagstatus">
+                        <option value="0">请选择</option>
+                        <option value="1">标签不可识别</option>
+                        <option value="2">标签识别错误</option>
+                    </select>
+                </div>
+            </div>
+            <div class="layui-inline" id="selec1">
+                <label class="layui-form-label labelWidth">铁路局</label>
+                <div class="layui-input-inline selectWidth">
+                    <select name="fBureauname" lay-filter="fBureauname" id="fBureauname">
+                        <option value="">请选择</option>
+                    </select>
+                </div>
+            </div>
+            <div class="layui-inline" id="selec2">
+                <label class="layui-form-label labelWidth">机务段</label>
+                <div class="layui-input-inline selectWidth">
+                    <select name="fSectionname" lay-filter="fSectionname" id="fSectionname">
+                        <option value="">请选择铁路局</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline" id="selec3">
+                <label class="layui-form-label labelWidth">整备场</label>
+                <div class="layui-input-inline selectWidth">
+                    <select name="fpasssite" lay-filter="fpasssite" id="fpasssite">
+                        <option value="">请选择机务段</option>
+                    </select>
+                </div>
+            </div>
+            <div class="layui-inline">
+                <span class="layui-form-label labelWidth">开始时间</span>
+                <div class="layui-input-inline selectWidth">
+                    <input type="text" class="layui-input" id="startTime" name="startTime"
+                           placeholder="yyyy-MM-dd HH:mm:ss" readonly="readonly">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <span class="layui-form-label labelWidth">结束时间</span>
+                <div class="layui-input-inline selectWidth">
+                    <input type="text" class="layui-input" id="endTime" name="endTime"
+                           placeholder="yyyy-MM-dd HH:mm:ss" readonly="readonly">
+                </div>
+            </div>
+
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label labelWidth">方向</label>
+                <div class="layui-input-inline selectWidth">
+                    <select name="fdirection" lay-filter="fdirection" id="fdirection">
+                        <option value="">请选择</option>
+                        <option value="进段">进段</option>
+                        <option value="出段">出段</option>
+                    </select>
+                </div>
+            </div>
+            <div class="layui-inline">
+                <button class="layui-btn" lay-submit="" lay-filter="demo1">查询</button>
+                <button class="layui-btn" lay-submit lay-filter="export">导出</button>
+                <button class="layui-btn" lay-submit lay-filter="jumpreport">统计分析</button>
+            </div>
+        </div>
+    </div>
+</form>
+<table class="layui-hide" id="test" lay-filter="demo"></table>
+<div id="pagination"></div>
+<script type="text/html" id="barDemo">
+    <a class="layui-btn layui-btn-xs" lay-event="edit" style="height: 18px;line-height: 18px;">销号</a>
+</script>
+<script type="text/html" id="titleTpl1">
+    {{#  if(d.fInforfid == null){ }}
+    <i class="layui-icon layui-icon-close-fill" style="color: red"><span></span></i>
+    {{#  }else {  }}
+    <div style="color: red"><i class="layui-icon layui-icon-close-fill"></i><span>{{d.fInforfid}}</span></div>
+    {{#  }  }}
+</script>
+
+<script type="text/javascript" src="${siteurl}/templates/default/media/js/jquery1.9.1.js"></script>
+<script src="${siteurl}/templates/skin2/template/plugins/layui/layui.js"></script>
+<script type="text/javascript" src="${siteurl}/public/libs/vue.min.js"></script>
+<!--业务逻辑JS-->
+<script src="${siteurl}/templates/skin2/media/js/biz/TrainCheckinfo/traincheckinfolist.js"></script>
+<script>
+    var siteurl = '${siteurl}';
+    var levelmarkid = '${levelmarkid}';
+    var abname = '${abname}';
+    var abnameTotal = '${abnameTotal}';
+    var levelmarkidTotal = '${levelmarkidTotal}';
+
+</script>
+</body>
+</html>

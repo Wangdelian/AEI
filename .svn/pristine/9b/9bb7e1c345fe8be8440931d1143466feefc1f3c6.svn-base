@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="io.jeasyframework.dao.master.ODAndonDao">
+  <resultMap id="BaseResultMap" type="io.jeasyframework.entity.ODAndonEntity">
+    <id column="F_ID" jdbcType="DECIMAL" property="fId" />
+    <result column="F_STATIONNAME" jdbcType="OTHER" property="fStationname" />
+    <result column="F_ANDONNAME" jdbcType="OTHER" property="fAndonname" />
+    <result column="F_STARTTIME" jdbcType="TIMESTAMP" property="fStarttime" />
+    <result column="F_ENDTIME" jdbcType="TIMESTAMP" property="fEndtime" />
+    <result column="F_LINEID" jdbcType="OTHER" property="fLineid" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    F_ID, F_STATIONNAME, F_ANDONNAME, F_STARTTIME, F_ENDTIME, F_LINEID
+  </sql>
+  <select id="queryList" parameterType="java.lang.Object" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from OD_ANDON 
+		<where>
+			<if  test="keyWords != null and keyWords.trim()!=''">
+				 and  F_STATIONNAME like '%'||#{keyWords,jdbcType=VARCHAR}||'%' 
+			</if>
+			<if test="startTime!=null  and startTime.trim()!=''">
+				and F_STARTTIME &gt;= to_date(#{startTime,jdbcType=VARCHAR},'yyyy-MM-dd HH24:mi:ss')
+			</if>
+			<if test="endTime!=null  and endTime.trim()!=''">
+				and F_STARTTIME &lt; to_date(#{endTime,jdbcType=VARCHAR},'yyyy-MM-dd HH24:mi:ss')
+			</if>
+		</where>
+           
+  </select>
+  <select id="queryTotal" resultType="int">
+        select
+        count(*)
+        from OD_ANDON 
+        <where>
+			<if  test="keyWords != null and keyWords.trim()!=''">
+				 and  F_STATIONNAME like '%'||#{keyWords,jdbcType=VARCHAR}||'%' 
+			</if>
+			<if test="startTime!=null  and startTime.trim()!=''">
+				and F_STARTTIME &gt;= to_date(#{startTime,jdbcType=VARCHAR},'yyyy-MM-dd HH24:mi:ss')
+			</if>
+			<if test="endTime!=null  and endTime.trim()!=''">
+				and F_STARTTIME &lt; to_date(#{endTime,jdbcType=VARCHAR},'yyyy-MM-dd HH24:mi:ss')
+			</if>
+		</where>
+        
+  </select>
+  
+</mapper>

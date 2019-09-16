@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>统计分析</title>
+    <link rel="stylesheet" href="${siteurl}/templates/skin2/template/plugins/layui/css/layui.css" media="all">
+    <script src="${siteurl}/public/js/utils.js"></script>
+
+</head>
+<body id="main">
+<br>
+<form class="layui-form layui-form-pane" action="">
+    <div class="layui-form-item">
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">请选择</label>
+                <div class="layui-input-block">
+                    <input type="radio" name="daterange" value="day" title="日报" lay-filter="daterange" checked="">
+                    <input type="radio" name="daterange" value="week" title="周报" lay-filter="daterange">
+                    <input type="radio" name="daterange" value="month" title="月报" lay-filter="daterange">
+                    <input type="radio" name="daterange" value="year" title="年报" lay-filter="daterange">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <button class="layui-btn" lay-submit lay-filter="export">导出</button>
+            </div>
+        </div>
+    </div>
+</form>
+
+<div id="echart1" style="width: 80%; height: 400px"></div>
+
+
+<script type="text/javascript" src="${siteurl}/templates/default/media/js/jquery1.9.1.js"></script>
+<script src="${siteurl}/templates/skin2/template/plugins/layui/layui.js"></script>
+<script type="text/javascript" src="${siteurl}/public/libs/vue.min.js"></script>
+<script src="${siteurl}/public/plugins/echarts/echarts.min.js"></script>
+<!--业务逻辑JS-->
+<script src="${siteurl}/templates/skin2/media/js/biz/TrainCheckinfo/datareport.js"></script>
+<script>
+    var siteurl = '${siteurl}';
+</script>
+</body>
+</html>

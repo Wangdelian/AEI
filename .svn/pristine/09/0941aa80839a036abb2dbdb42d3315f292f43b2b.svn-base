@@ -1,0 +1,88 @@
+<%
+directive dynamic dictionaryList;
+%>
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>编辑字典配置-zf</title>
+    <link rel="stylesheet" href="${siteurl}/templates/skin2/template/plugins/layui/css/layui.css" media="all">
+</head>
+<body class="layui-container">
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 50px;">
+    <legend>编辑字典配置</legend>
+</fieldset>
+
+<form class="layui-form layui-form-pane" action="">
+    <input type="text"  style="display: none" name="dictlibid" value="${dictionaryList.dictlibid}">
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <!--字典类型-->
+            <label class="layui-form-label">字典类型</label>
+            <div class="layui-input-inline">
+                <select name="dicttype" lay-search="" >
+                </select>
+            </div>
+            <!--字典名称-->
+            <label class="layui-form-label">字典名称</label>
+            <div class="layui-input-inline">
+                <input type="text" id="dictname" placeholder="请输入字典名称" class="layui-input"
+                       name="dictname" value="${dictionaryList.dictname}">
+            </div>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <!--字典值-->
+            <label class="layui-form-label">字典值</label>
+            <div class="layui-input-inline">
+                <input type="text" id="dictvalue" placeholder="请输入字典值" class="layui-input"
+                       name="dictvalue" value="${dictionaryList.dictvalue}">
+            </div>
+            <!--是否默认-->
+            <label class="layui-form-label">是否默认</label>
+            <div class="layui-input-inline">
+                <select name="isdefault" lay-search="">
+                    <option value="${dictionaryList.isdefault}">${dictionaryList.isdefault}</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+            <!--备注-->
+            <label class="layui-form-label">备注</label>
+            <div class="layui-input-inline" style="width: 500px">
+                <input type="text" id="dictremark" placeholder="请输入备注" class="layui-input"
+                       name="dictremark" value="${dictionaryList.dictremark}">
+            </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn" type="submit" lay-submit  lay-filter="demo1">保存</button>
+            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+    </div>
+</form>
+
+<script type="text/javascript" src="${siteurl}/templates/default/media/js/jquery1.9.1.js"></script>
+<script src="${siteurl}/templates/skin2/template/plugins/layui/layui.js"></script>
+<script type="text/javascript" src="${siteurl}/public/libs/vue.min.js"></script>
+<!--业务逻辑JS-->
+<script type="text/javascript" src="${siteurl}/templates/skin2/media/js/biz/Dictionary/editDictionary.js"></script>
+</body>
+<script type="text/javascript">
+    var siteurl = '${siteurl}';
+    var dictlibid = '${dictionaryList.dictlibid}';
+    var dicttype = '${dictionaryList.dicttype}';
+    var dictname = '${dictionaryList.dictname}';
+    var dictvalue = '${dictionaryList.dictvalue}';
+    var isdefault = '${dictionaryList.isdefault}';
+    var dictremark = '${dictionaryList.dictremark}';
+    console.log("aaaaaa");
+    console.log('${dictionaryList}')
+</script>
+
+</html>

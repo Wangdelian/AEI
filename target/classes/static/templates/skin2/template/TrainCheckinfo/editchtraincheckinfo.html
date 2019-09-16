@@ -1,0 +1,135 @@
+<%
+directive dynamic chTraincheckinfoEntity;
+%>
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>编辑标签监控</title>
+    <link rel="stylesheet" href="${siteurl}/templates/skin2/template/plugins/layui/css/layui.css" media="all">
+</head>
+
+<body class="layui-container" style="position: static">
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 50px;">
+    <legend>编辑标签监控</legend>
+</fieldset>
+<form class="layui-form layui-form-pane" action="">
+<span id="main_1111">
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">车次</label>
+            <div class="layui-input-inline" style="width:511px;">
+                <input type="text" name="ftrainorder" value="${chTraincheckinfoEntity.fTrainorder}" autocomplete="off"
+                       placeholder="请输入车次" class="layui-input">
+            </div>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">综合车型</label>
+            <div class="layui-input-inline">
+                <input type="text" name="fTraintypeverdict" value="${chTraincheckinfoEntity.fTraintypeverdict}" autocomplete="off"
+                       placeholder="请输入综合车型" class="layui-input" lay-verify="required">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">综合车号</label>
+            <div class="layui-input-inline">
+                <input type="text" name="fTrainnumberverdict" value="${chTraincheckinfoEntity.fTrainnumberverdict}" autocomplete="off"
+                       placeholder="请输入综合车号" class="layui-input" lay-verify="required">
+            </div>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">配属局</label>
+            <div class="layui-input-inline">
+                <input type="text" name="fBureauname" value="${chTraincheckinfoEntity.fBureauname}" autocomplete="off"
+                       placeholder="请输入配属局" class="layui-input" lay-verify="required">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">配属段</label>
+            <div class="layui-input-inline">
+                <input type="text" name="fSectionname" value="${chTraincheckinfoEntity.fSectionname}" autocomplete="off"
+                       placeholder="请输入配属段" class="layui-input" lay-verify="required">
+            </div>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">设备战场</label>
+            <div class="layui-input-inline">
+                <input type="text" name="fpasssite" value="${chTraincheckinfoEntity.fPasssite}" autocomplete="off"
+                       placeholder="请输入设备战场" class="layui-input" lay-verify="required">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">设备地点</label>
+            <div class="layui-input-inline">
+                <input type="text" name="fpasspoint" value="${chTraincheckinfoEntity.fPasspoint}" autocomplete="off"
+                       placeholder="请输入设备地点" class="layui-input" lay-verify="required">
+            </div>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">进出方向</label>
+            <div class="layui-input-inline">
+                <input type="text" name="fdirection" value="${chTraincheckinfoEntity.fDirection}" autocomplete="off"
+                       placeholder="请输入进出方向" class="layui-input" lay-verify="required">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">通过时间</label>
+            <div class="layui-input-inline">
+                <input type="text" name="ftimethrough" id="ftimethrough" value="${chTraincheckinfoEntity.fTimethrough}" autocomplete="off"
+                       placeholder="请输入通过时间" class="layui-input" lay-verify="required" readonly="readonly">
+            </div>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">标签识别</label>
+            <div class="layui-input-inline">
+                <input type="text" name="fInforfid" value="${chTraincheckinfoEntity.fInforfid}" autocomplete="off"
+                       placeholder="请输入标签识别" class="layui-input" lay-verify="required">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">备注</label>
+            <div class="layui-input-inline">
+                <input type="text" name="freserve1" value="${chTraincheckinfoEntity.fReserve1}" autocomplete="off"
+                       placeholder="请输入备注" class="layui-input" lay-verify="required">
+            </div>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn" lay-submit="" lay-filter="demo1">保存</button>
+        </div>
+    </div>
+    </span>
+</form>
+
+<script type="text/javascript" src="${siteurl}/templates/default/media/js/jquery1.9.1.js"></script>
+<script src="${siteurl}/templates/skin2/template/plugins/layui/layui.js"></script>
+<script type="text/javascript" src="${siteurl}/public/libs/vue.min.js"></script>
+
+<link rel="stylesheet" type="text/css"
+      href="${siteurl}/templates/skin2/media/js/plugins/jquery-easyui-1.5.3/themes/default/easyui.css">
+<link rel="stylesheet" type="text/css"
+      href="${siteurl}/templates/skin2/media/js/plugins/jquery-easyui-1.5.3/themes/icon.css">
+<script type="text/javascript"
+        src="${siteurl}/templates/skin2/media/js/plugins/jquery-easyui-1.5.3/jquery.easyui.min.js"></script>
+<!--业务逻辑JS-->
+<script type="text/javascript" src="${siteurl}/templates/skin2/media/js/biz/TrainCheckinfo/editchtraincheckinfo.js"></script>
+
+</body>
+<script type="text/javascript">
+    var siteurl = '${siteurl}';
+    var fid = '${chTraincheckinfoEntity.fId}';
+    var ftguid = '${chTraincheckinfoEntity.fTguid}'
+</script>
+</html>

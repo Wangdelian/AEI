@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="io.jeasyframework.dao.master.SysUserPasswordDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="io.jeasyframework.entity.SysUserPasswordEntity" id="sysUserPasswordMap">
+        <result property="id" column="ID"/>
+        <result property="userId" column="USER_ID"/>
+        <result property="password" column="PASSWORD"/>
+        <result property="createTime" column="CREATE_TIME"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+ID, USER_ID, PASSWORD, CREATE_TIME
+	</sql>
+	<select id="queryObject" resultType="io.jeasyframework.entity.SysUserPasswordEntity">
+		select * from SYS_USER_PASSWORD where ID = #{value}
+	</select>
+
+	<select id="queryByUser" resultType="io.jeasyframework.entity.SysUserPasswordEntity">
+		SELECT * FROM (select * from SYS_USER_PASSWORD where USER_ID = #{userId}
+		ORDER BY CREATE_TIME DESC) where ROWNUM &lt;=5
+	</select>
+
+	<select id="queryList" resultType="io.jeasyframework.entity.SysUserPasswordEntity">
+		select * from SYS_USER_PASSWORD
+        <choose>
+            <when test="sidx != null and sidx.trim() != ''">
+                order by ${sidx} ${order}
+            </when>
+			<otherwise>
+                order by ID desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="queryTotal" resultType="int">
+		select count(*) from SYS_USER_PASSWORD 
+	</select>
+	 
+	<insert id="save" parameterType="io.jeasyframework.entity.SysUserPasswordEntity">
+		insert into SYS_USER_PASSWORD
+		(
+			ID,
+			USER_ID,
+			PASSWORD,
+			CREATE_TIME
+		)
+		values
+		(
+			#{id}, 
+			#{userId}, 
+			#{password}, 
+			sysdate
+		)
+	</insert>
+	 
+	<update id="update" parameterType="io.jeasyframework.entity.SysUserPasswordEntity">
+		update SYS_USER_PASSWORD 
+		<set>
+			<if test="userId != null">`USER_ID` = #{userId}, </if>
+			<if test="password != null">`PASSWORD` = #{password}, </if>
+			<if test="createTime != null">`CREATE_TIME` = #{createTime}</if>
+		</set>
+		where ID = #{id}
+	</update>
+	
+	<delete id="delete">
+		delete from SYS_USER_PASSWORD where ID = #{value}
+	</delete>
+	
+	<delete id="deleteBatch">
+		delete from SYS_USER_PASSWORD where ID in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>

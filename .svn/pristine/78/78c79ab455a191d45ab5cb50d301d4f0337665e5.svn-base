@@ -1,0 +1,70 @@
+.content{
+    position: absolute;
+    top: 10%;
+    left: 30%;
+    width: 26%;
+    height: 80%;
+    display:none;
+    z-index:9999;
+    border:1px  solid  #b3b3b3;
+}
+.menuLayer{
+    width: 100%;
+    height: 78%;
+    margin-left:3%;
+    overflow-x: auto;
+    overflow-y: auto;
+
+}
+.black_overlay{
+    display: none;
+    position: absolute;
+    top: 0%;
+    left: 0%;
+    width: 100%;
+    height: 100%;
+    background-color: white;
+    z-index:1001;
+    -moz-opacity: 0.8;
+    opacity:.80;
+    filter: alpha(opacity=80);
+}
+.butt{
+    width: 100%;
+    height: 20%;
+}
+.button2{
+    background: url(../img/skin_/formbtnbg.png);
+    border: none;
+    border-radius: 3px;
+    width:28%;
+    height:40%;
+    margin-top:8%;
+    margin-left:10%;
+    cursor: pointer;
+}
+/*.white_content {
+    display: none;
+    position: absolute;
+    top: 10%;
+    left: 10%;
+    width: 80%;
+    height: 80%;
+    border: 16px solid lightblue;
+    background-color: white;
+    z-index:1002;
+    overflow: auto;
+}*/
+/*
+.white_content_small {
+    display: none;
+    position: absolute;
+    top: 20%;
+    left: 30%;
+    width: 40%;
+    height: 50%;
+    border: 16px solid lightblue;
+    background-color: white;
+    z-index:1002;
+    overflow: auto;
+}*/

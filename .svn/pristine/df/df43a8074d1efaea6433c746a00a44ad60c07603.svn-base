@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>TOP排序统计表</title>
+    <link rel="stylesheet" href="${siteurl}/templates/skin2/template/plugins/layui/css/layui.css" media="all">
+    <script src="${siteurl}/public/js/utils.js"></script>
+
+    <style>
+        .pg {
+            padding: 0 20px;
+        }
+
+        td[data-field="1"] {
+            display: none;
+        }
+
+        .layui-table tbody tr:hover {
+            background-color: #87CEEB
+        }
+
+        .layui-table-click {
+            background-color: #87CEEB;
+        }
+
+        .layui-table-cell {
+            padding: 0;
+            height: 18px;
+            line-height: 18px;
+            text-align: center;
+        }
+
+        .layui-table-view .layui-table th, .layui-table-view .layui-table td {
+            padding: 5px 0;
+            font-size: 12px;
+            -webkit-transform-origin-x: 0;
+            -webkit-transform: scale(0.90);
+        }
+
+        .link {
+            cursor: pointer;
+        }
+
+
+    </style>
+</head>
+
+<body>
+<br>
+<form class="layui-form layui-form-pane" id="main">
+    <div class="layui-row" style="padding-left: 40px">
+        <div class="layui-col-xs12">
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <span class="layui-form-label">TOPN</span>
+                    <div class="layui-input-inline">
+                        <select id="topn" name="topn" lay-search="" lay-filter="topn">
+                            <option value="20">请选择类型</option>
+                            <option value="20">20</option>
+                            <option value="40">40</option>
+                            <option value="">全部</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <span class="layui-form-label">结束时间</span>
+                    <div class="layui-input-inline">
+                        <input type="text" class="layui-input" id="end-time" name="endTime"
+                               placeholder="yyyy-MM-dd HH:mm:ss">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <span class="layui-form-label">ICC</span>
+                    <div class="layui-input-inline">
+                        <input type="text" id="icc" name="icc" class="layui-input" placeholder="请输入ICC">
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <span class="layui-form-label">数据类型</span>
+                    <div class="layui-input-inline">
+                        <select id="type" name="type" lay-search="" lay-filter="condition1" lay-verify="required">
+                            <option value="1">问题数</option>
+                            <option value="2">c1000</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">采集点</label>
+                    <div class="layui-input-inline">
+                        <select name="pstation" lay-search="" lay-filter="select1">
+                            <option value="">请选择采集点</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <span class="layui-form-label">班组</span>
+                    <div class="layui-input-inline">
+                        <select name="iissuebz" lay-filter="iissuebz" id="iissuebz">
+                            <option value="">请选择班组</option>
+                        </select>
+                    </div>
+                </div>
+                <%
+                if(has(token_84)){
+                println('<button class="layui-btn" data-type="SearchList" lay-submit lay-filter="search">查询</button>');
+                }
+                if(has(token_85)){
+                println('<button class="layui-btn layui-btn-primary" lay-submit lay-filter="export">导出</button>');
+                }
+                %>
+            </div>
+        </div>
+    </div>
+</form>
+<div class="pointer">
+    <table id="table" class="layui-table" lay-filter="topsortcount"></table>
+</div>
+
+<script src="${siteurl}/templates/default/media/js/jquery1.9.1.js"></script>
+<script src="${siteurl}/templates/skin2/template/plugins/layui/layui.js"></script>
+<script type="text/javascript" src="${siteurl}/public/js/utils.js"></script>
+<!--业务逻辑JS-->
+<script src="${siteurl}/templates/skin2/media/js/biz/MqsReport/TOPsortcount.js"></script>
+<script type="text/javascript">
+    var siteurl = '${siteurl}';
+</script>
+</body>
+</html>

@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="io.jeasyframework.dao.master.ChTraincheckdetailDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="io.jeasyframework.entity.ChTraincheckdetailEntity" id="chTraincheckdetailMap">
+        <result property="fId" column="F_ID"/>
+        <result property="fGuid" column="F_GUID"/>
+        <result property="fTguid" column="F_TGUID"/>
+        <result property="fSerialnumber" column="F_SERIALNUMBER"/>
+        <result property="fTrainindex" column="F_TRAININDEX"/>
+        <result property="fTrainorder" column="F_TRAINORDER"/>
+        <result property="fTrainkind" column="F_TRAINKIND"/>
+        <result property="fTrainquota" column="F_TRAINQUOTA"/>
+        <result property="fTrainendcode" column="F_TRAINENDCODE"/>
+        <result property="fTrainweightself" column="F_TRAINWEIGHTSELF"/>
+        <result property="fTrainweightload" column="F_TRAINWEIGHTLOAD"/>
+        <result property="fTrainlengthconvert" column="F_TRAINLENGTHCONVERT"/>
+        <result property="fTrainmakefactory" column="F_TRAINMAKEFACTORY"/>
+        <result property="fTrainmaketime" column="F_TRAINMAKETIME"/>
+        <result property="fTrainattribute" column="F_TRAINATTRIBUTE"/>
+        <result property="fTrainstatus" column="F_TRAINSTATUS"/>
+        <result property="fTraintypetag" column="F_TRAINTYPETAG"/>
+        <result property="fTrainnumbertag" column="F_TRAINNUMBERTAG"/>
+        <result property="fTraintypeimage" column="F_TRAINTYPEIMAGE"/>
+        <result property="fTrainnumberimage" column="F_TRAINNUMBERIMAGE"/>
+        <result property="fTraintypeverdict" column="F_TRAINTYPEVERDICT"/>
+        <result property="fTrainnumberverdict" column="F_TRAINNUMBERVERDICT"/>
+        <result property="fBureauname" column="F_BUREAUNAME"/>
+        <result property="fSectionname" column="F_SECTIONNAME"/>
+        <result property="fTrainusetype" column="F_TRAINUSETYPE"/>
+        <result property="fTraintimes" column="F_TRAINTIMES"/>
+        <result property="fFixnumf" column="F_FIXNUMF"/>
+        <result property="fFixnumd" column="F_FIXNUMD"/>
+        <result property="fFixnumc" column="F_FIXNUMC"/>
+        <result property="fTimethrough" column="F_TIMETHROUGH"/>
+        <result property="fInfoaxis" column="F_INFOAXIS"/>
+        <result property="fInforfid" column="F_INFORFID"/>
+        <result property="fInfoimage" column="F_INFOIMAGE"/>
+        <result property="fPathvideo" column="F_PATHVIDEO"/>
+        <result property="fPathimage" column="F_PATHIMAGE"/>
+        <result property="fReliabilityimage" column="F_RELIABILITYIMAGE"/>
+        <result property="fReliabilityall" column="F_RELIABILITYALL"/>
+        <result property="fReadway" column="F_READWAY"/>
+        <result property="fReserve1" column="F_RESERVE1"/>
+        <result property="fReserve2" column="F_RESERVE2"/>
+        <result property="fReserve3" column="F_RESERVE3"/>
+        <result property="fReserve4" column="F_RESERVE4"/>
+        <result property="fReserve5" column="F_RESERVE5"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+F_ID, F_GUID, F_TGUID, F_SERIALNUMBER, F_TRAININDEX, F_TRAINORDER, F_TRAINKIND, F_TRAINQUOTA, F_TRAINENDCODE, F_TRAINWEIGHTSELF, F_TRAINWEIGHTLOAD, F_TRAINLENGTHCONVERT, F_TRAINMAKEFACTORY, to_char(F_TRAINMAKETIME,'yyyy-MM-dd hh24:mi:ss') as F_TRAINMAKETIME, F_TRAINATTRIBUTE, F_TRAINSTATUS, F_TRAINTYPETAG, F_TRAINNUMBERTAG, F_TRAINTYPEIMAGE, F_TRAINNUMBERIMAGE, F_TRAINTYPEVERDICT, F_TRAINNUMBERVERDICT, F_BUREAUNAME, F_SECTIONNAME, F_TRAINUSETYPE, F_TRAINTIMES, F_FIXNUMF, F_FIXNUMD, F_FIXNUMC, to_char(F_TIMETHROUGH,'yyyy-MM-dd hh24:mi:ss') as F_TIMETHROUGH, F_INFOAXIS, F_INFORFID, F_INFOIMAGE, F_PATHVIDEO, F_PATHIMAGE, F_RELIABILITYIMAGE, F_RELIABILITYALL, F_READWAY, F_RESERVE1, F_RESERVE2, F_RESERVE3, F_RESERVE4, F_RESERVE5
+	</sql>
+
+
+	<select id="queryAllInfo" resultMap="chTraincheckdetailMap" parameterType="io.jeasyframework.entity.ChTraincheckdetailEntity">
+		select * from
+		( select t.F_ID, t.F_GUID, t.F_TGUID, nvl(t.F_SERIALNUMBER,'""') as F_SERIALNUMBER, nvl( TO_CHAR(t.F_TRAININDEX),'""') as F_TRAININDEX,
+		nvl(t.F_TRAINORDER,'""') as F_TRAINORDER, nvl(t.F_TRAINKIND,'""') as F_TRAINKIND, nvl( TO_CHAR(t.F_TRAINQUOTA),'""') as F_TRAINQUOTA,
+		nvl(t.F_TRAINENDCODE,'""') as F_TRAINENDCODE, nvl( TO_CHAR(t.F_TRAINWEIGHTSELF),'""') as F_TRAINWEIGHTSELF,
+		nvl( TO_CHAR(t.F_TRAINWEIGHTLOAD),'""') as F_TRAINWEIGHTLOAD, nvl( TO_CHAR(t.F_TRAINLENGTHCONVERT),'""') as F_TRAINLENGTHCONVERT,
+		nvl(t.F_TRAINMAKEFACTORY,'""') as F_TRAINMAKEFACTORY,nvl(to_char(t.F_TRAINMAKETIME,'yyyy-MM-dd hh24:mi:ss'),'""') as F_TRAINMAKETIME ,
+		nvl(t.F_TRAINATTRIBUTE,'""') as F_TRAINATTRIBUTE, nvl(t.F_TRAINSTATUS,'""') as F_TRAINSTATUS, nvl(t.F_TRAINTYPETAG,'""') as F_TRAINTYPETAG,
+		nvl(t.F_TRAINNUMBERTAG,'""') as F_TRAINNUMBERTAG,nvl(t.F_TRAINTYPEIMAGE,'""') as F_TRAINTYPEIMAGE,
+		nvl(t.F_TRAINNUMBERIMAGE,'""') as F_TRAINNUMBERIMAGE,nvl( t.F_TRAINTYPEVERDICT,'""') as F_TRAINTYPEVERDICT,
+		nvl(t.F_TRAINNUMBERVERDICT,'""') as F_TRAINNUMBERVERDICT,nvl(t.F_BUREAUNAME,'""') as F_BUREAUNAME,
+		nvl(t.F_SECTIONNAME,'""') as F_SECTIONNAME, nvl(t.F_TRAINUSETYPE,'""') as F_TRAINUSETYPE,
+		nvl(TO_CHAR(t.F_TRAINTIMES),'""') as F_TRAINTIMES, nvl(TO_CHAR(t.F_FIXNUMF),'""') as F_FIXNUMF,
+		nvl(TO_CHAR(t.F_FIXNUMD),'""') as F_FIXNUMD,nvl(TO_CHAR(t.F_FIXNUMC),'""') as F_FIXNUMC,
+		nvl(to_char(t.F_TIMETHROUGH,'yyyy-MM-dd hh24:mi:ss'),'""') as F_TIMETHROUGH, nvl(t.F_INFOAXIS,'""') as F_INFOAXIS,
+		nvl(t.F_INFORFID,'""') as F_INFORFID, nvl(t.F_INFOIMAGE,'""') as F_INFOIMAGE, nvl(t.F_PATHVIDEO,'""') as F_PATHVIDEO,
+		nvl(t.F_PATHIMAGE,'""') as F_PATHIMAGE, nvl(TO_CHAR(t.F_RELIABILITYIMAGE),'""') as F_RELIABILITYIMAGE,
+		nvl(TO_CHAR(t.F_RELIABILITYALL),'""') as F_RELIABILITYALL,nvl(t.F_READWAY,'""') as F_READWAY, nvl(t.F_RESERVE1,'""') as F_RESERVE1,
+		nvl(t.F_RESERVE2,'""') as F_RESERVE2, nvl(t.F_RESERVE3,'""') as F_RESERVE3, nvl(t.F_RESERVE4,'""') as F_RESERVE4,
+		nvl(t.F_RESERVE5,'""') as F_RESERVE5
+		from CH_TRAINCHECKDETAILTEST t
+		where 1=1
+		<if test="fTimeStart != null and fTimeStart.trim() != '' ">
+			and t.F_TIMETHROUGH >= to_date(#{fTimeStart},'yyyy-MM-dd')
+		</if>
+		<if test="fTimeEnd != null and fTimeEnd.trim() != '' ">
+			and t.F_TIMETHROUGH &lt;= to_date(#{fTimeEnd},'yyyy-MM-dd')
+		</if>
+		order by t.f_id desc
+		) where 1=1
+		<if test="chCount != null and chCount.trim() != '' ">
+			and rownum &lt;= #{chCount}
+		</if>
+	</select>
+
+
+	<select id="queryObject" resultType="io.jeasyframework.entity.ChTraincheckdetailEntity">
+		select * from CH_TRAINCHECKDETAILTEST where F_ID = #{value}
+	</select>
+
+	<select id="queryList" resultType="io.jeasyframework.entity.ChTraincheckdetailEntity">
+		select * from CH_TRAINCHECKDETAILTEST
+        <choose>
+            <when test="sidx != null and sidx.trim() != ''">
+                order by ${sidx} ${order}
+            </when>
+			<otherwise>
+                order by F_ID desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="queryTotal" resultType="int">
+		select count(*) from CH_TRAINCHECKDETAILTEST
+	</select>
+	 
+	<insert id="save" parameterType="io.jeasyframework.entity.ChTraincheckdetailEntity">
+		insert into CH_TRAINCHECKDETAILTEST
+		(
+			`F_ID`, 
+			`F_GUID`, 
+			`F_TGUID`, 
+			`F_SERIALNUMBER`, 
+			`F_TRAININDEX`, 
+			`F_TRAINORDER`, 
+			`F_TRAINKIND`, 
+			`F_TRAINQUOTA`, 
+			`F_TRAINENDCODE`, 
+			`F_TRAINWEIGHTSELF`, 
+			`F_TRAINWEIGHTLOAD`, 
+			`F_TRAINLENGTHCONVERT`, 
+			`F_TRAINMAKEFACTORY`, 
+			`F_TRAINMAKETIME`, 
+			`F_TRAINATTRIBUTE`, 
+			`F_TRAINSTATUS`, 
+			`F_TRAINTYPETAG`, 
+			`F_TRAINNUMBERTAG`, 
+			`F_TRAINTYPEIMAGE`, 
+			`F_TRAINNUMBERIMAGE`, 
+			`F_TRAINTYPEVERDICT`, 
+			`F_TRAINNUMBERVERDICT`, 
+			`F_BUREAUNAME`, 
+			`F_SECTIONNAME`, 
+			`F_TRAINUSETYPE`, 
+			`F_TRAINTIMES`, 
+			`F_FIXNUMF`, 
+			`F_FIXNUMD`, 
+			`F_FIXNUMC`, 
+			`F_TIMETHROUGH`, 
+			`F_INFOAXIS`, 
+			`F_INFORFID`, 
+			`F_INFOIMAGE`, 
+			`F_PATHVIDEO`, 
+			`F_PATHIMAGE`, 
+			`F_RELIABILITYIMAGE`, 
+			`F_RELIABILITYALL`, 
+			`F_READWAY`, 
+			`F_RESERVE1`, 
+			`F_RESERVE2`, 
+			`F_RESERVE3`, 
+			`F_RESERVE4`, 
+			`F_RESERVE5`
+		)
+		values
+		(
+			#{fId}, 
+			#{fGuid}, 
+			#{fTguid}, 
+			#{fSerialnumber}, 
+			#{fTrainindex}, 
+			#{fTrainorder}, 
+			#{fTrainkind}, 
+			#{fTrainquota}, 
+			#{fTrainendcode}, 
+			#{fTrainweightself}, 
+			#{fTrainweightload}, 
+			#{fTrainlengthconvert}, 
+			#{fTrainmakefactory}, 
+			#{fTrainmaketime}, 
+			#{fTrainattribute}, 
+			#{fTrainstatus}, 
+			#{fTraintypetag}, 
+			#{fTrainnumbertag}, 
+			#{fTraintypeimage}, 
+			#{fTrainnumberimage}, 
+			#{fTraintypeverdict}, 
+			#{fTrainnumberverdict}, 
+			#{fBureauname}, 
+			#{fSectionname}, 
+			#{fTrainusetype}, 
+			#{fTraintimes}, 
+			#{fFixnumf}, 
+			#{fFixnumd}, 
+			#{fFixnumc}, 
+			#{fTimethrough}, 
+			#{fInfoaxis}, 
+			#{fInforfid}, 
+			#{fInfoimage}, 
+			#{fPathvideo}, 
+			#{fPathimage}, 
+			#{fReliabilityimage}, 
+			#{fReliabilityall}, 
+			#{fReadway}, 
+			#{fReserve1}, 
+			#{fReserve2}, 
+			#{fReserve3}, 
+			#{fReserve4}, 
+			#{fReserve5}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="io.jeasyframework.entity.ChTraincheckdetailEntity">
+		update CH_TRAINCHECKDETAILTEST
+		<set>
+			<if test="fGuid != null">F_GUID = #{fGuid}, </if>
+			<if test="fSerialnumber != null">F_SERIALNUMBER = #{fSerialnumber}, </if>
+			<if test="fTrainindex != null">F_TRAININDEX = #{fTrainindex}, </if>
+			<if test="fTrainorder != null">F_TRAINORDER = #{fTrainorder}, </if>
+			<if test="fTrainkind != null">F_TRAINKIND = #{fTrainkind}, </if>
+			<if test="fTrainquota != null">F_TRAINQUOTA = #{fTrainquota}, </if>
+			<if test="fTrainendcode != null">F_TRAINENDCODE = #{fTrainendcode}, </if>
+			<if test="fTrainweightself != null">F_TRAINWEIGHTSELF = #{fTrainweightself}, </if>
+			<if test="fTrainweightload != null">F_TRAINWEIGHTLOAD = #{fTrainweightload}, </if>
+			<if test="fTrainlengthconvert != null">F_TRAINLENGTHCONVERT = #{fTrainlengthconvert}, </if>
+			<if test="fTrainmakefactory != null">F_TRAINMAKEFACTORY = #{fTrainmakefactory}, </if>
+			<if test="fTrainmaketime != null">F_TRAINMAKETIME = #{fTrainmaketime}, </if>
+			<if test="fTrainattribute != null">F_TRAINATTRIBUTE = #{fTrainattribute}, </if>
+			<if test="fTrainstatus != null">F_TRAINSTATUS = #{fTrainstatus}, </if>
+			<if test="fTraintypetag != null">F_TRAINTYPETAG = #{fTraintypetag}, </if>
+			<if test="fTrainnumbertag != null">F_TRAINNUMBERTAG = #{fTrainnumbertag}, </if>
+			<if test="fTraintypeimage != null">F_TRAINTYPEIMAGE = #{fTraintypeimage}, </if>
+			<if test="fTrainnumberimage != null">F_TRAINNUMBERIMAGE = #{fTrainnumberimage}, </if>
+			<if test="fTraintypeverdict != null">F_TRAINTYPEVERDICT = #{fTraintypeverdict}, </if>
+			<if test="fTrainnumberverdict != null">F_TRAINNUMBERVERDICT = #{fTrainnumberverdict}, </if>
+			<if test="fBureauname != null">F_BUREAUNAME = #{fBureauname}, </if>
+			<if test="fSectionname != null">F_SECTIONNAME = #{fSectionname}, </if>
+			<if test="fTrainusetype != null">F_TRAINUSETYPE = #{fTrainusetype}, </if>
+			<if test="fTraintimes != null">`F_TRAINTIMES` = #{fTraintimes}, </if>
+			<if test="fFixnumf != null">F_FIXNUMF = #{fFixnumf}, </if>
+			<if test="fFixnumd != null">F_FIXNUMD = #{fFixnumd}, </if>
+			<if test="fFixnumc != null">F_FIXNUMC = #{fFixnumc}, </if>
+			<if test="fTimethrough != null">F_TIMETHROUGH = #{fTimethrough}, </if>
+			<if test="fInfoaxis != null">F_INFOAXIS = #{fInfoaxis}, </if>
+			<if test="fInforfid != null">F_INFORFID = #{fInforfid}, </if>
+			<if test="fInfoimage != null">F_INFOIMAGE = #{fInfoimage}, </if>
+			<if test="fPathvideo != null">F_PATHVIDEO = #{fPathvideo}, </if>
+			<if test="fPathimage != null">F_PATHIMAGE = #{fPathimage}, </if>
+			<if test="fReliabilityimage != null">F_RELIABILITYIMAGE = #{fReliabilityimage}, </if>
+			<if test="fReliabilityall != null">F_RELIABILITYALL = #{fReliabilityall}, </if>
+			<if test="fReserve1 != null">F_RESERVE1 = #{fReserve1}, </if>
+			<if test="fReserve2 != null">F_RESERVE2 = #{fReserve2}, </if>
+			<if test="fReserve3 != null">F_RESERVE3 = #{fReserve3}, </if>
+			<if test="fReserve4 != null">F_RESERVE4 = #{fReserve4}, </if>
+			<if test="fReserve5 != null">F_RESERVE5 = #{fReserve5} </if>
+		</set>
+		where F_ID = #{fId}
+	</update>
+	
+	<delete id="delete">
+		delete from CH_TRAINCHECKDETAILTEST where F_ID = #{value}
+	</delete>
+	
+	<delete id="deleteBatch">
+		delete from CH_TRAINCHECKDETAILTEST where F_ID in
+		<foreach item="fId" collection="array" open="(" separator="," close=")">
+			#{fId}
+		</foreach>
+	</delete>
+
+	<update id="updateResult" parameterType="io.jeasyframework.entity.ChTraincheckdetailEntity">
+		update CH_TRAINCHECKRESULTTEST
+		<set>
+			<if test="fReserve1 != null">F_RESERVE1 = #{fReserve1} </if>
+			<if test="fReserve2 != null">F_RESERVE2 = #{fReserve2}, </if>
+			<if test="fReserve5 != null">F_RESERVE5 = #{fReserve5}, </if>
+			<if test="fBureauname != null">F_BUREAUNAME = #{fBureauname}, </if>
+			<if test="fSectionname != null">F_SECTIONNAME = #{fSectionname} </if>
+		</set>
+		where F_ID = #{fId}
+	</update>
+
+</mapper>
